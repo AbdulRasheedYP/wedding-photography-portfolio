@@ -8,21 +8,22 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
 GALLERY_DIR = PROJECT_DIR / 'public' / 'images' / 'gallery'
 THUMB_DIR = GALLERY_DIR / 'thumbnails'
-OPT_DIR = GALLERY_DIR / 'optimized'
-
 THUMB_DIR.mkdir(parents=True, exist_ok=True)
-OPT_DIR.mkdir(parents=True, exist_ok=True)
 
 VALID_EXTS = {'.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'}
 
 def optimize_file(img_path: Path):
     stem = img_path.stem
-    thumb_path = THUMB_DIR / f'{stem}.webp'
-    opt_path = OPT_DIR / f'{stem}.webp'
+    # Ignore duplicate copies with (1), (2), etc.
+    if '(' in stem:
+        return None
 
-    if thumb_path.exists() and opt_path.exists():
+    thumb_path = THUMB_DIR / f'{stem}.webp'
+    full_path = GALLERY_DIR / f'{stem}.webp'
+
+    if thumb_path.exists() and full_path.exists():
         src_mtime = img_path.stat().st_mtime
-        if thumb_path.stat().st_mtime >= src_mtime and opt_path.stat().st_mtime >= src_mtime:
+        if thumb_path.stat().st_mtime >= src_mtime and full_path.stat().st_mtime >= src_mtime:
             return None
 
     try:
@@ -33,15 +34,17 @@ def optimize_file(img_path: Path):
 
             orig_size = img_path.stat().st_size
 
-            im.save(opt_path, 'WEBP', quality=85, method=6)
-            opt_size = opt_path.stat().st_size
+            # Save full-res WebP master directly in gallery/
+            im.save(full_path, 'WEBP', quality=85, method=6)
+            full_size = full_path.stat().st_size
 
+            # Save grid thumbnail in thumbnails/
             im_thumb = im.copy()
             im_thumb.thumbnail((800, 800), Image.Resampling.LANCZOS)
             im_thumb.save(thumb_path, 'WEBP', quality=85, method=6)
             thumb_size = thumb_path.stat().st_size
 
-            return (orig_size, opt_size, thumb_size)
+            return (orig_size, full_size, thumb_size)
     except Exception as e:
         print(f'[Error] Failed to process {img_path.name}: {e}', file=sys.stderr)
         return None

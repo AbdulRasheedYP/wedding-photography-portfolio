@@ -33,25 +33,16 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
         {!loaded && (
           <div className="absolute inset-0 bg-gradient-to-r from-[#111412] via-[#1a1f1b] to-[#111412] animate-pulse pointer-events-none" />
         )}
-        <picture>
-          <source srcSet={item.thumb} type="image/webp" />
-          <img
-            src={item.thumb}
-            alt={item.note}
-            className={`sticky-img w-full h-full object-cover transition-all duration-500 hover:scale-105 ${
-              loaded ? "opacity-100 filter-none" : "opacity-0 scale-95"
-            }`}
-            loading="lazy"
-            decoding="async"
-            onLoad={() => setLoaded(true)}
-            onError={(e) => {
-              if (e.currentTarget.src !== item.img) {
-                e.currentTarget.src = item.img;
-              }
-              setLoaded(true);
-            }}
-          />
-        </picture>
+        <img
+          src={item.thumb}
+          alt={item.note}
+          className={`sticky-img w-full h-full object-cover transition-all duration-500 hover:scale-105 ${
+            loaded ? "opacity-100 filter-none" : "opacity-0 scale-95"
+          }`}
+          loading="lazy"
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+        />
         <div className="sticky-img-overlay absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <span className="sticky-hover-tag px-3 py-1 bg-black/70 text-[#F1EDE3] text-[10px] font-sans uppercase tracking-widest rounded border border-white/20">
             {item.tag}
@@ -78,14 +69,29 @@ const StickyGallery: React.FC = () => {
     return GALLERY_ITEMS.filter((item) => item.category === selectedCategory);
   }, [selectedCategory]);
 
-  // Distribute items into 3 columns for balanced masonry layout
+  // Responsive column count: 2 on mobile/tablet (<768px), 3 on desktop
+  const [columnCount, setColumnCount] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 2 : 3
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      const nextCount = window.innerWidth < 768 ? 2 : 3;
+      setColumnCount((prev) => (prev !== nextCount ? nextCount : prev));
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Distribute items dynamically into columns so both sides are perfectly balanced
   const cols = useMemo(() => {
-    const columns: GalleryItem[][] = [[], [], []];
+    const columns: GalleryItem[][] = Array.from({ length: columnCount }, () => []);
     filteredItems.forEach((item, i) => {
-      columns[i % 3].push(item);
+      columns[i % columnCount].push(item);
     });
     return columns;
-  }, [filteredItems]);
+  }, [filteredItems, columnCount]);
 
   // Keyboard navigation for lightbox
   useEffect(() => {
@@ -277,19 +283,11 @@ const StickyGallery: React.FC = () => {
 
             {/* Photo */}
             <div className="max-h-[82vh] max-w-full flex items-center justify-center overflow-hidden rounded-xl shadow-2xl">
-              <picture>
-                <source srcSet={activeLightboxItem.full} type="image/webp" />
-                <img
-                  src={activeLightboxItem.full}
-                  alt={activeLightboxItem.note}
-                  className="max-h-[82vh] w-auto max-w-full object-contain rounded-xl"
-                  onError={(e) => {
-                    if (e.currentTarget.src !== activeLightboxItem.img) {
-                      e.currentTarget.src = activeLightboxItem.img;
-                    }
-                  }}
-                />
-              </picture>
+              <img
+                src={activeLightboxItem.full}
+                alt={activeLightboxItem.note}
+                className="max-h-[82vh] w-auto max-w-full object-contain rounded-xl"
+              />
             </div>
 
             {/* Next Button */}
