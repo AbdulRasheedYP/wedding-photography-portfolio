@@ -121,6 +121,25 @@ const StickyGallery: React.FC = () => {
     });
   };
 
+  // Idle prefetch: pre-warm images in browser memory during idle CPU time
+  useEffect(() => {
+    const idlePrefetch = () => {
+      const toWarm = displayedItems.slice(0, 15);
+      toWarm.forEach((item) => {
+        const img = new Image();
+        img.src = item.thumb;
+      });
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const handle = (window as unknown as { requestIdleCallback: (cb: () => void, opts: { timeout: number }) => number }).requestIdleCallback(idlePrefetch, { timeout: 2000 });
+      return () => (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
+    } else {
+      const timer = setTimeout(idlePrefetch, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [displayedItems]);
+
   // Keyboard navigation for lightbox
   useEffect(() => {
     if (lightboxIndex === null) return;
