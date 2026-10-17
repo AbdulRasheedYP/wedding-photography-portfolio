@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "python3 scripts/optimize_images.py && vite build",
     "preview": "vite preview",
     "optimize:images": "python3 scripts/optimize_images.py"
   },
