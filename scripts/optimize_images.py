@@ -9,7 +9,7 @@ PROJECT_DIR = SCRIPT_DIR.parent
 IMAGES_DIR = PROJECT_DIR / 'public' / 'images'
 
 TARGET_DIRS = [
-    IMAGES_DIR / 'story-wall',
+    IMAGES_DIR / 'wall',
     IMAGES_DIR / 'services',
     IMAGES_DIR / 'gallery',
 ]
