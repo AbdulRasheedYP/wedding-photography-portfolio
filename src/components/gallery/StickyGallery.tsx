@@ -57,10 +57,13 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
   );
 };
 
+const INITIAL_VISIBLE_COUNT = 30;
+
 const StickyGallery: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [visibleCount, setVisibleCount] = useState<number>(INITIAL_VISIBLE_COUNT);
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === "All") {
@@ -68,6 +71,16 @@ const StickyGallery: React.FC = () => {
     }
     return GALLERY_ITEMS.filter((item) => item.category === selectedCategory);
   }, [selectedCategory]);
+
+  // Reset visible count when category changes
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  }, [selectedCategory]);
+
+  // Only take visibleCount items for display
+  const displayedItems = useMemo(() => {
+    return filteredItems.slice(0, visibleCount);
+  }, [filteredItems, visibleCount]);
 
   // Responsive column count: 2 on mobile/tablet (<768px), 3 on desktop
   const [columnCount, setColumnCount] = useState(() =>
@@ -87,11 +100,26 @@ const StickyGallery: React.FC = () => {
   // Distribute items dynamically into columns so both sides are perfectly balanced
   const cols = useMemo(() => {
     const columns: GalleryItem[][] = Array.from({ length: columnCount }, () => []);
-    filteredItems.forEach((item, i) => {
+    displayedItems.forEach((item, i) => {
       columns[i % columnCount].push(item);
     });
     return columns;
-  }, [filteredItems, columnCount]);
+  }, [displayedItems, columnCount]);
+
+  // Refresh GSAP scroll metrics when item count changes
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, [displayedItems.length]);
+
+  const handleViewMore = () => {
+    setVisibleCount((prev) => {
+      const next = prev + 30;
+      if (filteredItems.length - next <= 10) {
+        return filteredItems.length;
+      }
+      return next;
+    });
+  };
 
   // Keyboard navigation for lightbox
   useEffect(() => {
@@ -229,6 +257,25 @@ const StickyGallery: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* View More Button */}
+      {visibleCount < filteredItems.length && (
+        <div className="mt-14 mb-4 flex flex-col items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={handleViewMore}
+            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-sans uppercase tracking-[0.2em] text-[#080B09] bg-[#F1EDE3] hover:bg-white transition-all duration-300 shadow-[0_4px_20px_rgba(241,237,227,0.15)] hover:shadow-[0_6px_25px_rgba(241,237,227,0.3)] hover:scale-[1.02] active:scale-[0.98] font-medium cursor-pointer"
+          >
+            <span>View More Photographs</span>
+            <span className="w-5 h-5 rounded-full bg-[#080B09]/10 text-[#080B09] flex items-center justify-center text-[10px] font-mono group-hover:translate-y-0.5 transition-transform">
+              ↓
+            </span>
+          </button>
+          <p className="text-[11px] text-[#8D8B82] font-sans tracking-wide">
+            Showing {displayedItems.length} of {filteredItems.length} photographs
+          </p>
+        </div>
+      )}
 
       {/* Lightbox Full-screen Modal */}
       {activeLightboxItem && lightboxIndex !== null && (

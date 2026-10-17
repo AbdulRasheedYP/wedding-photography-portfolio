@@ -89,7 +89,7 @@ const AboutSection: React.FC = () => {
               </div>
               <div>
                 <p className="font-serif text-lg text-[#F1EDE3] font-semibold leading-tight tracking-wide">
-                  Adil Rasheed
+                  Adil Mubarak 
                 </p>
                 <p className="text-[11px] font-sans text-[#A8A499] uppercase tracking-widest mt-0.5">
                   Founder &amp; Creative Director

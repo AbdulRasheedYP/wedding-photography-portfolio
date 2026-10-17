@@ -249,7 +249,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     full: "/images/gallery/DSC01011.webp",
     note: "Captured Memories",
     tag: "STORY",
-    category: "All",
+    category: "Weddings & Shoots",
     rotation: -1.0
   },
   {
