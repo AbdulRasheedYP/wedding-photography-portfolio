@@ -15,49 +15,49 @@ const CORE_SERVICES: ServiceCardData[] = [
   {
     id: "weddings",
     title: "Weddings",
-    img: "/images/gallery/thumbnails/2W6A3149.webp",
+    img: "/images/gallery/thumbnails/5.webp",
     categoryValue: "wedding",
   },
   {
     id: "prewedding",
     title: "Pre-Weddings",
-    img: "/images/gallery/thumbnails/2W6A8657.webp",
+    img: "/images/gallery/thumbnails/13.webp",
     categoryValue: "wedding",
   },
   {
     id: "portraits",
     title: "Portraits & Editorial",
-    img: "/images/gallery/thumbnails/DSC04238.webp",
+    img: "/images/gallery/thumbnails/29.webp",
     categoryValue: "other",
   },
   {
     id: "commercial",
     title: "Commercial & Brands",
-    img: "/images/gallery/thumbnails/DSCF0445.webp",
+    img: "/images/gallery/thumbnails/34.webp",
     categoryValue: "corporate",
   },
   {
     id: "travel",
     title: "Travel & Aerial",
-    img: "/images/gallery/thumbnails/DSC02662.webp",
+    img: "/images/gallery/thumbnails/28.webp",
     categoryValue: "other",
   },
   {
     id: "events",
     title: "Events & Celebrations",
-    img: "/images/gallery/thumbnails/DSC00565.webp",
+    img: "/images/gallery/thumbnails/17.webp",
     categoryValue: "event",
   },
   {
     id: "fashion",
     title: "Fashion & Lifestyle",
-    img: "/images/gallery/thumbnails/DSC00293.webp",
+    img: "/images/gallery/thumbnails/16.webp",
     categoryValue: "advertisement",
   },
   {
     id: "documentaries",
     title: "Documentaries",
-    img: "/images/gallery/thumbnails/IMG_2688.webp",
+    img: "/images/gallery/thumbnails/47.webp",
     categoryValue: "corporate",
   },
 ];
@@ -66,7 +66,7 @@ const ADDITIONAL_SERVICES: ServiceCardData[] = [
   {
     id: "albums",
     title: "Fine-Art Print Albums",
-    img: "/images/gallery/thumbnails/DSC01011.webp",
+    img: "/images/gallery/thumbnails/27.webp",
     categoryValue: "other",
   },
 ];

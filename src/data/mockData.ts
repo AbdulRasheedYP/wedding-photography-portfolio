@@ -11,79 +11,79 @@ export const projects: Project[] = [
     id: 1,
     title: "The Royal Knot",
     category: { id: 1, name: "Wedding", slug: "wedding" },
-    thumbnail: "/images/gallery/thumbnails/2W6A3149.webp",
+    thumbnail: "/images/gallery/thumbnails/5.webp",
     video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     id: 2,
     title: "Calicut Twilight Shore",
     category: { id: 2, name: "Fashion", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/2W6A8657.webp",
+    thumbnail: "/images/gallery/thumbnails/13.webp",
   },
   {
     id: 3,
     title: "Bridal Splendor in Red",
     category: { id: 1, name: "Wedding", slug: "wedding" },
-    thumbnail: "/images/gallery/thumbnails/DSC00565.webp",
+    thumbnail: "/images/gallery/thumbnails/17.webp",
   },
   {
     id: 4,
     title: "Golden Hour Lehenga",
     category: { id: 1, name: "Wedding", slug: "wedding" },
-    thumbnail: "/images/gallery/thumbnails/DSC04238.webp",
+    thumbnail: "/images/gallery/thumbnails/29.webp",
   },
   {
     id: 5,
     title: "Kerala Backwaters",
     category: { id: 2, name: "Aerial", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/DSC02662.webp",
+    thumbnail: "/images/gallery/thumbnails/28.webp",
   },
   {
     id: 6,
     title: "Kashmir Valley Vista",
     category: { id: 2, name: "Travel", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/IMG_3124.webp",
+    thumbnail: "/images/gallery/thumbnails/48.webp",
   },
   {
     id: 7,
     title: "Himalayan Ridge Expedition",
     category: { id: 2, name: "Travel", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/IMG_4023.webp",
+    thumbnail: "/images/gallery/thumbnails/53.webp",
   },
   {
     id: 8,
     title: "Dubai Marina Twilight",
     category: { id: 2, name: "Commercial", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/DSCF0445.webp",
+    thumbnail: "/images/gallery/thumbnails/34.webp",
   },
   {
     id: 9,
     title: "Hampi Heritage Echoes",
     category: { id: 3, name: "Culture", slug: "music" },
-    thumbnail: "/images/gallery/thumbnails/IMG_1606.webp",
+    thumbnail: "/images/gallery/thumbnails/41.webp",
   },
   {
     id: 10,
     title: "Director at Dusk",
     category: { id: 2, name: "BTS", slug: "commercial" },
-    thumbnail: "/images/gallery/thumbnails/IMG_2688.webp",
+    thumbnail: "/images/gallery/thumbnails/47.webp",
   },
   {
     id: 11,
     title: "Silk Elegance in Gold",
     category: { id: 1, name: "Wedding", slug: "wedding" },
-    thumbnail: "/images/gallery/thumbnails/DSC01011.webp",
+    thumbnail: "/images/gallery/thumbnails/27.webp",
   },
   {
     id: 12,
     title: "Magenta Romance",
     category: { id: 1, name: "Wedding", slug: "wedding" },
-    thumbnail: "/images/gallery/thumbnails/DSC00709.webp",
+    thumbnail: "/images/gallery/thumbnails/20.webp",
   },
 ];
 
 export const team: TeamMember[] = [
-  { id: 1, name: "Adil Rasheed", role: "Creative Director" },
+  { id: 1, name: "Adil Mubarak", role: "Creative Director" },
 ];
 
 export const services: Service[] = [
