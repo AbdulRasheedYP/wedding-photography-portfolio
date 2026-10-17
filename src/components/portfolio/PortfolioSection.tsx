@@ -14,14 +14,14 @@ interface SlideItem {
 }
 
 const FALLBACK_SLIDES: SlideItem[] = [
-  { id: "f1", img: "/images/gallery/thumbnails/5.webp",    title: "The Royal Knot",         category: "Wedding" },
-  { id: "f2", img: "/images/gallery/thumbnails/13.webp",    title: "Calicut Twilight Shore", category: "Fashion" },
-  { id: "f3", img: "/images/gallery/thumbnails/17.webp",    title: "Bridal Splendor in Red", category: "Wedding" },
-  { id: "f4", img: "/images/gallery/thumbnails/29.webp",    title: "Golden Hour Lehenga",    category: "Wedding" },
-  { id: "f5", img: "/images/gallery/thumbnails/28.webp",    title: "Kerala Backwaters",      category: "Aerial" },
-  { id: "f6", img: "/images/gallery/thumbnails/48.webp",    title: "Kashmir Valley Vista",   category: "Travel" },
-  { id: "f7", img: "/images/gallery/thumbnails/34.webp",    title: "Dubai Marina Twilight",  category: "Commercial" },
-  { id: "f8", img: "/images/gallery/thumbnails/47.webp",    title: "Director at Dusk",       category: "BTS" },
+  { id: "f1", img: "/images/gallery/1.webp",    title: "The Royal Knot",         category: "Wedding" },
+  { id: "f2", img: "/images/gallery/2.webp",    title: "Calicut Twilight Shore", category: "Fashion" },
+  { id: "f3", img: "/images/gallery/3.webp",    title: "Bridal Splendor in Red", category: "Wedding" },
+  { id: "f4", img: "/images/gallery/4.webp",    title: "Golden Hour Lehenga",    category: "Wedding" },
+  { id: "f5", img: "/images/gallery/5.webp",    title: "Kerala Backwaters",      category: "Aerial" },
+  { id: "f6", img: "/images/gallery/6.webp",    title: "Kashmir Valley Vista",   category: "Travel" },
+  { id: "f7", img: "/images/gallery/7.webp",    title: "Dubai Marina Twilight",  category: "Commercial" },
+  { id: "f8", img: "/images/gallery/8.webp",    title: "Director at Dusk",       category: "BTS" },
 ];
 
 interface Props {

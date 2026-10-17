@@ -6,7 +6,7 @@ from PIL import Image, ImageOps
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
-GALLERY_DIR = PROJECT_DIR / 'public' / 'images' / 'gallery'
+GALLERY_DIR = PROJECT_DIR / 'public' / 'images' / 'story-wall'
 THUMB_DIR = GALLERY_DIR / 'thumbnails'
 THUMB_DIR.mkdir(parents=True, exist_ok=True)
 
