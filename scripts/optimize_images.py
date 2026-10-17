@@ -7,8 +7,6 @@ from PIL import Image, ImageOps
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
 GALLERY_DIR = PROJECT_DIR / 'public' / 'images' / 'story-wall'
-THUMB_DIR = GALLERY_DIR / 'thumbnails'
-THUMB_DIR.mkdir(parents=True, exist_ok=True)
 
 VALID_EXTS = {'.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'}
 
@@ -18,12 +16,11 @@ def optimize_file(img_path: Path):
     if '(' in stem:
         return None
 
-    thumb_path = THUMB_DIR / f'{stem}.webp'
-    full_path = GALLERY_DIR / f'{stem}.webp'
+    out_path = GALLERY_DIR / f'{stem}.webp'
 
-    if thumb_path.exists() and full_path.exists():
+    if out_path.exists():
         src_mtime = img_path.stat().st_mtime
-        if thumb_path.stat().st_mtime >= src_mtime and full_path.stat().st_mtime >= src_mtime:
+        if out_path.stat().st_mtime >= src_mtime:
             return None
 
     try:
@@ -34,17 +31,13 @@ def optimize_file(img_path: Path):
 
             orig_size = img_path.stat().st_size
 
-            # Save full-res WebP master directly in gallery/
-            im.save(full_path, 'WEBP', quality=85, method=6)
-            full_size = full_path.stat().st_size
-
-            # Save grid thumbnail in thumbnails/
+            # Save high-performance WebP directly in story-wall/
             im_thumb = im.copy()
-            im_thumb.thumbnail((800, 800), Image.Resampling.LANCZOS)
-            im_thumb.save(thumb_path, 'WEBP', quality=85, method=6)
-            thumb_size = thumb_path.stat().st_size
+            im_thumb.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
+            im_thumb.save(out_path, 'WEBP', quality=85, method=6)
+            out_size = out_path.stat().st_size
 
-            return (orig_size, full_size, thumb_size)
+            return (orig_size, out_size, out_size)
     except Exception as e:
         print(f'[Error] Failed to process {img_path.name}: {e}', file=sys.stderr)
         return None
