@@ -2,7 +2,11 @@
 import os
 import sys
 from pathlib import Path
-from PIL import Image, ImageOps
+try:
+    from PIL import Image, ImageOps
+except ImportError:
+    print("[Info] PIL not installed, skipping image optimization.")
+    sys.exit(0)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
