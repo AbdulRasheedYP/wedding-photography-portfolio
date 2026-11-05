@@ -224,15 +224,12 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           {/* Bottom Content Bar */}
           <div className="absolute bottom-4 sm:bottom-6 inset-x-4 sm:inset-x-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 pointer-events-none z-10">
             <div>
-              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.25em] text-[#8D8B82] mb-1">
-                {mainProject.client_name || "Adil Mubarak Films"}
-              </p>
               <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-[#F1EDE3] font-normal leading-tight">
                 {mainProject.title}
               </h3>
             </div>
 
-            <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-[#D8D1C2]/80">
+            <div className="hidden sm:flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-[#D8D1C2]/80">
               <svg className="w-3.5 h-3.5 fill-current text-[#25D366]" viewBox="0 0 24 24">
                 <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
               </svg>
