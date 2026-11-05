@@ -12,7 +12,7 @@ import ContactSection from "../components/contact/ContactSection";
 import Footer from "../components/shared/Footer";
 import VideoModal from "../components/shared/VideoModal";
 
-import { projects, categories, services, testimonials } from "../data/mockData";
+import { projects, categories, testimonials } from "../data/mockData";
 import { Project, ContactFormState } from "../types";
 
 const SectionGap: React.FC = () => (

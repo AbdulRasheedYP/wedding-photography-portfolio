@@ -1,9 +1,9 @@
 import { Category, Project, TeamMember, Service, Testimonial } from "../types";
 
 export const categories: Category[] = [
-  { id: 1, name: "Wedding", slug: "wedding" },
-  { id: 2, name: "Commercial", slug: "commercial" },
-  { id: 3, name: "Music Video", slug: "music" },
+  { id: 1, name: "Weddings", slug: "wedding" },
+  { id: 2, name: "Editorial", slug: "editorial" },
+  { id: 3, name: "Travel & Cinema", slug: "cinema" },
 ];
 
 export const projects: Project[] = [
@@ -53,19 +53,19 @@ export const projects: Project[] = [
   {
     id: 8,
     title: "Dubai Marina Twilight",
-    category: { id: 2, name: "Commercial", slug: "commercial" },
+    category: { id: 3, name: "Destination", slug: "destination" },
     thumbnail: "/images/gallery/8.webp",
   },
   {
     id: 9,
     title: "Hampi Heritage Echoes",
-    category: { id: 3, name: "Culture", slug: "music" },
+    category: { id: 3, name: "Culture", slug: "culture" },
     thumbnail: "/images/gallery/9.webp",
   },
   {
     id: 10,
     title: "Director at Dusk",
-    category: { id: 2, name: "BTS", slug: "commercial" },
+    category: { id: 2, name: "BTS", slug: "bts" },
     thumbnail: "/images/gallery/10.webp",
   },
   {
@@ -83,12 +83,12 @@ export const projects: Project[] = [
 ];
 
 export const team: TeamMember[] = [
-  { id: 1, name: "Adil Mubarak", role: "Creative Director" },
+  { id: 1, name: "Adil Mubarak", role: "Photographer & Filmmaker" },
 ];
 
 export const services: Service[] = [
   { id: 1, title: "Wedding Cinema" },
-  { id: 2, title: "Commercials" },
+  { id: 2, title: "Fine-Art Editorial & Portraits" },
 ];
 
 export const testimonials: Testimonial[] = [
