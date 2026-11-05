@@ -194,11 +194,11 @@ const PortfolioSection: React.FC<Props> = ({ projects, onSelectProject }) => {
           <div className="flex items-center gap-2 mb-1.5">
             <span className="w-5 h-[1px] bg-[#67685D]" />
             <p className="text-[10px] font-display font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-              Curated Stories
+              Portfolio
             </p>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#F1EDE3] uppercase leading-none">
-            Selected Works
+            Show Reel
           </h2>
         </div>
         <div className="flex items-center gap-2.5">
@@ -228,6 +228,16 @@ const PortfolioSection: React.FC<Props> = ({ projects, onSelectProject }) => {
               >
                 <img src={slide.img} alt={slide.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
+
+                {/* Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
+                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white ml-0.5" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-4.5">
                   <p className="text-[#D8D1C2]/60 text-[9px] font-display font-medium uppercase tracking-[0.2em] mb-1">{slide.category}</p>
                   <h3 className="text-[#F1EDE3] font-serif font-normal text-base sm:text-lg group-hover:text-white transition-colors duration-300 leading-snug">{slide.title}</h3>

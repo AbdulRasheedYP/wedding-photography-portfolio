@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "../../types";
 
@@ -7,7 +7,38 @@ interface Props {
   onClose: () => void;
 }
 
+const getYouTubeEmbed = (url?: string): string | null => {
+  if (!url) return null;
+
+  let videoId: string | null = null;
+
+  if (url.includes("youtube.com/watch?v=")) {
+    videoId = new URL(url).searchParams.get("v");
+  } else if (url.includes("youtu.be/")) {
+    videoId = url.split("youtu.be/")[1]?.split("?")[0];
+  } else if (url.includes("youtube.com/embed/")) {
+    videoId = url.split("youtube.com/embed/")[1]?.split("?")[0];
+  }
+
+  if (!videoId) return null;
+
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&vq=hd1080&playsinline=1&enablejsapi=1`;
+};
+
+const isDirectVideo = (url?: string): boolean => {
+  if (!url) return false;
+  return (
+    url.endsWith(".mp4") ||
+    url.endsWith(".webm") ||
+    url.endsWith(".mov") ||
+    url.startsWith("/videos/") ||
+    (!url.includes("youtube.com") && !url.includes("youtu.be") && !url.includes("vimeo.com"))
+  );
+};
+
 const VideoModal: React.FC<Props> = ({ project, onClose }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     if (!project) return;
     const prev = document.body.style.overflow;
@@ -17,92 +48,144 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
     };
   }, [project, onClose]);
 
   if (!project) return null;
 
-  const getEmbed = (url?: string) => {
-    if (!url) return null;
-    if (url.includes("youtube.com/watch?v="))
-      return url.replace("watch?v=", "embed/") + "?autoplay=1";
-    if (url.includes("youtu.be/"))
-      return `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}?autoplay=1`;
-    return url;
-  };
-
-  const embed = getEmbed(project.video_url || project.video_embed_url);
-  const thumb = project.thumbnail;
+  const rawUrl = project.video_url || project.video_embed_url || "/videos/showreel.mp4";
+  const isDirect = isDirectVideo(rawUrl);
+  const ytEmbed = !isDirect ? getYouTubeEmbed(rawUrl) : null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        {/* Full-screen dark cinematic backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
           onClick={onClose}
-          className="absolute inset-0 bg-[#080B09]/80 backdrop-blur-lg cursor-pointer"
+          className="absolute inset-0 bg-black/92 backdrop-blur-2xl cursor-pointer"
         />
 
-        {/* Panel */}
+        {/* Large Expanded Player Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 12 }}
+          initial={{ opacity: 0, scale: 0.92, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 12 }}
-          transition={{ type: "spring", damping: 28, stiffness: 360 }}
-          className="relative w-full max-w-4xl bg-[#111412] border border-[#F1EDE3]/10 rounded-2xl overflow-hidden shadow-2xl z-10"
+          exit={{ opacity: 0, scale: 0.94, y: 12 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 w-full max-w-6xl mx-auto flex flex-col"
         >
-          {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#F1EDE3]/10">
-            <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-[#F1EDE3]" />
-              <h3 id="modal-title" className="font-display font-bold text-sm text-[#F1EDE3]">{project.title}</h3>
-              {project.category?.name && (
-                <span className="px-2.5 py-0.5 rounded-full bg-[#F1EDE3]/5 text-[#D8D1C2] border border-[#F1EDE3]/10 text-[10px] font-display font-bold">
-                  {project.category.name}
-                </span>
-              )}
-            </div>
-            <button
-              onClick={onClose}
-              className="w-7 h-7 rounded-full bg-[#F1EDE3]/10 hover:bg-[#F1EDE3]/20 text-[#F1EDE3] flex items-center justify-center text-xs transition-colors"
-              aria-label="Close"
-            >✕</button>
-          </div>
-
-          {/* Video */}
-          <div className="aspect-video bg-[#080B09]">
-            {embed ? (
-              <iframe src={embed} title={project.title} className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-            ) : thumb ? (
-              <div className="relative w-full h-full">
-                <img src={thumb} alt={project.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-[#080B09]/60 flex items-center justify-center">
-                  <p className="font-display font-bold text-[#F1EDE3] text-base">Preview available on request</p>
+          {/* Header Bar */}
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 mb-2 bg-[#111412]/90 backdrop-blur-md border border-[#F1EDE3]/10 rounded-2xl">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse flex-shrink-0" />
+              <div className="min-w-0">
+                <h3
+                  id="modal-title"
+                  className="font-serif text-sm sm:text-lg text-[#F1EDE3] font-normal leading-tight truncate"
+                >
+                  {project.title}
+                </h3>
+                <div className="flex items-center gap-2 mt-0.5">
+                  {project.category?.name && (
+                    <span className="text-[9px] font-sans font-semibold uppercase tracking-widest text-[#8D8B82]">
+                      {project.category.name}
+                    </span>
+                  )}
+                  <span className="text-[#67685D] text-[10px]">•</span>
+                  <span className="text-[9px] font-sans font-bold uppercase tracking-wider text-[#D8D1C2] bg-white/10 px-2 py-0.5 rounded">
+                    1080p Full HD
+                  </span>
                 </div>
               </div>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={onClose}
+              className="group flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest text-[#8D8B82] hover:text-[#F1EDE3] transition-colors px-2 py-1 flex-shrink-0"
+              aria-label="Close video player"
+            >
+              <span className="hidden sm:inline">Close</span>
+              <span className="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:border-white/40 group-hover:bg-white/10 flex items-center justify-center transition-all text-sm">
+                ✕
+              </span>
+            </button>
+          </div>
+
+          {/* Large Video Frame (Native HTML5 or YouTube) */}
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.95)] border border-[#F1EDE3]/15">
+            {isDirect ? (
+              <video
+                ref={videoRef}
+                src={rawUrl}
+                controls
+                autoPlay
+                playsInline
+                preload="auto"
+                className="w-full h-full object-contain bg-black focus:outline-none"
+              >
+                <source src={rawUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : ytEmbed ? (
+              <iframe
+                src={ytEmbed}
+                title={project.title}
+                className="absolute inset-0 w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="font-display text-[#8D8B82] text-sm">Loading preview…</p>
+              <div className="relative w-full h-full flex items-center justify-center bg-black">
+                {project.thumbnail && (
+                  <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    className="w-full h-full object-cover filter brightness-50"
+                  />
+                )}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-4 text-center">
+                  <p className="font-serif text-lg text-[#F1EDE3]">Preview ready upon inquiry</p>
+                  <a
+                    href="https://wa.me/971568709412?text=Hi%20Adil,%20I'd%20like%20to%20view%20your%20showreel%20videos."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-[#080B09] font-sans font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-lg"
+                  >
+                    Request on WhatsApp
+                  </a>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Footer */}
-          <div className="px-5 py-4 border-t border-[#F1EDE3]/10 flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-[10px] font-display text-[#8D8B82] uppercase tracking-widest">Client</p>
-              <p className="font-display font-bold text-sm text-[#F1EDE3]">{project.client_name || "Adil Mubarak Films"}</p>
+          {/* Footer Bar */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 px-3 py-2 text-center sm:text-left">
+            <p className="text-[11px] font-sans text-[#8D8B82]">
+              Captured &amp; Color Graded on <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong> by Adil Mubarak
+            </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://wa.me/971568709412?text=Hi%20Adil,%20I%20loved%20your%20showreel%20and%20would%20like%20to%20work%20together."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[11px] font-sans font-semibold uppercase tracking-wider text-[#25D366] hover:text-white transition-colors"
+              >
+                Book Similar Project &rarr;
+              </a>
             </div>
-            <button
-              onClick={() => { onClose(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
-              className="btn-emerald text-xs py-2 px-5"
-            >
-              Inquire Similar Shoot →
-            </button>
           </div>
         </motion.div>
       </div>

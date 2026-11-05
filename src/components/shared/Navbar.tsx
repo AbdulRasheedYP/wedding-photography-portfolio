@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { id: "about",    label: "About"       },
   { id: "services", label: "Disciplines" },
   { id: "journey",  label: "Journey"     },
-  { id: "work",     label: "Portfolio"   },
+  { id: "work",     label: "Show Reel"   },
   { id: "contact",  label: "Contact"     },
 ];
 
