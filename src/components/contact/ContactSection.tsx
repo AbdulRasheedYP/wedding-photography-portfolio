@@ -20,37 +20,99 @@ const INITIAL_FORM: ContactFormState = {
 };
 
 type FormErrors = Partial<Record<keyof ContactFormState, string>>;
+type FormTouched = Partial<Record<keyof ContactFormState, boolean>>;
 type Status = "idle" | "sending" | "success" | "error";
 
 interface Props { prefill?: Partial<ContactFormState> | null; }
 
+const validateField = (name: keyof ContactFormState, value: string): string | undefined => {
+  const val = value.trim();
+  switch (name) {
+    case "name":
+      if (!val) return "Please enter your full name.";
+      if (val.length < 2) return "Full name must be at least 2 characters.";
+      if (!/^[\p{L}\s.'-]+$/u.test(val)) return "Please enter a valid name (letters only).";
+      return undefined;
+
+    case "email":
+      if (!val) return "Please enter your email address.";
+      // RFC-compliant email regex
+      if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(val)) {
+        return "Please enter a valid email address (e.g. name@domain.com).";
+      }
+      return undefined;
+
+    case "phone":
+      if (!val) return undefined; // Optional field
+      const digitsOnly = val.replace(/\D/g, "");
+      if (digitsOnly.length < 7 || digitsOnly.length > 15 || !/^[+]?[\d\s().-]{7,20}$/.test(val)) {
+        return "Please enter a valid phone or WhatsApp number (min 7 digits, e.g. +971 50 123 4567).";
+      }
+      return undefined;
+
+    case "message":
+      if (!val) return "Please tell me about your project, dates, or deliverables.";
+      if (val.length < 15) return `Please provide at least 15 characters (currently ${val.length}/15).`;
+      if (val.length > 1500) return "Message is too long (maximum 1500 characters).";
+      return undefined;
+
+    default:
+      return undefined;
+  }
+};
+
 const ContactSection: React.FC<Props> = ({ prefill }) => {
   const sectionRef              = useRef<HTMLElement>(null);
   const [form, setForm]         = useState<ContactFormState>({ ...INITIAL_FORM, ...prefill });
+  const [touched, setTouched]   = useState<FormTouched>({});
   const [status, setStatus]     = useState<Status>("idle");
   const [errors, setErrors]     = useState<FormErrors>({});
 
   useEffect(() => { if (prefill) setForm((f) => ({ ...f, ...prefill })); }, [prefill]);
 
-  const validate = (): FormErrors => {
-    const e: FormErrors = {};
-    if (!form.name.trim())  e.name = "Required";
-    if (!form.email.trim()) e.email = "Required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Invalid email";
-    if (!form.message.trim()) e.message = "Required";
-    return e;
+  const validateAll = (): FormErrors => {
+    const errs: FormErrors = {};
+    (["name", "email", "phone", "message"] as (keyof ContactFormState)[]).forEach((field) => {
+      const err = validateField(field, form[field] || "");
+      if (err) errs[field] = err;
+    });
+    return errs;
+  };
+
+  const handleBlur = (field: keyof ContactFormState) => {
+    setTouched((t) => ({ ...t, [field]: true }));
+    const err = validateField(field, form[field] || "");
+    setErrors((prev) => ({ ...prev, [field]: err }));
   };
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    setErrors((f) => ({ ...f, [name]: undefined }));
-  }, []);
+    const field = name as keyof ContactFormState;
+    setForm((f) => ({ ...f, [field]: value }));
+
+    // Real-time validation if already touched or has error
+    if (touched[field] || errors[field]) {
+      const err = validateField(field, value);
+      setErrors((prev) => ({ ...prev, [field]: err }));
+    }
+  }, [touched, errors]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+
+    // Mark all required fields as touched
+    setTouched({ name: true, email: true, phone: true, message: true });
+
+    const allErrs = validateAll();
+    if (Object.keys(allErrs).length > 0) {
+      setErrors(allErrs);
+      // Focus the first invalid field
+      const firstErrorField = Object.keys(allErrs)[0];
+      const element = document.getElementById(firstErrorField);
+      element?.focus();
+      return;
+    }
+
     setStatus("sending");
 
     try {
@@ -64,6 +126,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
         window.open(`mailto:adilmubarack03@gmail.com?subject=${subject}&body=${body}`, "_blank");
         setStatus("success");
         setForm(INITIAL_FORM);
+        setTouched({});
         return;
       }
 
@@ -89,6 +152,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
       if (data.success) {
         setStatus("success");
         setForm(INITIAL_FORM);
+        setTouched({});
       } else {
         setStatus("error");
       }
@@ -98,8 +162,19 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
     }
   };
 
-  const inputCls = (field: keyof ContactFormState) =>
-    `w-full bg-[#141414] border ${errors[field] ? "border-red-500/50" : "border-white/10 focus:border-white/30"} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none focus:bg-[#181818] transition-colors text-base sm:text-sm`;
+  const inputCls = (field: keyof ContactFormState) => {
+    const hasError = !!errors[field];
+    const isSuccess = touched[field] && !hasError && form[field] && form[field]!.trim().length > 0;
+
+    let borderState = "border-white/10 focus:border-white/30";
+    if (hasError) {
+      borderState = "border-red-500/70 bg-red-950/10 focus:border-red-500 focus:ring-1 focus:ring-red-500/30";
+    } else if (isSuccess) {
+      borderState = "border-emerald-500/30 focus:border-emerald-500/50";
+    }
+
+    return `w-full bg-[#141414] border ${borderState} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none transition-all duration-200 text-base sm:text-sm`;
+  };
 
   return (
     <section ref={sectionRef} id="contact" className="py-24 px-5 sm:px-8 bg-black text-[#F1EDE3] relative overflow-hidden scroll-mt-20">
@@ -181,36 +256,143 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                  {/* Web3Forms Honeypot Spam Protection */}
+                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    {[
-                      { name: "name" as const,  label: "Full Name *", type: "text",  placeholder: "e.g. Rahul Sharma" },
-                      { name: "email" as const, label: "Email *",      type: "email", placeholder: "you@example.com" },
-                    ].map((f) => (
-                      <div key={f.name}>
-                        <label htmlFor={f.name} className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">{f.label}</label>
-                        <input id={f.name} name={f.name} type={f.type} value={form[f.name]} onChange={handleChange} placeholder={f.placeholder} className={inputCls(f.name)} />
-                        {errors[f.name] && <p className="text-red-400 text-[10px] mt-1">{errors[f.name]}</p>}
-                      </div>
-                    ))}
+                    {/* Full Name */}
+                    <div>
+                      <label htmlFor="name" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">
+                        Full Name <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        value={form.name}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("name")}
+                        placeholder="e.g. Rahul Sharma"
+                        className={inputCls("name")}
+                        aria-invalid={!!errors.name}
+                      />
+                      {errors.name && (
+                        <p className="flex items-center gap-1.5 text-red-400 text-[11px] font-sans mt-1.5">
+                          <svg className="w-3.5 h-3.5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                          <span>{errors.name}</span>
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                      <label htmlFor="email" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">
+                        Email Address <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("email")}
+                        placeholder="you@example.com"
+                        className={inputCls("email")}
+                        aria-invalid={!!errors.email}
+                      />
+                      {errors.email && (
+                        <p className="flex items-center gap-1.5 text-red-400 text-[11px] font-sans mt-1.5">
+                          <svg className="w-3.5 h-3.5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                          <span>{errors.email}</span>
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* Phone / WhatsApp */}
                     <div>
-                      <label htmlFor="phone" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Phone / WhatsApp</label>
-                      <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="+971 … / +91 …" className={inputCls("phone")} />
+                      <div className="flex items-center justify-between mb-2">
+                        <label htmlFor="phone" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499]">
+                          Phone / WhatsApp
+                        </label>
+                        <span className="text-[10px] text-[#67685D] font-sans">Optional</span>
+                      </div>
+                      <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        onChange={handleChange}
+                        onBlur={() => handleBlur("phone")}
+                        placeholder="+971 … / +91 …"
+                        className={inputCls("phone")}
+                        aria-invalid={!!errors.phone}
+                      />
+                      {errors.phone && (
+                        <p className="flex items-center gap-1.5 text-red-400 text-[11px] font-sans mt-1.5">
+                          <svg className="w-3.5 h-3.5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                          <span>{errors.phone}</span>
+                        </p>
+                      )}
                     </div>
+
+                    {/* Project / Shoot Type */}
                     <div>
-                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Project / Shoot Type</label>
-                      <select id="project_type" name="project_type" value={form.project_type} onChange={handleChange} className={`${inputCls("project_type")} appearance-none`}>
-                        {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-[#141414]">{t.label}</option>)}
+                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">
+                        Project / Shoot Type <span className="text-red-400">*</span>
+                      </label>
+                      <select
+                        id="project_type"
+                        name="project_type"
+                        value={form.project_type}
+                        onChange={handleChange}
+                        className={`${inputCls("project_type")} appearance-none cursor-pointer`}
+                      >
+                        {SHOOT_TYPES.map((t) => (
+                          <option key={t.value} value={t.value} className="bg-[#141414] text-[#F1EDE3]">
+                            {t.label}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
 
+                  {/* Project Concept & Details */}
                   <div>
-                    <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Project Concept &amp; Details *</label>
-                    <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Tell me about your project concept, dates, location, deliverables, or story…" className={`${inputCls("message")} resize-none`} />
-                    {errors.message && <p className="text-red-400 text-[10px] mt-1">{errors.message}</p>}
+                    <div className="flex items-center justify-between mb-2">
+                      <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499]">
+                        Project Concept &amp; Details <span className="text-red-400">*</span>
+                      </label>
+                      <span className={`text-[10px] font-sans transition-colors ${form.message.trim().length >= 15 ? "text-emerald-400/90 font-medium" : "text-[#67685D]"}`}>
+                        {form.message.trim().length}/1500 chars {form.message.trim().length >= 15 ? "✓" : "(min. 15)"}
+                      </span>
+                    </div>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      value={form.message}
+                      onChange={handleChange}
+                      onBlur={() => handleBlur("message")}
+                      placeholder="Tell me about your project concept, dates, location, deliverables, or story… (minimum 15 characters)"
+                      className={`${inputCls("message")} resize-none`}
+                      aria-invalid={!!errors.message}
+                    />
+                    {errors.message && (
+                      <p className="flex items-center gap-1.5 text-red-400 text-[11px] font-sans mt-1.5">
+                        <svg className="w-3.5 h-3.5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        <span>{errors.message}</span>
+                      </p>
+                    )}
                   </div>
 
                   {status === "error" && (
