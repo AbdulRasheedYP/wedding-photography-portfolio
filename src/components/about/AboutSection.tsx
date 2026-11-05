@@ -80,7 +80,7 @@ const AboutSection: React.FC = () => {
             <div className="pt-4 flex items-center gap-4">
               <div className="w-12 h-12 rounded-full border border-[#F1EDE3]/15 overflow-hidden bg-[#080B09] flex-shrink-0">
                 <img
-                  src="/images/about/founder.jpg"
+                  src="/images/about/founder.webp"
                   alt="Adil Mubarak, Photographer & Filmmaker"
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -105,8 +105,8 @@ const AboutSection: React.FC = () => {
             <div className="relative w-full max-w-[460px] aspect-[4/5] rounded-3xl overflow-hidden border border-[#F1EDE3]/10 shadow-2xl bg-[#080B09]">
               <img
                 ref={parallaxImgRef}
-                src="/images/about/camera_rig.jpg"
-                alt="Cinema Production Rig"
+                src="/images/about/camera_rig.webp"
+                alt="Behind the Lens - Adil Mubarak"
                 className="w-full h-[115%] object-cover -translate-y-[7%] filter brightness-95 contrast-105"
                 loading="lazy"
                 decoding="async"
@@ -117,8 +117,8 @@ const AboutSection: React.FC = () => {
             {/* Secondary Floating Inset Image (Color Grading) */}
             <div className="hidden sm:block absolute -bottom-6 -left-6 w-44 aspect-square rounded-2xl overflow-hidden border border-[#F1EDE3]/20 shadow-2xl bg-[#111412] transform -rotate-3 hover:rotate-0 transition-transform duration-500">
               <img
-                src="/images/about/color_grading.jpg"
-                alt="Cinema Color Grade"
+                src="/images/about/color_grading.webp"
+                alt="Editorial Color Grading"
                 className="w-full h-full object-cover filter contrast-110"
                 loading="lazy"
                 decoding="async"
@@ -126,7 +126,7 @@ const AboutSection: React.FC = () => {
               <div className="absolute inset-0 bg-black/30" />
               <div className="absolute bottom-2.5 left-2.5">
                 <span className="text-[9px] font-sans font-bold uppercase tracking-widest text-[#F1EDE3] bg-[#080B09]/90 px-2 py-1 rounded">
-                  ACES Grade
+                  Editorial Grade
                 </span>
               </div>
             </div>

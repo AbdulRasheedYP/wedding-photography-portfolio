@@ -194,11 +194,11 @@ const PortfolioSection: React.FC<Props> = ({ projects, onSelectProject }) => {
           <div className="flex items-center gap-2 mb-1.5">
             <span className="w-5 h-[1px] bg-[#67685D]" />
             <p className="text-[10px] font-display font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-              Selected Portfolio
+              Curated Stories
             </p>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#F1EDE3] uppercase leading-none">
-            Our Gallery
+            Selected Works
           </h2>
         </div>
         <div className="flex items-center gap-2.5">

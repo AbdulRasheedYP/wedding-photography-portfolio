@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
   { id: "hero",         label: "Home"         },
-  { id: "about",        label: "About"        },
-  { id: "services",     label: "Services"     },
-  { id: "work",         label: "Gallery"      },
+  { id: "about",        label: "The Artist"   },
+  { id: "services",     label: "Offerings"    },
+  { id: "work",         label: "Works"        },
   { id: "destinations", label: "Destinations" },
-  { id: "contact",      label: "Contact"      },
+  { id: "contact",      label: "Inquire"      },
 ];
 
 const Navbar: React.FC = () => {
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
                 onClick={() => scrollTo("contact")}
                 className="hidden sm:inline-flex items-center gap-2 bg-[#F1EDE3] text-[#080B09] font-display font-semibold text-xs py-2 px-5 rounded-full hover:bg-white hover:scale-102 transition-all duration-200 shadow-md"
               >
-                Book a Shoot
+                Inquire Date
               </button>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}

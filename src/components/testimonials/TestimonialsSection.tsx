@@ -22,10 +22,10 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-10 text-center">
         <p className="text-[10px] font-sans font-bold uppercase tracking-[0.25em] text-[#8D8B82] mb-2">
-          Client Feedback
+          Kind Words
         </p>
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-[#F1EDE3] font-normal tracking-wide">
-          Trusted by <span className="text-[#D8D1C2] italic">Couples & Brands</span>
+          Love Notes <span className="text-[#D8D1C2] italic">from Couples</span>
         </h2>
       </div>
 

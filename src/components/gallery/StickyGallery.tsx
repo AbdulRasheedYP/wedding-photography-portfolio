@@ -226,7 +226,7 @@ const StickyGallery: React.FC = () => {
           <span className="w-6 h-[1px] bg-[#67685D]" />
         </div>
         <h2 className="sticky-title font-serif text-3xl sm:text-5xl text-[#F1EDE3] tracking-tight">
-          Our <span className="sticky-gradient-text text-[#D8D1C2]">Story Wall</span>
+          The <span className="sticky-gradient-text text-[#D8D1C2]">Visual Wall</span>
         </h2>
         <p className="text-xs sm:text-sm text-[#8D8B82] mt-3 font-sans">
           Curated archive of {GALLERY_ITEMS.length} original photographs · Click any photo for full-screen view

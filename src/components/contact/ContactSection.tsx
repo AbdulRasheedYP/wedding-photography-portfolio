@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 import { ContactFormState } from "../../types";
 
 const SHOOT_TYPES = [
-  { value: "wedding",       label: "Wedding Cinema"     },
-  { value: "corporate",     label: "Commercial / Brand" },
-  { value: "music_video",   label: "Music Video"        },
-  { value: "advertisement", label: "Social Campaign"    },
-  { value: "event",         label: "Live Event"         },
-  { value: "other",         label: "Custom Shoot"       },
+  { value: "wedding",       label: "Full Wedding Coverage"     },
+  { value: "prewedding",    label: "Couple & Pre-Wedding Shoot" },
+  { value: "destination",   label: "Destination Wedding"       },
+  { value: "bridal",        label: "Bridal & Editorial Portrait"},
+  { value: "rituals",       label: "Ceremonies & Haldi / Sangeet" },
+  { value: "other",         label: "Custom Celebration"        },
 ];
 
 const INITIAL_FORM: ContactFormState = {
@@ -70,30 +70,43 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
             className="lg:col-span-5 space-y-7"
           >
             <div>
-              <p className="text-[11px] font-display font-bold uppercase tracking-widest text-[#8D8B82] mb-3">Book A Shoot</p>
+              <p className="text-[11px] font-display font-bold uppercase tracking-widest text-[#8D8B82] mb-3">Inquire &amp; Connect</p>
               <h2 className="font-serif text-5xl sm:text-6xl tracking-tight leading-[0.95] mb-4 font-normal">
                 Let's Create<br />
                 <span className="text-[#D8D1C2] italic">Your Story</span>
               </h2>
               <p className="text-[#8D8B82] text-[15px] leading-relaxed max-w-sm">
-                Fill in the details below. I will personally review your brief and get back to you within 24 hours.
+                Tell me about your celebration. I will personally review your story and get back to you within 24 hours.
               </p>
             </div>
 
-            <div className="space-y-6 pt-6 border-t border-[#F1EDE3]/8">
-              {[
-                { label: "Direct Email",    val: "contact@adilmubarak.com", href: "mailto:contact@adilmubarak.com" },
-                { label: "WhatsApp & Call", val: "+91 98765 43210",         href: "https://wa.me/919876543210"      },
-                { label: "Location",        val: "Calicut, Kerala — India Wide"                                     },
-              ].map((c) => (
-                <div key={c.label}>
-                  <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">{c.label}</p>
-                  {c.href
-                    ? <a href={c.href} target="_blank" rel="noopener noreferrer" className="font-display font-semibold text-[15px] text-[#D8D1C2] hover:text-[#F1EDE3] transition-colors">{c.val}</a>
-                    : <p className="font-display font-semibold text-[15px] text-[#D8D1C2]">{c.val}</p>
-                  }
-                </div>
-              ))}
+            <div className="space-y-5 pt-6 border-t border-[#F1EDE3]/8">
+              <div>
+                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Direct Email</p>
+                <a href="mailto:contact@adilmubarak.com" className="font-display font-semibold text-[15px] text-[#D8D1C2] hover:text-[#F1EDE3] transition-colors">
+                  contact@adilmubarak.com
+                </a>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Base &amp; Travel</p>
+                <p className="font-display font-semibold text-[15px] text-[#D8D1C2]">Calicut, Kerala — Pan-India &amp; Worldwide</p>
+              </div>
+
+              {/* Direct WhatsApp Action */}
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/919876543210?text=Hi%20Adil,%20I'm%20inquiring%20about%20wedding%20photography%20coverage."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/20 transition-all font-display text-xs font-semibold tracking-wider group"
+                >
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                  </svg>
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </div>
             </div>
           </motion.div>
 
@@ -110,7 +123,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center space-y-4">
                   <div className="w-14 h-14 rounded-full bg-[#F1EDE3] text-[#080B09] text-2xl flex items-center justify-center mx-auto font-bold">✓</div>
                   <h3 className="font-display font-extrabold text-xl text-[#F1EDE3]">Request Received!</h3>
-                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">I'll review your brief and get back to you within 24 hours.</p>
+                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">I will review your brief and get back to you within 24 hours.</p>
                   <button onClick={() => setStatus("idle")} className="bg-[#F1EDE3] text-[#080B09] px-6 py-2 rounded-full font-bold text-xs mt-4 hover:bg-[#D8D1C2] transition-colors">
                     Submit Another Request
                   </button>
@@ -136,7 +149,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                       <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="+91 …" className={inputCls("phone")} />
                     </div>
                     <div>
-                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Shoot Category</label>
+                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Celebration Type</label>
                       <select id="project_type" name="project_type" value={form.project_type} onChange={handleChange} className={`${inputCls("project_type")} appearance-none`}>
                         {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-[#111412]">{t.label}</option>)}
                       </select>
@@ -144,8 +157,8 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Shoot Brief *</label>
-                    <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Dates, location, and what you have in mind…" className={`${inputCls("message")} resize-none`} />
+                    <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Your Story &amp; Details *</label>
+                    <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Tell me about your wedding dates, venues, and what you envision for your day…" className={`${inputCls("message")} resize-none`} />
                     {errors.message && <p className="text-red-400 text-[10px] mt-1">{errors.message}</p>}
                   </div>
 

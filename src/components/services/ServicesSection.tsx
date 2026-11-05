@@ -14,51 +14,51 @@ interface ServiceCardData {
 const CORE_SERVICES: ServiceCardData[] = [
   {
     id: "weddings",
-    title: "Weddings",
+    title: "Weddings & Elopements",
     img: "/images/services/1.webp",
     categoryValue: "wedding",
   },
   {
     id: "prewedding",
-    title: "Pre-Weddings",
+    title: "Couple & Pre-Weddings",
     img: "/images/services/2.webp",
     categoryValue: "wedding",
   },
   {
     id: "portraits",
-    title: "Portraits & Editorial",
+    title: "Bridal & Editorial",
     img: "/images/services/3.webp",
     categoryValue: "other",
   },
   {
-    id: "commercial",
-    title: "Commercial & Brands",
+    id: "cinema",
+    title: "Cinema & Highlight Films",
     img: "/images/services/4.webp",
-    categoryValue: "corporate",
+    categoryValue: "wedding",
   },
   {
-    id: "travel",
-    title: "Travel & Aerial",
+    id: "destination",
+    title: "Destination Ceremonies",
     img: "/images/services/5.webp",
     categoryValue: "other",
   },
   {
-    id: "events",
-    title: "Events & Celebrations",
+    id: "rituals",
+    title: "Haldi, Mehndi & Sangeet",
     img: "/images/services/6.webp",
     categoryValue: "event",
   },
   {
-    id: "fashion",
-    title: "Fashion & Lifestyle",
+    id: "twilight",
+    title: "Post-Wedding Portraits",
     img: "/images/services/7.webp",
-    categoryValue: "advertisement",
+    categoryValue: "wedding",
   },
   {
-    id: "documentaries",
-    title: "Documentaries",
+    id: "albums",
+    title: "Heirloom Fine-Art Albums",
     img: "/images/services/8.webp",
-    categoryValue: "corporate",
+    categoryValue: "other",
   },
 ];
 
@@ -150,15 +150,15 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
             <div className="flex items-center gap-2 mb-1.5">
               <span className="w-5 h-[1px] bg-[#67685D]" />
               <p className="text-[10px] font-display font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-                What We Do
+                Artistic Disciplines
               </p>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#F1EDE3] font-normal tracking-tight">
-              Our Services
+              Offerings &amp; Disciplines
             </h2>
           </div>
           <p className="text-xs text-[#8D8B82] font-sans max-w-md hidden sm:block leading-relaxed">
-            Bespoke visual storytelling, cinematography, and editorial photography crafted with cinematic precision.
+            Candid emotion, timeless cinema, and editorial portraiture crafted with intimate care.
           </p>
         </div>
 
