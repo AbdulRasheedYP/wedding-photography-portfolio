@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
-  { id: "hero",         label: "Home"        },
-  { id: "about",        label: "About"       },
-  { id: "services",     label: "Disciplines" },
-  { id: "journey",      label: "Journey"     },
-  { id: "work",         label: "Portfolio"   },
-  { id: "contact",      label: "Contact"     },
+  { id: "hero",     label: "Home"        },
+  { id: "about",    label: "About"       },
+  { id: "services", label: "Disciplines" },
+  { id: "journey",  label: "Journey"     },
+  { id: "work",     label: "Portfolio"   },
+  { id: "contact",  label: "Contact"     },
 ];
 
 const Navbar: React.FC = () => {
@@ -174,10 +174,10 @@ const Navbar: React.FC = () => {
             {/* Subtle Minimal Personal Brand Mark */}
             <div className="pt-6 border-t border-[#F1EDE3]/10 flex items-center justify-between text-xs font-sans text-[#8D8B82]">
               <span className="tracking-wider uppercase text-[10px] font-display">
-                Adil Mubarak Photography
+                Adil Mubarak
               </span>
               <span className="text-[10px] font-sans">
-                Kerala • Pan-India • UAE
+                Dubai · Kerala · Worldwide
               </span>
             </div>
           </motion.div>

@@ -15,46 +15,46 @@ const PINS: Pin[] = [
   {
     id: "kerala",
     name: "Kerala",
-    region: "Home Base Studio",
-    flight: "Base Studio",
-    tag: "HQ Studio",
+    region: "Origin & Home",
+    flight: "Home Base",
+    tag: "Calicut HQ",
     x: 675,
     y: 300,
     isBase: true,
   },
   {
     id: "dubai",
-    name: "Dubai & Emirates",
+    name: "Dubai",
     region: "United Arab Emirates",
-    flight: "4h 10m Direct",
-    tag: "Desert & Skyline",
+    flight: "Current Base",
+    tag: "Now Based Here",
     x: 588,
     y: 242,
   },
   {
-    id: "udaipur",
-    name: "Udaipur & Rajasthan",
-    region: "North India",
-    flight: "2h 45m Domestic",
-    tag: "Royal Palaces",
+    id: "india",
+    name: "Pan-India",
+    region: "Available Nationwide",
+    flight: "Domestic Travel",
+    tag: "Events & Fashion",
     x: 658,
-    y: 248,
+    y: 265,
   },
   {
-    id: "goa",
-    name: "Goa & Konkan",
-    region: "West Coast",
-    flight: "1h 15m Flight",
-    tag: "Coastal Bohemia",
-    x: 665,
-    y: 280,
+    id: "worldwide",
+    name: "Worldwide",
+    region: "International",
+    flight: "Available Globally",
+    tag: "On Request",
+    x: 400,
+    y: 200,
   },
 ];
 
 const FLIGHT_PATHS = [
   { to: "dubai",     d: "M 675 300 Q 625 240 588 242" },
-  { to: "udaipur",   d: "M 675 300 Q 670 270 658 248" },
-  { to: "goa",       d: "M 675 300 Q 672 290 665 280" },
+  { to: "india",     d: "M 675 300 Q 668 275 658 265" },
+  { to: "worldwide", d: "M 675 300 Q 540 220 400 200" },
 ];
 
 interface Props {
@@ -93,16 +93,23 @@ const DestinationsSection: React.FC<Props> = ({ onInquireDestination }) => {
         {/* Minimal Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
           <div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#F1EDE3] font-normal tracking-wide">
-              Based in Kerala, <span className="italic font-light text-[#D8D1C2]">Available for Travel.</span>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-5 h-[1px] bg-[#67685D]" />
+              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">Availability</p>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl text-[#F1EDE3] font-normal tracking-tight leading-[1.1]">
+              Based in Dubai, <span className="italic font-light text-[#D8D1C2]">rooted in Kerala.</span>
             </h2>
+            <p className="text-[#67685D] text-sm font-sans mt-3 max-w-sm leading-relaxed">
+              Available for projects worldwide — events, fashion, bridal, and social media content.
+            </p>
           </div>
 
           <button
             onClick={handleInquireClick}
             className="self-start sm:self-auto px-6 py-3 rounded-full bg-[#F1EDE3] text-[#080B09] font-display font-semibold text-xs uppercase tracking-widest hover:bg-[#D8D1C2] transition-colors whitespace-nowrap shadow-lg"
           >
-            Check Travel Dates &rarr;
+            Check Availability &rarr;
           </button>
         </div>
 

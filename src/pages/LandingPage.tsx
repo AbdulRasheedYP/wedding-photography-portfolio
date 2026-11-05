@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "../components/hero/HeroSection";
 import AboutSection from "../components/about/AboutSection";
 import ServicesSection from "../components/services/ServicesSection";
-import ProcessFaqSection from "../components/services/ProcessFaqSection";
 import PortfolioSection from "../components/portfolio/PortfolioSection";
 import StickyGallery from "../components/gallery/StickyGallery";
 import TestimonialsSection from "../components/testimonials/TestimonialsSection";
-import DestinationsSection from "../components/destinations/DestinationsSection";
-import DirectorNoteSection from "../components/director/DirectorNoteSection";
 import JourneySection from "../components/journey/JourneySection";
 import ContactSection from "../components/contact/ContactSection";
 import Footer from "../components/shared/Footer";
@@ -34,11 +31,6 @@ const LandingPage: React.FC = () => {
 
   const scrollToSection = (id: string): void => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleInquireDestination = (destination: string): void => {
-    setContactPrefill({ message: `Interested in coverage for ${destination}.\n\n` });
-    scrollToSection("contact");
   };
 
   const handleSelectService = (category: string): void => {
@@ -80,18 +72,6 @@ const LandingPage: React.FC = () => {
       <SectionGap />
 
       <TestimonialsSection testimonials={testimonials} />
-
-      <SectionGap />
-
-      <DirectorNoteSection onCommissionClick={() => scrollToSection("contact")} />
-
-      <SectionGap />
-
-      <DestinationsSection onInquireDestination={handleInquireDestination} />
-
-      <SectionGap />
-
-      <ProcessFaqSection />
 
       <SectionGap />
 
