@@ -67,7 +67,7 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       {project.video_url && (
         <video
           ref={cardVideoRef}
-          src={project.video_url}
+          src={project.video_url === "/videos/showreel.mp4" ? "/videos/showreel-preview.mp4" : project.video_url}
           muted
           loop
           playsInline

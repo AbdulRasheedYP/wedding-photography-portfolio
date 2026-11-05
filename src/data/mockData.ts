@@ -4,12 +4,13 @@ export const categories: Category[] = [
   { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
   { id: 2, name: "Fashion & Bridal", slug: "fashion" },
   { id: 3, name: "Reels & Social Media", slug: "reels" },
+  { id: 4, name: "Events & Corporate", slug: "events" },
 ];
 
 /**
- * SHOWREEL & VIDEO PROJECTS
- * - The 1st project is displayed as the Main Featured Spotlight Reel with silent video loop.
- * - Any additional projects added here in the future will automatically appear in the grid below!
+ * SHOWREEL & VIDEO PROJECTS (Method 1: Featured Main + Additional Grid)
+ * - projects[0] is displayed as the Main Featured Spotlight Reel with silent video loop.
+ * - Remaining projects appear in the sleek grid below with hover video preview!
  */
 export const projects: Project[] = [
   {
@@ -20,6 +21,33 @@ export const projects: Project[] = [
     video_url: "/videos/showreel.mp4",
     client_name: "Adil Mubarak Films",
     description: "Cinematic montage of bridal campaigns, fashion shows, and event films captured across Dubai and Kerala.",
+  },
+  {
+    id: "reel-shobhika",
+    title: "Shobhika — Bridal Collection Campaign",
+    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
+    thumbnail: "/images/gallery/1.webp",
+    video_url: "/videos/showreel.mp4",
+    client_name: "Shobhika Weddings · Calicut",
+    description: "Bridal collection launch film with editorial color grade on DaVinci Resolve.",
+  },
+  {
+    id: "reel-fashion-show",
+    title: "Calicut Fashion Show — Runway Highlights",
+    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
+    thumbnail: "/images/gallery/2.webp",
+    video_url: "/videos/showreel.mp4",
+    client_name: "Fashion Show II",
+    description: "Multi-camera runway cinematic film and dynamic short-form reel.",
+  },
+  {
+    id: "reel-dubai-events",
+    title: "Jovial Events — Dubai Cultural & Corporate Gala",
+    category: { id: 4, name: "Events & Corporate", slug: "events" },
+    thumbnail: "/images/gallery/4.webp",
+    video_url: "/videos/showreel.mp4",
+    client_name: "Jovial Events · Dubai, UAE",
+    description: "Fast-turnaround high engagement event highlight film produced in Dubai.",
   },
 ];
 
