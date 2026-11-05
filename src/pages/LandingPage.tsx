@@ -3,14 +3,14 @@ import HeroSection from "../components/hero/HeroSection";
 import AboutSection from "../components/about/AboutSection";
 import ServicesSection from "../components/services/ServicesSection";
 import PortfolioSection from "../components/portfolio/PortfolioSection";
+import BrandMarquee from "../components/brands/BrandMarquee";
 import StickyGallery from "../components/gallery/StickyGallery";
-import TestimonialsSection from "../components/testimonials/TestimonialsSection";
 import JourneySection from "../components/journey/JourneySection";
 import ContactSection from "../components/contact/ContactSection";
 import Footer from "../components/shared/Footer";
 import VideoModal from "../components/shared/VideoModal";
 
-import { projects, categories, testimonials } from "../data/mockData";
+import { projects, categories } from "../data/mockData";
 import { Project } from "../types";
 
 const SectionGap: React.FC = () => (
@@ -59,13 +59,12 @@ const LandingPage: React.FC = () => {
         onSelectProject={(project: Project) => setSelectedVideo(project)}
       />
 
+      {/* Sleek Minimal Brand & Client Logos Marquee right below Showreel */}
+      <BrandMarquee />
+
       <SectionGap />
 
       <StickyGallery />
-
-      <SectionGap />
-
-      <TestimonialsSection testimonials={testimonials} />
 
       <SectionGap />
 
