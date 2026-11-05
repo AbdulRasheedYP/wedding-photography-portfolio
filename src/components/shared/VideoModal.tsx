@@ -88,39 +88,15 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 w-full max-w-6xl mx-auto flex flex-col"
         >
-          {/* Header Bar */}
-          <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 mb-2 bg-[#111412]/90 backdrop-blur-md border border-[#F1EDE3]/10 rounded-2xl">
-            <div className="flex items-center gap-3 min-w-0">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse flex-shrink-0" />
-              <div className="min-w-0">
-                <h3
-                  id="modal-title"
-                  className="font-serif text-sm sm:text-lg text-[#F1EDE3] font-normal leading-tight truncate"
-                >
-                  {project.title}
-                </h3>
-                <div className="flex items-center gap-2 mt-0.5">
-                  {project.category?.name && (
-                    <span className="text-[9px] font-sans font-semibold uppercase tracking-widest text-[#8D8B82]">
-                      {project.category.name}
-                    </span>
-                  )}
-                  <span className="text-[#67685D] text-[10px]">•</span>
-                  <span className="text-[9px] font-sans font-bold uppercase tracking-wider text-[#D8D1C2] bg-white/10 px-2 py-0.5 rounded">
-                    1080p Full HD
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Close Button */}
+          {/* Header Bar — Clean Close Button Only on Right */}
+          <div className="flex items-center justify-end px-1 py-1 mb-2">
             <button
               onClick={onClose}
-              className="group flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest text-[#8D8B82] hover:text-[#F1EDE3] transition-colors px-2 py-1 flex-shrink-0"
+              className="group flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest text-[#8D8B82] hover:text-[#F1EDE3] transition-colors px-2 py-1"
               aria-label="Close video player"
             >
               <span className="hidden sm:inline">Close</span>
-              <span className="w-8 h-8 rounded-full bg-white/5 border border-white/15 group-hover:border-white/40 group-hover:bg-white/10 flex items-center justify-center transition-all text-sm">
+              <span className="w-8 h-8 rounded-full bg-white/10 border border-white/20 group-hover:border-white/50 group-hover:bg-white/20 flex items-center justify-center transition-all text-sm text-[#F1EDE3]">
                 ✕
               </span>
             </button>
@@ -191,23 +167,6 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Footer Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3 px-3 py-2 text-center sm:text-left">
-            <p className="text-[11px] font-sans text-[#8D8B82]">
-              Captured &amp; Color Graded on <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong> by Adil Mubarak
-            </p>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://wa.me/971568709412?text=Hi%20Adil,%20I%20loved%20your%20showreel%20and%20would%20like%20to%20work%20together."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[11px] font-sans font-semibold uppercase tracking-wider text-[#25D366] hover:text-white transition-colors"
-              >
-                Book Similar Project &rarr;
-              </a>
-            </div>
           </div>
         </motion.div>
       </div>

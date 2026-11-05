@@ -202,23 +202,6 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none" />
 
-          {/* Top Info Bar */}
-          <div className="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-7 flex items-center justify-between pointer-events-none z-10">
-            {/* Live silent preview pill */}
-            <div className="inline-flex items-center gap-2 bg-[#080B09]/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-              <span className="text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-widest text-[#F1EDE3]">
-                Silent Preview Loop
-              </span>
-            </div>
-
-            {/* Quality badge */}
-            <div className="inline-flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
-              <span className="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2]">
-                1080p HD · 60fps · 0:44s
-              </span>
-            </div>
-          </div>
 
           {/* Center Play Button with Expanding Pulse */}
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none z-10">
@@ -236,11 +219,6 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
               </div>
             </div>
 
-            <div className="bg-[#080B09]/85 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full shadow-lg group-hover:border-white/30 transition-all duration-300">
-              <p className="text-[10px] sm:text-xs font-sans font-bold uppercase tracking-[0.2em] text-[#F1EDE3]">
-                Click to Watch with Sound
-              </p>
-            </div>
           </div>
 
           {/* Bottom Content Bar */}
