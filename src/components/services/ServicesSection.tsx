@@ -77,11 +77,7 @@ const EXACT_CV_SKILLS = [
   "WordPress Website Management",
 ];
 
-interface Props {
-  onSelectService?: (category: string) => void;
-}
-
-const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
+const ServicesSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -156,14 +152,6 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
     };
   }, []);
 
-  const handleCardClick = (id: string) => {
-    if (onSelectService) {
-      onSelectService(id);
-    } else {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -198,8 +186,7 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
           {SERVICES.map((serv) => (
             <div
               key={serv.id}
-              onClick={() => handleCardClick(serv.id)}
-              className="group relative overflow-hidden rounded-xl border border-[#F1EDE3]/[0.08] hover:border-[#F1EDE3]/25 bg-[#0D100E] cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+              className="group relative overflow-hidden rounded-xl border border-[#F1EDE3]/[0.08] hover:border-[#F1EDE3]/25 bg-[#0D100E] transition-all duration-300 hover:shadow-xl"
             >
               {/* Compact Letterbox Image */}
               <div className="relative aspect-[16/7.5] overflow-hidden">

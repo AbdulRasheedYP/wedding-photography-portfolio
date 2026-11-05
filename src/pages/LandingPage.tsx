@@ -11,7 +11,7 @@ import Footer from "../components/shared/Footer";
 import VideoModal from "../components/shared/VideoModal";
 
 import { projects, categories, testimonials } from "../data/mockData";
-import { Project, ContactFormState } from "../types";
+import { Project } from "../types";
 
 const SectionGap: React.FC = () => (
   <div className="w-full h-16 sm:h-24 lg:h-32 bg-[#080B09] flex items-center justify-center pointer-events-none select-none">
@@ -23,7 +23,6 @@ const SectionGap: React.FC = () => (
 
 const LandingPage: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<Project | null>(null);
-  const [contactPrefill, setContactPrefill] = useState<Partial<ContactFormState> | null>(null);
 
   useEffect(() => {
     document.title = "Adil Mubarak — Videographer & Photographer";
@@ -31,11 +30,6 @@ const LandingPage: React.FC = () => {
 
   const scrollToSection = (id: string): void => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleSelectService = (category: string): void => {
-    setContactPrefill({ project_type: category, message: `Enquiring about ${category}.` });
-    scrollToSection("contact");
   };
 
   return (
@@ -51,7 +45,7 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
-      <ServicesSection onSelectService={handleSelectService} />
+      <ServicesSection />
 
       <SectionGap />
 
@@ -75,7 +69,7 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
-      <ContactSection prefill={contactPrefill} />
+      <ContactSection />
 
       <Footer />
 
