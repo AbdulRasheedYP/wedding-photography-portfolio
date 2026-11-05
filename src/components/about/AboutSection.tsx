@@ -7,18 +7,18 @@ gsap.registerPlugin(ScrollTrigger);
 const STATS = [
   { value: "100+", label: "Visual Projects", detail: "Campaigns & Events" },
   { value: "03", label: "Fashion Shows", detail: "Runway & Bridal Launches" },
-  { value: "02", label: "Global Bases", detail: "Dubai, UAE & Kerala" },
-  { value: "04", label: "Languages", detail: "English, Malayalam, Hindi, Tamil" },
+  { value: "02", label: "Operating Bases", detail: "Dubai, UAE & Kerala" },
+  { value: "04", label: "Languages", detail: "English, Hindi, Malayalam, Tamil" },
 ];
 
-const SKILLS = [
-  "Videography & Cinema",
-  "Fashion & Bridal",
-  "Reel Editing & Pacing",
-  "DaVinci Resolve",
-  "Color Grading",
-  "Corporate Galas",
-  "Social Media Strategy",
+const CV_SPECIALTIES = [
+  "Bridal & Fashion Campaigns",
+  "Runway Fashion Shows",
+  "Corporate & Social Events",
+  "Instagram Reels Creation",
+  "DaVinci Resolve (Advanced)",
+  "Color Correction & Grading",
+  "Professional Camera Operation",
 ];
 
 const AboutSection: React.FC = () => {
@@ -118,41 +118,41 @@ const AboutSection: React.FC = () => {
           {/* RIGHT: STORY, SKILLS, STATS & CV (Span 7) */}
           <div ref={contentRef} className="lg:col-span-7 space-y-7">
             
-            {/* Main Headline */}
+            {/* Main Headline — Professional & Grounded */}
             <div>
-              <h3 className="font-serif text-3xl sm:text-5xl text-[#F1EDE3] font-normal leading-[1.12] tracking-tight">
-                Every frame is <span className="italic text-[#C8BFB0]">a deliberate act.</span>
+              <h3 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#F1EDE3] font-normal leading-[1.2] tracking-tight">
+                Creative Videographer, Photographer <span className="italic text-[#C8BFB0]">&amp; Reel Editor</span>
               </h3>
-              <p className="font-serif text-base sm:text-lg text-[#D8D1C2] font-normal italic border-l-2 border-[#67685D] pl-4 py-1 mt-4">
-                "Light, motion, truth — captured in a single breath."
+              <p className="text-xs sm:text-[13px] font-sans uppercase tracking-[0.22em] text-[#8D8B82] mt-3">
+                Dubai, UAE · Calicut, Kerala
               </p>
             </div>
 
-            {/* Narrative Bio */}
+            {/* Narrative Bio — Strictly Verbatim & Factual from CV */}
             <div className="space-y-4 text-xs sm:text-[14.5px] text-[#A8A499] font-sans leading-[1.85]">
               <p>
-                I'm <strong className="text-[#F1EDE3] font-medium">Adil Mubarak MK</strong> — a creative Videographer, Photographer, and Reel Editor operating between <strong className="text-[#F1EDE3] font-medium">Dubai, UAE</strong> and <strong className="text-[#F1EDE3] font-medium">Calicut, Kerala</strong>.
+                Creative <strong className="text-[#F1EDE3] font-medium">Videographer, Photographer, and Reel Editor</strong> with hands-on experience producing engaging visual content for bridal &amp; fashion campaigns, fashion shows, corporate events, and social media platforms across <strong className="text-[#F1EDE3] font-medium">Dubai, UAE</strong> and <strong className="text-[#F1EDE3] font-medium">Calicut, Kerala</strong>.
               </p>
               <p>
-                With over <strong className="text-[#F1EDE3] font-medium">100+ visual projects</strong> across luxury bridal campaigns, high-fashion runway shows, and corporate events — I merge cinematic storytelling with rhythmic reel pacing.
+                Skilled in professional camera operation, visual storytelling, color grading, and end-to-end post-production with a strong focus on <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong>. Experienced in delivering high-quality content under tight deadlines and creating short-form videos optimized for Instagram Reels and digital marketing campaigns.
               </p>
               <p>
-                Every project is graded and finished on <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong>. From custom color grading to sound design, every visual is crafted with intention to evoke emotion and capture the true spirit of the moment.
+                Track record includes delivering <strong className="text-[#F1EDE3] font-medium">100+ video projects</strong>, filming and editing <strong className="text-[#F1EDE3] font-medium">3 runway fashion shows</strong>, leading visual coverage for bridal collections at Shobhika Weddings, and capturing high-profile corporate, cultural, and social events at Jovial Events, Dubai.
               </p>
             </div>
 
-            {/* Creative Skill Chips */}
+            {/* Production Specialties from CV */}
             <div>
               <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8D8B82] mb-3">
-                Disciplines &amp; Craft
+                Production Experience
               </p>
               <div className="flex flex-wrap gap-2">
-                {SKILLS.map((skill) => (
+                {CV_SPECIALTIES.map((item) => (
                   <span
-                    key={skill}
+                    key={item}
                     className="text-[11px] font-sans font-medium text-[#D8D1C2] bg-[#121614] border border-[#F1EDE3]/10 px-3.5 py-1.5 rounded-full hover:border-[#F1EDE3]/30 hover:text-[#F1EDE3] transition-colors duration-200"
                   >
-                    {skill}
+                    {item}
                   </span>
                 ))}
               </div>

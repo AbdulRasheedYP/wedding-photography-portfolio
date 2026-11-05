@@ -173,9 +173,6 @@ const ServicesSection: React.FC = () => {
               Services &amp; Expertise
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#8D8B82] font-sans max-w-xs hidden sm:block leading-relaxed">
-            Hands-on production across Dubai, UAE and Kerala.
-          </p>
         </div>
 
         {/* 6 Services Cards Grid — Compact Box Sizes */}
@@ -235,16 +232,11 @@ const ServicesSection: React.FC = () => {
           ref={skillsRef}
           className="rounded-2xl p-4 sm:p-6 bg-[#0D100E] border border-white/[0.08] shadow-lg"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-white/[0.06]">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
-              <h3 className="font-serif text-lg sm:text-xl text-[#F1EDE3] font-normal tracking-tight">
-                Technical Skills &amp; Software Arsenal
-              </h3>
-            </div>
-            <span className="text-[10px] font-sans uppercase tracking-widest text-[#8D8B82]">
-              From Verified CV
-            </span>
+          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.06]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
+            <h3 className="font-serif text-lg sm:text-xl text-[#F1EDE3] font-normal tracking-tight">
+              Technical Skills &amp; Software Arsenal
+            </h3>
           </div>
 
           {/* Exact 9 CV Skills Grid */}

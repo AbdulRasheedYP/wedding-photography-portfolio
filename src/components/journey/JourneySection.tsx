@@ -146,9 +146,6 @@ const JourneySection: React.FC = () => {
             A journey told in{" "}
             <span className="italic text-[#C8BFB0]">frames.</span>
           </h2>
-          <p className="mt-4 text-[#67685D] text-sm font-sans max-w-lg mx-auto leading-relaxed">
-            From Calicut to Dubai — every chapter shaped a sharper eye, a steadier hand, and a deeper understanding of light.
-          </p>
         </div>
 
         {/* Timeline */}

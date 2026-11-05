@@ -174,10 +174,6 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
               Show <span className="italic text-[#C8BFB0]">Reel</span>
             </h2>
           </div>
-
-          <p className="text-xs sm:text-sm text-[#8D8B82] font-sans max-w-sm leading-relaxed">
-            A 44-second visual showcase of fashion campaigns, bridal films, and event cinema — graded on DaVinci Resolve.
-          </p>
         </div>
 
         {/* 1. FEATURED MAIN REEL SPOTLIGHT (With silent 2-3s auto-repeating video loop) */}
