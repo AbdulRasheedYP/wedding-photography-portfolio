@@ -126,10 +126,10 @@ const JourneySection: React.FC = () => {
     <section
       ref={sectionRef}
       id="journey"
-      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#060908] scroll-mt-20 relative overflow-hidden"
+      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#141414] scroll-mt-20 relative overflow-hidden"
     >
       {/* Ambient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#F1EDE3]/[0.015] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-white/[0.015] rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
 
@@ -171,7 +171,7 @@ const JourneySection: React.FC = () => {
                   {/* Desktop: left or right card container */}
                   <div className={`hidden lg:block lg:w-[calc(50%-2.5rem)] ${isLeft ? "lg:pr-10 text-right" : "lg:pl-10"}`}>
                     <div
-                      className={`group bg-[#0D100E] border ${m.highlight ? "border-[#F1EDE3]/15 hover:border-[#F1EDE3]/30" : "border-[#F1EDE3]/[0.06] hover:border-[#F1EDE3]/15"} rounded-2xl p-6 transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5`}
+                      className={`group bg-black border ${m.highlight ? "border-white/20 hover:border-white/35" : "border-white/[0.08] hover:border-white/20"} rounded-2xl p-6 transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5`}
                     >
                       {/* Year badge */}
                       <div className={`inline-flex items-center gap-2 mb-3 ${isLeft ? "flex-row-reverse" : ""}`}>
@@ -204,7 +204,7 @@ const JourneySection: React.FC = () => {
 
                   {/* Center dot — desktop */}
                   <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-6 w-5 h-5 items-center justify-center z-10">
-                    <div className={`rounded-full border-2 ${m.highlight ? "w-4 h-4 border-[#F1EDE3]/50 bg-[#F1EDE3]/20" : "w-3 h-3 border-[#67685D] bg-[#060908]"}`} />
+                    <div className={`rounded-full border-2 ${m.highlight ? "w-4 h-4 border-[#F1EDE3]/50 bg-[#F1EDE3]/20" : "w-3 h-3 border-[#67685D] bg-black"}`} />
                   </div>
 
                   {/* Desktop spacer for other side */}
@@ -217,7 +217,7 @@ const JourneySection: React.FC = () => {
                       <div className={`rounded-full ${m.highlight ? "w-4 h-4 border-2 border-[#F1EDE3]/40 bg-[#F1EDE3]/15" : "w-2.5 h-2.5 bg-[#67685D]"}`} />
                     </div>
 
-                    <div className={`group bg-[#0D100E] border ${m.highlight ? "border-[#F1EDE3]/15" : "border-[#F1EDE3]/[0.06]"} rounded-2xl p-5 w-full transition-all duration-500`}>
+                    <div className={`group bg-black border ${m.highlight ? "border-white/20" : "border-white/[0.08]"} rounded-2xl p-5 w-full transition-all duration-500`}>
                       <div className="flex items-center gap-2 mb-2">
                         <span className={`text-[10px] font-sans font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full ${m.highlight ? "bg-[#F1EDE3]/10 text-[#D8D1C2]" : "bg-[#F1EDE3]/[0.05] text-[#8D8B82]"}`}>
                           {m.year}

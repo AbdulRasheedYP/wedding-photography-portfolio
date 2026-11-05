@@ -156,7 +156,7 @@ const ServicesSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="py-12 sm:py-16 lg:py-20 px-5 sm:px-8 bg-[#080B09] scroll-mt-20 relative"
+      className="py-12 sm:py-16 lg:py-20 px-5 sm:px-8 bg-[#141414] scroll-mt-20 relative"
     >
       <div className="max-w-6xl mx-auto">
 
@@ -175,7 +175,7 @@ const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 6 Services Cards Grid — Compact Box Sizes */}
+        {/* 6 Services Cards Grid — Pure Black Cards on Ash Canvas */}
         <div
           ref={gridRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8 sm:mb-10"
@@ -183,7 +183,7 @@ const ServicesSection: React.FC = () => {
           {SERVICES.map((serv) => (
             <div
               key={serv.id}
-              className="group relative overflow-hidden rounded-xl border border-[#F1EDE3]/[0.08] hover:border-[#F1EDE3]/25 bg-[#0D100E] transition-all duration-300 hover:shadow-xl"
+              className="group relative overflow-hidden rounded-xl border border-white/[0.08] hover:border-white/25 bg-black transition-all duration-300 hover:shadow-2xl"
             >
               {/* Compact Letterbox Image */}
               <div className="relative aspect-[16/7.5] overflow-hidden">
@@ -194,7 +194,7 @@ const ServicesSection: React.FC = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D100E] via-black/25 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent pointer-events-none" />
 
                 {/* Number badge */}
                 <div className="absolute top-2 right-2.5">
@@ -216,7 +216,7 @@ const ServicesSection: React.FC = () => {
                   {serv.tools.map((tool) => (
                     <span
                       key={tool}
-                      className="text-[8.5px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-[#F1EDE3]/[0.05] border border-[#F1EDE3]/[0.07] px-2 py-0.5 rounded-full"
+                      className="text-[8.5px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-white/[0.05] border border-white/[0.07] px-2 py-0.5 rounded-full"
                     >
                       {tool}
                     </span>
@@ -227,10 +227,10 @@ const ServicesSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Technical Skills & Software Arsenal — Exact 9 CV Skills Only */}
+        {/* Technical Skills & Software Arsenal — Pure Black Plaque */}
         <div
           ref={skillsRef}
-          className="rounded-2xl p-4 sm:p-6 bg-[#0D100E] border border-white/[0.08] shadow-lg"
+          className="rounded-2xl p-4 sm:p-6 bg-black border border-white/[0.08] shadow-lg"
         >
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.06]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
@@ -244,7 +244,7 @@ const ServicesSection: React.FC = () => {
             {EXACT_CV_SKILLS.map((skill) => (
               <div
                 key={skill}
-                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#080B09] border border-white/[0.06] hover:border-white/20 transition-all duration-200"
+                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#141414] border border-white/[0.06] hover:border-white/20 transition-all duration-200"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]/80 flex-shrink-0" />
                 <span className="text-xs sm:text-[12.5px] font-sans font-medium text-[#E5E0D5]">

@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="py-10 sm:py-12 px-5 sm:px-8 bg-[#080B09] border-t border-[#F1EDE3]/10 relative z-10 text-[#F1EDE3]">
+      <footer className="py-10 sm:py-12 px-5 sm:px-8 bg-[#141414] border-t border-white/10 relative z-10 text-[#F1EDE3]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           
           {/* Brand & Copyright */}
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[#111412] border border-[#F1EDE3]/20 rounded-3xl p-6 sm:p-10 shadow-2xl text-[#F1EDE3]"
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-black border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl text-[#F1EDE3]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -166,7 +166,7 @@ const Footer: React.FC = () => {
             <div className="mt-8 pt-5 border-t border-white/10 flex justify-end">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-[#080B09] font-display font-semibold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-md"
+                className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-display font-semibold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-md"
               >
                 Close
               </button>

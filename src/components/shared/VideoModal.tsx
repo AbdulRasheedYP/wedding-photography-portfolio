@@ -160,7 +160,7 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
                     href="https://wa.me/971568709412?text=Hi%20Adil,%20I'd%20like%20to%20view%20your%20showreel%20videos."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-[#080B09] font-sans font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-lg"
+                    className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-sans font-bold text-xs uppercase tracking-widest hover:bg-white transition-all shadow-lg"
                   >
                     Request on WhatsApp
                   </a>

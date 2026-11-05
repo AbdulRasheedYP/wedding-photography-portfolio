@@ -246,7 +246,7 @@ const StickyGallery: React.FC = () => {
               }}
               className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all duration-300 border ${
                 isActive
-                  ? "bg-[#F1EDE3] text-[#080B09] border-[#F1EDE3] font-semibold shadow-md"
+                  ? "bg-[#F1EDE3] text-black border-[#F1EDE3] font-semibold shadow-md"
                   : "bg-white/[0.03] text-[#8D8B82] border-[#F1EDE3]/15 hover:border-[#F1EDE3]/40 hover:text-[#F1EDE3]"
               }`}
             >
@@ -280,10 +280,10 @@ const StickyGallery: React.FC = () => {
           <button
             type="button"
             onClick={handleViewMore}
-            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-sans uppercase tracking-[0.2em] text-[#080B09] bg-[#F1EDE3] hover:bg-white transition-all duration-300 shadow-[0_4px_20px_rgba(241,237,227,0.15)] hover:shadow-[0_6px_25px_rgba(241,237,227,0.3)] hover:scale-[1.02] active:scale-[0.98] font-medium cursor-pointer"
+            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-sans uppercase tracking-[0.2em] text-black bg-[#F1EDE3] hover:bg-white transition-all duration-300 shadow-[0_4px_20px_rgba(241,237,227,0.15)] hover:shadow-[0_6px_25px_rgba(241,237,227,0.3)] hover:scale-[1.02] active:scale-[0.98] font-medium cursor-pointer"
           >
             <span>View More Photographs</span>
-            <span className="w-5 h-5 rounded-full bg-[#080B09]/10 text-[#080B09] flex items-center justify-center text-[10px] font-mono group-hover:translate-y-0.5 transition-transform">
+            <span className="w-5 h-5 rounded-full bg-black/10 text-black flex items-center justify-center text-[10px] font-mono group-hover:translate-y-0.5 transition-transform">
               ↓
             </span>
           </button>

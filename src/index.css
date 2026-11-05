@@ -5,7 +5,7 @@
 @layer base {
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #080B09;
+    background-color: #141414;
     color: #F1EDE3;
     overflow-x: clip;
     letter-spacing: -0.01em;
@@ -19,34 +19,34 @@
 
 /* Minimal Dark Navbar Pill */
 .navbar-pill {
-  background: rgba(17, 20, 18, 0.85); /* Deep Charcoal with opacity */
+  background: rgba(0, 0, 0, 0.85); /* Pure black with opacity */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(241, 237, 227, 0.05); /* offWhite very subtle */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* Minimal Card Styling */
 .adil-card, .framestory-card {
-  background: #111412;
-  border: 1px solid rgba(241, 237, 227, 0.05);
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .adil-card:hover, .framestory-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
-  border-color: rgba(241, 237, 227, 0.15);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 /* Feature Bar */
 .emerald-feature-panel {
-  background: #111412;
+  background: #000000;
   color: #F1EDE3;
   border-radius: 20px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* Buttons */
@@ -60,7 +60,7 @@
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.04em;
-  color: #080B09;
+  color: #000000;
   background: #F1EDE3;
   border-radius: 9999px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -77,8 +77,8 @@
   width: 44px;
   height: 44px;
   border-radius: 9999px;
-  background: #111412;
-  border: 1px solid rgba(241, 237, 227, 0.1);
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #F1EDE3;
   display: flex;
   align-items: center;
@@ -90,14 +90,14 @@
 .btn-circle-play:hover {
   transform: scale(1.06);
   background: #F1EDE3;
-  color: #080B09;
+  color: #000000;
 }
 
 /* Field Inputs */
 .field-input-cream {
   width: 100%;
-  background: #111412;
-  border: 1px solid rgba(241, 237, 227, 0.1);
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 11px 15px;
   color: #F1EDE3;
@@ -116,7 +116,7 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080B09;
+  background: #141414;
 }
 ::-webkit-scrollbar-thumb {
   background: #67685D;
@@ -131,7 +131,7 @@
   position: relative;
   overflow: hidden;
   padding: 5rem 1.25rem 7rem;
-  background: #080B09;
+  background: #141414;
 }
 
 /* Section header */
@@ -201,11 +201,11 @@
 /* ── Sticky Card ── */
 .sticky-card {
   position: relative;
-  background: #111412;
-  border: 1px solid rgba(241, 237, 227, 0.06);
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   cursor: pointer;
 }
 
@@ -214,10 +214,10 @@
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .sticky-card:hover {
-    border-color: rgba(241, 237, 227, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
     box-shadow:
-      0 0 25px rgba(0, 0, 0, 0.5),
-      0 15px 40px rgba(0, 0, 0, 0.6);
+      0 0 25px rgba(0, 0, 0, 0.7),
+      0 15px 40px rgba(0, 0, 0, 0.8);
     z-index: 10;
   }
 }
@@ -246,7 +246,7 @@
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  background: #091510;
+  background: #000000;
 }
 
 .sticky-img {

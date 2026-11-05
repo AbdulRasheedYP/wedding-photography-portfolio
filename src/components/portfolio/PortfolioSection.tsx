@@ -50,7 +50,7 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       onClick={() => onSelectProject(project)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/10 hover:border-[#F1EDE3]/35 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
+      className="group relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-black border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
     >
       {/* Background Poster Image */}
       <img
@@ -83,7 +83,7 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
 
       {/* Play Icon Badge */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F1EDE3] group-hover:text-[#080B09] text-white transition-all duration-300 shadow-md">
+        <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-[#F1EDE3] group-hover:text-black text-white transition-all duration-300 shadow-md">
           <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current ml-0.5" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 5v14l11-7z" />
           </svg>
@@ -154,10 +154,10 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
     <section
       ref={sectionRef}
       id="work"
-      className="py-14 sm:py-20 lg:py-24 bg-[#080B09] scroll-mt-20 overflow-hidden relative"
+      className="py-14 sm:py-20 lg:py-24 bg-[#141414] scroll-mt-20 overflow-hidden relative"
     >
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#F1EDE3]/[0.02] rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/[0.02] rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
@@ -176,11 +176,11 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           </div>
         </div>
 
-        {/* 1. FEATURED MAIN REEL SPOTLIGHT (With silent 2-3s auto-repeating video loop) */}
+        {/* 1. FEATURED MAIN REEL SPOTLIGHT — Pure Black Cinema Frame */}
         <div
           ref={containerRef}
           onClick={handlePlayMain}
-          className="group relative w-full aspect-[16/9] sm:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/15 hover:border-[#F1EDE3]/40 cursor-pointer shadow-[0_20px_70px_rgba(0,0,0,0.85)] transition-all duration-700 hover:shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
+          className="group relative w-full aspect-[16/9] sm:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-black border border-white/10 hover:border-white/30 cursor-pointer shadow-[0_20px_70px_rgba(0,0,0,0.85)] transition-all duration-700 hover:shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
         >
           {/* Silent Video Loop (No Sound, 2-3s Repeating Preview) */}
           <video
@@ -204,7 +204,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
             <div className="relative flex items-center justify-center">
               <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 animate-ping opacity-40 pointer-events-none" />
               
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F1EDE3] text-[#080B09] flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F1EDE3] text-black flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
                 <svg
                   viewBox="0 0 24 24"
                   className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1"

@@ -5,8 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bgDark:       "#080B09",
-        deepCharcoal: "#111412",
+        bgDark:       "#141414",
+        deepCharcoal: "#000000",
         offWhite:     "#F1EDE3",
         softCream:    "#D8D1C2",
         mutedGray:    "#8D8B82",

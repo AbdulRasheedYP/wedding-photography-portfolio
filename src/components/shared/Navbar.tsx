@@ -69,15 +69,15 @@ const Navbar: React.FC = () => {
           <div
             className={`rounded-full px-5 py-2.5 flex items-center justify-between relative transition-all duration-500 ${
               scrolled
-                ? "bg-[#080B09]/80 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/70"
-                : "bg-black/25 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_32px_0_rgba(0,0,0,0.37)]"
+                ? "bg-[#141414]/90 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/70"
+                : "bg-black/40 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_32px_0_rgba(0,0,0,0.45)]"
             }`}
           >
 
             {/* Logo */}
             <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="Adil Mubarak Home">
               <div className="w-7 h-7 rounded-full bg-[#F1EDE3] flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-[#080B09] fill-none stroke-[2]">
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-black fill-none stroke-[2]">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 3L15 9M21 9.5L14.5 12M19.5 17.5L14 15M12 21L9 15M3 14.5L9.5 12M4.5 6.5L10 9" />
                 </svg>
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => scrollTo("contact")}
-                className="hidden sm:inline-flex items-center gap-2 bg-[#F1EDE3] text-[#080B09] font-display font-semibold text-xs py-2 px-5 rounded-full hover:bg-white hover:scale-102 transition-all duration-200 shadow-md"
+                className="hidden sm:inline-flex items-center gap-2 bg-[#F1EDE3] text-black font-display font-semibold text-xs py-2 px-5 rounded-full hover:bg-white hover:scale-102 transition-all duration-200 shadow-md"
               >
                 Contact
               </button>
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-[#080B09]/98 backdrop-blur-2xl pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
+            className="fixed inset-0 z-40 bg-[#141414]/98 backdrop-blur-2xl pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
           >
             <div className="flex flex-col justify-center flex-1 space-y-6">
               {NAV_LINKS.map((link, idx) => {

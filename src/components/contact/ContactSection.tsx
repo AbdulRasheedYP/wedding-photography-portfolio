@@ -56,10 +56,10 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
   };
 
   const inputCls = (field: keyof ContactFormState) =>
-    `w-full bg-[#111412] border ${errors[field] ? "border-red-500/50" : "border-[#F1EDE3]/8 focus:border-[#F1EDE3]/30"} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none transition-colors text-base sm:text-sm`;
+    `w-full bg-black border ${errors[field] ? "border-red-500/50" : "border-white/10 focus:border-white/30"} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none transition-colors text-base sm:text-sm`;
 
   return (
-    <section ref={sectionRef} id="contact" className="py-24 px-5 sm:px-8 bg-[#080B09] text-[#F1EDE3] relative overflow-hidden scroll-mt-20">
+    <section ref={sectionRef} id="contact" className="py-24 px-5 sm:px-8 bg-[#141414] text-[#F1EDE3] relative overflow-hidden scroll-mt-20">
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -129,10 +129,10 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
             <div className="contact-form">
               {status === "success" ? (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-[#F1EDE3] text-[#080B09] text-2xl flex items-center justify-center mx-auto font-bold">✓</div>
+                  <div className="w-14 h-14 rounded-full bg-[#F1EDE3] text-black text-2xl flex items-center justify-center mx-auto font-bold">✓</div>
                   <h3 className="font-display font-extrabold text-xl text-[#F1EDE3]">Request Received!</h3>
                   <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">I will review your brief and get back to you within 24 hours.</p>
-                  <button onClick={() => setStatus("idle")} className="bg-[#F1EDE3] text-[#080B09] px-6 py-2 rounded-full font-bold text-xs mt-4 hover:bg-[#D8D1C2] transition-colors">
+                  <button onClick={() => setStatus("idle")} className="bg-[#F1EDE3] text-black px-6 py-2 rounded-full font-bold text-xs mt-4 hover:bg-[#D8D1C2] transition-colors">
                     Submit Another Request
                   </button>
                 </motion.div>
@@ -159,7 +159,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                     <div>
                       <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Celebration Type</label>
                       <select id="project_type" name="project_type" value={form.project_type} onChange={handleChange} className={`${inputCls("project_type")} appearance-none`}>
-                        {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-[#111412]">{t.label}</option>)}
+                        {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-black">{t.label}</option>)}
                       </select>
                     </div>
                   </div>
@@ -175,7 +175,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                   )}
 
                   <button type="submit" disabled={status === "sending"}
-                    className="w-full bg-[#F1EDE3] text-[#080B09] py-3.5 rounded-full font-display font-bold text-sm hover:bg-[#D8D1C2] transition-colors disabled:opacity-60 mt-4">
+                    className="w-full bg-[#F1EDE3] text-black py-3.5 rounded-full font-display font-bold text-sm hover:bg-[#D8D1C2] transition-colors disabled:opacity-60 mt-4">
                     {status === "sending" ? "Sending…" : "Send Request →"}
                   </button>
                 </form>
