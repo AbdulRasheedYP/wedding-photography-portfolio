@@ -3,19 +3,19 @@ import { motion } from "framer-motion";
 import { ContactFormState } from "../../types";
 
 const SHOOT_TYPES = [
-  { value: "videography",  label: "Event Videography"            },
-  { value: "photography",  label: "Photography & Portraits"      },
-  { value: "reels",        label: "Reel Editing & Short-Form"    },
-  { value: "colorgrading", label: "Color Grading & Post-Prod."   },
-  { value: "fashion",      label: "Fashion & Bridal Campaigns"   },
-  { value: "social",       label: "Social Media Content"         },
-  { value: "other",        label: "Other / Custom Project"       },
+  { value: "videography",  label: "Event & Commercial Videography" },
+  { value: "photography",  label: "Photography & Editorial Portraits" },
+  { value: "reels",        label: "Reel Editing & Short-Form Content" },
+  { value: "fashion",      label: "Fashion & Bridal Campaigns" },
+  { value: "colorgrading", label: "DaVinci Resolve Color Grading" },
+  { value: "corporate",    label: "Corporate & Cultural Galas" },
+  { value: "other",        label: "Other / Custom Project" },
 ];
 
 const INITIAL_FORM: ContactFormState = {
   name: "", email: "", phone: "",
-  project_type: "wedding",
-  budget_range: "₹50,000 – ₹1,00,000",
+  project_type: "videography",
+  budget_range: "",
   message: "",
 };
 
@@ -52,7 +52,50 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setStatus("sending");
-    setTimeout(() => { setStatus("success"); setForm(INITIAL_FORM); }, 1000);
+
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "";
+      if (!accessKey) {
+        // Fallback if access key is not yet set: open pre-filled mailto
+        const subject = encodeURIComponent(`Project Enquiry from ${form.name} (${form.project_type})`);
+        const body = encodeURIComponent(
+          `Hi Adil,\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "N/A"}\nProject Type: ${form.project_type}\n\nProject Details:\n${form.message}\n`
+        );
+        window.open(`mailto:adilmubarack03@gmail.com?subject=${subject}&body=${body}`, "_blank");
+        setStatus("success");
+        setForm(INITIAL_FORM);
+        return;
+      }
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          from_name: "Adil Mubarak Portfolio",
+          subject: `New Project Enquiry: ${form.name} [${form.project_type}]`,
+          name: form.name,
+          email: form.email,
+          phone: form.phone || "Not provided",
+          project_type: form.project_type,
+          message: form.message,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setStatus("success");
+        setForm(INITIAL_FORM);
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Web3Forms submission error:", err);
+      setStatus("error");
+    }
   };
 
   const inputCls = (field: keyof ContactFormState) =>
@@ -130,8 +173,8 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
               {status === "success" ? (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center space-y-4">
                   <div className="w-14 h-14 rounded-full bg-[#F1EDE3] text-black text-2xl flex items-center justify-center mx-auto font-bold">✓</div>
-                  <h3 className="font-display font-extrabold text-xl text-[#F1EDE3]">Request Received!</h3>
-                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">I will review your brief and get back to you within 24 hours.</p>
+                  <h3 className="font-display font-extrabold text-xl text-[#F1EDE3]">Enquiry Received!</h3>
+                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">Thank you. I have received your project details and will personally get back to you within 24 hours.</p>
                   <button onClick={() => setStatus("idle")} className="bg-[#F1EDE3] text-black px-6 py-2 rounded-full font-bold text-xs mt-4 hover:bg-[#D8D1C2] transition-colors">
                     Submit Another Request
                   </button>
@@ -154,10 +197,10 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="phone" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Phone / WhatsApp</label>
-                      <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="+91 …" className={inputCls("phone")} />
+                      <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="+971 … / +91 …" className={inputCls("phone")} />
                     </div>
                     <div>
-                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Celebration Type</label>
+                      <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Project / Shoot Type</label>
                       <select id="project_type" name="project_type" value={form.project_type} onChange={handleChange} className={`${inputCls("project_type")} appearance-none`}>
                         {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-[#141414]">{t.label}</option>)}
                       </select>
@@ -165,18 +208,25 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Your Story &amp; Details *</label>
-                    <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Tell me about your wedding dates, venues, and what you envision for your day…" className={`${inputCls("message")} resize-none`} />
+                    <label htmlFor="message" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Project Concept &amp; Details *</label>
+                    <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} placeholder="Tell me about your project concept, dates, location, deliverables, or story…" className={`${inputCls("message")} resize-none`} />
                     {errors.message && <p className="text-red-400 text-[10px] mt-1">{errors.message}</p>}
                   </div>
 
                   {status === "error" && (
-                    <p className="text-red-400 text-xs text-center">Submission failed. Please email <a href="mailto:contact@adilmubarak.com" className="underline">contact@adilmubarak.com</a>.</p>
+                    <div className="text-center space-y-2 p-3.5 rounded-xl bg-red-950/20 border border-red-500/20">
+                      <p className="text-red-400 text-xs">Submission failed. You can reach out directly:</p>
+                      <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
+                        <a href="mailto:adilmubarack03@gmail.com" className="text-[#F1EDE3] underline hover:text-white">Email: adilmubarack03@gmail.com</a>
+                        <span className="text-white/20">•</span>
+                        <a href={`https://wa.me/971568709412?text=${encodeURIComponent(`Hi Adil, I'm ${form.name || "Client"}. I'd like to enquire about ${form.project_type}: ${form.message || ""}`)}`} target="_blank" rel="noopener noreferrer" className="text-[#25D366] hover:underline font-semibold">WhatsApp (+971 56 870 9412)</a>
+                      </div>
+                    </div>
                   )}
 
                   <button type="submit" disabled={status === "sending"}
                     className="w-full bg-[#F1EDE3] text-black py-3.5 rounded-full font-display font-bold text-sm hover:bg-[#D8D1C2] transition-colors disabled:opacity-60 mt-4">
-                    {status === "sending" ? "Sending…" : "Send Request →"}
+                    {status === "sending" ? "Sending Enquiry…" : "Send Request →"}
                   </button>
                 </form>
               )}
