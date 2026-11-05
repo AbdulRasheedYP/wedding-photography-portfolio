@@ -1,180 +1,52 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Project, Category } from "../../types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface SlideItem {
-  id: string | number;
-  img: string;
-  title: string;
-  category: string;
-  project?: Project;
-}
-
-const FALLBACK_SLIDES: SlideItem[] = [
-  { id: "f1", img: "/images/gallery/1.webp",    title: "The Royal Knot",         category: "Wedding" },
-  { id: "f2", img: "/images/gallery/2.webp",    title: "Calicut Twilight Shore", category: "Fashion" },
-  { id: "f3", img: "/images/gallery/3.webp",    title: "Bridal Splendor in Red", category: "Wedding" },
-  { id: "f4", img: "/images/gallery/4.webp",    title: "Golden Hour Lehenga",    category: "Wedding" },
-  { id: "f5", img: "/images/gallery/5.webp",    title: "Kerala Backwaters",      category: "Aerial" },
-  { id: "f6", img: "/images/gallery/6.webp",    title: "Kashmir Valley Vista",   category: "Travel" },
-  { id: "f7", img: "/images/gallery/7.webp",    title: "Dubai Marina Twilight",  category: "Commercial" },
-  { id: "f8", img: "/images/gallery/8.webp",    title: "Director at Dusk",       category: "BTS" },
-];
-
 interface Props {
-  projects: Project[];
-  categories: Category[];
+  projects?: Project[];
+  categories?: Category[];
   onSelectProject: (project: Project) => void;
 }
 
-const PortfolioSection: React.FC<Props> = ({ projects, onSelectProject }) => {
-  const [current, setCurrent] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
+const OFFICIAL_SHOWREEL_PROJECT: Project = {
+  id: "official-showreel",
+  title: "Adil Mubarak — Official Showreel 2026",
+  category: { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
+  thumbnail: "/images/hero/hero_bg.webp",
+  video_url: "/videos/showreel.mp4",
+  client_name: "Adil Mubarak Films",
+  description: "Cinematic montage of bridal campaigns, fashion shows, and event films captured across Dubai and Kerala.",
+};
+
+const PortfolioSection: React.FC<Props> = ({ onSelectProject }) => {
   const sectionRef = useRef<HTMLElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const slides: SlideItem[] = projects.length > 0
-    ? projects.map((p) => ({
-        id: p.id,
-        img: p.thumbnail,
-        title: p.title,
-        category: p.category?.name || "Film",
-        project: p,
-      }))
-    : FALLBACK_SLIDES;
-
-  const totalSlides = slides.length;
-
-  const getVisibleSlides = useCallback(() => {
-    if (typeof window === "undefined") return 4;
-    const vw = window.innerWidth;
-    if (vw < 640) return 1;
-    if (vw < 1024) return 2;
-    return 4;
-  }, []);
-
-  const [visibleSlides, setVisibleSlides] = useState(getVisibleSlides);
-  const maxIndex = Math.max(0, totalSlides - visibleSlides);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      const v = getVisibleSlides();
-      setVisibleSlides(v);
-      const newMax = Math.max(0, totalSlides - v);
-      setCurrent((prev) => Math.min(prev, newMax));
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [totalSlides, getVisibleSlides]);
-
-  const goTo = useCallback((index: number) => {
-    setCurrent(Math.max(0, Math.min(index, maxIndex)));
-  }, [maxIndex]);
-
-  const next = useCallback(() => {
-    setCurrent((prevVal) => (prevVal >= maxIndex ? 0 : prevVal + 1));
-  }, [maxIndex]);
-
-  const prev = useCallback(() => {
-    setCurrent((prevVal) => (prevVal <= 0 ? maxIndex : prevVal - 1));
-  }, [maxIndex]);
-
-  const touchStartXRef = useRef<number | null>(null);
-  const touchStartYRef = useRef<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
-    touchStartYRef.current = e.touches[0].clientY;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
-    const diffX = touchStartXRef.current - e.changedTouches[0].clientX;
-    const diffY = touchStartYRef.current - e.changedTouches[0].clientY;
-    
-    // Check if horizontal swipe was dominant and beyond 35px threshold
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
-      if (diffX > 0) {
-        next();
-      } else {
-        prev();
-      }
-    }
-    touchStartXRef.current = null;
-    touchStartYRef.current = null;
-  };
-
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // Faster Auto-Advance (1.9s) & Immediately Rewinds to Left when Full on the Side
-  useEffect(() => {
-    if (isHovered || !isInView) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
-    intervalRef.current = setInterval(() => {
-      setCurrent((prevVal) => {
-        // When side is full (reaches maxIndex), immediately loops back to left (0)
-        if (prevVal >= maxIndex) {
-          return 0;
-        }
-        return prevVal + 1;
-      });
-    }, 1900);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isHovered, isInView, maxIndex]);
-
-  const isFirstRender = useRef(true);
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    if (!trackRef.current) return;
-    
-    const slidePercent = 100 / visibleSlides;
-
-    gsap.to(trackRef.current, {
-      x: `${-current * slidePercent}%`,
-      duration: current === 0 ? 0.75 : 0.5,
-      ease: current === 0 ? "power3.inOut" : "power2.out",
-      force3D: true, // Forces GPU acceleration to prevent horizontal slider stutter
-    });
-  }, [current, visibleSlides]);
-
-  useEffect(() => {
-    // Skip GSAP layout calculation on mobile
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      return;
-    }
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
 
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
-        const header = sectionRef.current?.querySelector(".gallery-header");
-        if (header) {
-          gsap.fromTo(header,
-            { opacity: 0, y: 30 },
+        if (containerRef.current) {
+          gsap.fromTo(
+            containerRef.current,
+            { opacity: 0, y: 35, scale: 0.98 },
             {
-              opacity: 1, y: 0, duration: 1, ease: "power3.out",
-              scrollTrigger: { trigger: header, start: "top 85%", once: true },
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 78%",
+                once: true,
+              },
             }
           );
         }
@@ -187,72 +59,125 @@ const PortfolioSection: React.FC<Props> = ({ projects, onSelectProject }) => {
     };
   }, []);
 
+  const handlePlayFull = () => {
+    onSelectProject(OFFICIAL_SHOWREEL_PROJECT);
+  };
+
   return (
-    <section ref={sectionRef} id="work" className="py-14 sm:py-18 lg:py-16 bg-[#080B09] scroll-mt-20 overflow-hidden">
-      <div className="gallery-header max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
-        <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="w-5 h-[1px] bg-[#67685D]" />
-            <p className="text-[10px] font-display font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-              Portfolio
-            </p>
+    <section
+      ref={sectionRef}
+      id="work"
+      className="py-14 sm:py-20 lg:py-24 bg-[#080B09] scroll-mt-20 overflow-hidden relative"
+    >
+      {/* Ambient background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#F1EDE3]/[0.02] rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
+
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-6 h-[1px] bg-[#67685D]" />
+              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
+                Show Reel
+              </p>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#F1EDE3] font-normal tracking-tight leading-[1.05]">
+              Cinematic <span className="italic text-[#C8BFB0]">Reel</span>
+            </h2>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#F1EDE3] uppercase leading-none">
-            Show Reel
-          </h2>
+
+          <p className="text-xs sm:text-sm text-[#8D8B82] font-sans max-w-sm leading-relaxed">
+            A 44-second visual showcase of fashion campaigns, bridal films, and event cinema — graded on DaVinci Resolve.
+          </p>
         </div>
-        <div className="flex items-center gap-2.5">
-          <button onClick={prev} className="w-10 h-10 rounded-full border border-[#F1EDE3]/15 flex items-center justify-center hover:border-[#F1EDE3]/40 hover:text-[#F1EDE3] hover:bg-white/5 transition-all duration-300 text-[#8D8B82]" aria-label="Previous slide">
-            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 19l-7-7 7-7" /></svg>
-          </button>
-          <button onClick={next} className="w-10 h-10 rounded-full border border-[#F1EDE3]/15 flex items-center justify-center hover:border-[#F1EDE3]/40 hover:text-[#F1EDE3] hover:bg-white/5 transition-all duration-300 text-[#8D8B82]" aria-label="Next slide">
-            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 5l7 7-7 7" /></svg>
-          </button>
-        </div>
-      </div>
 
-      <div
-        className="relative px-5 sm:px-8 max-w-7xl mx-auto"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div ref={trackRef} className="flex transition-none" style={{ willChange: "transform" }}>
-          {slides.map((slide) => (
-            <div key={slide.id} className="gallery-slide flex-shrink-0 px-2 sm:px-2.5 w-full sm:w-1/2 lg:w-1/4">
-              <div
-                className="relative overflow-hidden rounded-2xl bg-[#111412] border border-[#F1EDE3]/10 hover:border-[#F1EDE3]/30 cursor-pointer group shadow-lg transition-all duration-500"
-                style={{ aspectRatio: "4 / 5" }}
-                onClick={() => slide.project && onSelectProject(slide.project as Project)}
-              >
-                <img src={slide.img} alt={slide.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
+        {/* Real Single Showreel Spotlight Card (with 2-3s silent looping preview) */}
+        <div
+          ref={containerRef}
+          onClick={handlePlayFull}
+          className="group relative w-full aspect-[16/9] sm:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/15 hover:border-[#F1EDE3]/40 cursor-pointer shadow-[0_20px_70px_rgba(0,0,0,0.85)] transition-all duration-700 hover:shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
+        >
+          {/* Silent 2-3 Second Video Loop (No Sound, Auto-Repeat) */}
+          <video
+            ref={videoRef}
+            src="/videos/showreel-preview.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.08] transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
+          />
 
-                {/* Play Button */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-white/10 border border-white/30 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white ml-0.5" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </div>
-                </div>
+          {/* Vignette & Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-4.5">
-                  <p className="text-[#D8D1C2]/60 text-[9px] font-display font-medium uppercase tracking-[0.2em] mb-1">{slide.category}</p>
-                  <h3 className="text-[#F1EDE3] font-serif font-normal text-base sm:text-lg group-hover:text-white transition-colors duration-300 leading-snug">{slide.title}</h3>
-                </div>
+          {/* Top Info Bar */}
+          <div className="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-7 flex items-center justify-between pointer-events-none z-10">
+            {/* Live silent preview pill */}
+            <div className="inline-flex items-center gap-2 bg-[#080B09]/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+              <span className="text-[9px] sm:text-[10px] font-sans font-bold uppercase tracking-widest text-[#F1EDE3]">
+                Silent Preview Loop
+              </span>
+            </div>
+
+            {/* Quality badge */}
+            <div className="inline-flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
+              <span className="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2]">
+                1080p HD · 60fps · 0:44s
+              </span>
+            </div>
+          </div>
+
+          {/* Center Play Button with Expanding Pulse */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none z-10">
+            <div className="relative flex items-center justify-center">
+              {/* Ripple Ring */}
+              <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 animate-ping opacity-40 pointer-events-none" />
+              
+              {/* Play Circle */}
+              <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F1EDE3] text-[#080B09] flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Pagination Dots matching actual slide positions */}
-      <div className="flex items-center justify-center gap-1.5 mt-6 sm:mt-8">
-        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-          <button key={i} onClick={() => goTo(i)} className={`transition-all duration-300 rounded-full ${i === current ? "w-6 h-1.5 bg-[#F1EDE3]" : "w-1.5 h-1.5 bg-[#F1EDE3]/20 hover:bg-[#F1EDE3]/40"}`} aria-label={`Go to slide ${i + 1}`} />
-        ))}
+            <div className="bg-[#080B09]/85 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full shadow-lg group-hover:border-white/30 transition-all duration-300">
+              <p className="text-[10px] sm:text-xs font-sans font-bold uppercase tracking-[0.2em] text-[#F1EDE3]">
+                Click to Watch with Sound
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Content Bar */}
+          <div className="absolute bottom-4 sm:bottom-6 inset-x-4 sm:inset-x-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 pointer-events-none z-10">
+            <div>
+              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.25em] text-[#8D8B82] mb-1">
+                Adil Mubarak Films
+              </p>
+              <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-[#F1EDE3] font-normal leading-tight">
+                Direction, Cinematography &amp; Reel Edit
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-widest text-[#D8D1C2]/80">
+              <svg className="w-3.5 h-3.5 fill-current text-[#25D366]" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+              </svg>
+              <span>Full Audio Available on Click</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
