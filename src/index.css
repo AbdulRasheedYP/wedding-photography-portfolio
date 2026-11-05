@@ -186,17 +186,21 @@
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
   max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
   align-items: start;
+  box-sizing: border-box;
 }
 
 .sticky-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  min-width: 0;
+  width: 100%;
 }
 
 /* ── Sticky Card ── */
@@ -208,6 +212,9 @@
   padding: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (hover: hover) {
@@ -304,7 +311,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 4px 4px;
+  padding: 8px 3px 3px;
+  min-width: 0;
+  width: 100%;
 }
 
 .sticky-note-label {
@@ -313,6 +322,11 @@
   font-weight: 700;
   color: #D8D1C2;
   letter-spacing: 0.02em;
+  min-width: 0;
+  flex: 1 1 0%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sticky-note-dot {
@@ -322,6 +336,7 @@
   background: #67685D;
   box-shadow: 0 0 8px rgba(103, 104, 93, 0.5);
   animation: dotPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes dotPulse {
@@ -332,37 +347,61 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .sticky-columns-wrap {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    width: 100%;
   }
   .sticky-gallery-section {
-    padding: 3rem 1rem 4rem;
+    padding: 3rem 0.75rem 4rem;
+  }
+  .sticky-column {
+    min-width: 0;
+    width: 100%;
+  }
+  .sticky-card {
+    min-width: 0;
+    width: 100%;
+    transform: none !important; /* Disable rotation on mobile so cards never clip */
   }
   /* Stagger cards on tablet */
   .sticky-column:nth-child(2) {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .sticky-columns-wrap {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.85rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    width: 100%;
+  }
+  .sticky-gallery-section {
+    padding: 2.25rem 0.5rem 3.5rem;
   }
   .sticky-card {
-    padding: 7px;
+    padding: 6px;
     border-radius: 10px;
+    transform: none !important;
   }
   .sticky-tape-bar::after {
-    width: 36px;
-    height: 5px;
+    width: 32px;
+    height: 4px;
   }
   .sticky-note-label {
-    font-size: 10px;
+    font-size: 9.5px;
   }
   .sticky-column:nth-child(2) {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
+}
+
+/* No Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* ═══════════════════════════════════════════════════

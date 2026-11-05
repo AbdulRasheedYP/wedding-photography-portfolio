@@ -23,15 +23,15 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
 
   return (
     <div
-      className="sticky-card cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+      className="sticky-card cursor-pointer transition-transform duration-300 hover:scale-[1.02] min-w-0 w-full"
       style={{ transform: `rotate(${item.rotation}deg)` }}
       onClick={onClick}
     >
       <div className="sticky-tape-bar" />
-      <div className="sticky-img-wrap relative overflow-hidden rounded-lg bg-[#111412]">
+      <div className="sticky-img-wrap relative overflow-hidden rounded-lg bg-[#0a0a0a] min-w-0 w-full">
         {/* Shimmer skeleton placeholder */}
         {!loaded && (
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111412] via-[#1a1f1b] to-[#111412] animate-pulse pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#1f1f1f] to-[#141414] animate-pulse pointer-events-none" />
         )}
         <img
           src={item.thumb}
@@ -49,8 +49,8 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
           </span>
         </div>
       </div>
-      <div className="sticky-note-text mt-2.5 flex items-center justify-between text-xs px-1 text-[#D8D1C2]">
-        <span className="sticky-note-label font-serif tracking-wide truncate pr-2">{item.note}</span>
+      <div className="sticky-note-text mt-2 sm:mt-2.5 flex items-center justify-between text-xs px-1 text-[#D8D1C2] min-w-0 w-full">
+        <span className="sticky-note-label font-serif tracking-wide truncate pr-2 min-w-0 flex-1">{item.note}</span>
         <span className="sticky-note-dot w-1.5 h-1.5 rounded-full bg-[#67685D] flex-shrink-0" />
       </div>
     </div>
@@ -215,9 +215,9 @@ const StickyGallery: React.FC = () => {
     lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
 
   return (
-    <section ref={sectionRef} id="gallery" className="sticky-gallery-section scroll-mt-20 py-16 px-4 sm:px-8">
+    <section ref={sectionRef} id="gallery" className="sticky-gallery-section scroll-mt-20 py-12 sm:py-16 px-3 sm:px-8 w-full overflow-hidden">
       {/* Header */}
-      <div className="sticky-gallery-header max-w-4xl mx-auto text-center mb-10">
+      <div className="sticky-gallery-header max-w-4xl mx-auto text-center mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-2 mb-2">
           <span className="w-6 h-[1px] bg-[#67685D]" />
           <p className="sticky-eyebrow text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
@@ -230,30 +230,33 @@ const StickyGallery: React.FC = () => {
         </h2>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2 mb-12">
-        {CATEGORIES.map((cat) => {
-          const count =
-            cat === "All"
-              ? GALLERY_ITEMS.length
-              : GALLERY_ITEMS.filter((i) => i.category === cat).length;
-          const isActive = selectedCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => {
-                setSelectedCategory(cat);
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all duration-300 border ${
-                isActive
-                  ? "bg-[#F1EDE3] text-black border-[#F1EDE3] font-semibold shadow-md"
-                  : "bg-white/[0.03] text-[#8D8B82] border-[#F1EDE3]/15 hover:border-[#F1EDE3]/40 hover:text-[#F1EDE3]"
-              }`}
-            >
-              {cat} <span className="opacity-60 text-[10px]">({count})</span>
-            </button>
-          );
-        })}
+      {/* Category Filter Pills — Smooth Horizontal Scroll on Mobile, Centered Wrap on Desktop */}
+      <div className="w-full max-w-4xl mx-auto mb-8 sm:mb-12">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-2 sm:px-0 sm:flex-wrap sm:justify-center">
+          {CATEGORIES.map((cat) => {
+            const count =
+              cat === "All"
+                ? GALLERY_ITEMS.length
+                : GALLERY_ITEMS.filter((i) => i.category === cat).length;
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat);
+                }}
+                className={`flex-shrink-0 whitespace-nowrap px-4 py-2 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-sans uppercase tracking-wider transition-all duration-200 border cursor-pointer active:scale-95 ${
+                  isActive
+                    ? "bg-[#F1EDE3] text-black border-[#F1EDE3] font-bold shadow-md scale-[1.02]"
+                    : "bg-[#141414] text-[#A8A499] border-white/10 hover:border-white/30 hover:text-[#F1EDE3]"
+                }`}
+              >
+                {cat} <span className="opacity-60 text-[9.5px] ml-1">({count})</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* 3-Column Masonry Story Wall */}
