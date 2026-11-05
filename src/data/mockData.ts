@@ -15,7 +15,7 @@ export const categories: Category[] = [
 export const projects: Project[] = [
   {
     id: "official-showreel",
-    title: "Adil Mubarak — Official Showreel 2026",
+    title: "Official Showreel 2026",
     category: { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
     thumbnail: "/images/hero/hero_bg.webp",
     video_url: "/videos/showreel.mp4",
