@@ -12,6 +12,8 @@ TARGET_DIRS = [
     IMAGES_DIR / 'wall',
     IMAGES_DIR / 'services',
     IMAGES_DIR / 'gallery',
+    IMAGES_DIR / 'hero',
+    IMAGES_DIR / 'about',
 ]
 
 VALID_EXTS = {'.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'}
@@ -29,9 +31,10 @@ def optimize_file(img_path: Path):
 
             orig_size = img_path.stat().st_size
 
-            # Save optimized WebP (max 1200px, quality 85, Lanczos)
+            # Save optimized WebP (max 2560px for hero, 1200px for cards/wall, quality 85, Lanczos)
             im_opt = im.copy()
-            im_opt.thumbnail((1200, 1200), Image.Resampling.LANCZOS)
+            max_dim = (2560, 2560) if parent.name == 'hero' else (1200, 1200)
+            im_opt.thumbnail(max_dim, Image.Resampling.LANCZOS)
             im_opt.save(out_path, 'WEBP', quality=85, method=6)
             out_size = out_path.stat().st_size
 

@@ -6,13 +6,15 @@ function imageOptimizerPlugin(): Plugin {
   return {
     name: "vite-image-optimizer-watcher",
     configureServer(server) {
-      server.watcher.on("add", (filePath) => {
+      const handleFile = (filePath: string) => {
         if (/\.(jpe?g|png)$/i.test(filePath) && filePath.includes("/public/images/")) {
           exec("python3 scripts/optimize_images.py", (err, stdout) => {
             if (stdout) console.log(stdout);
           });
         }
-      });
+      };
+      server.watcher.on("add", handleFile);
+      server.watcher.on("change", handleFile);
     },
   };
 }
