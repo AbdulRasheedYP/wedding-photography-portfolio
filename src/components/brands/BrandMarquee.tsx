@@ -44,33 +44,26 @@ const BRANDS: BrandItem[] = [
   },
 ];
 
-const HIGHLIGHT_TAGS = [
-  "3 Runway Fashion Shows",
-  "Bridal Couture Campaigns",
-  "Corporate & Social Galas UAE",
-  "DaVinci Resolve Color Grading",
-];
-
 const BrandMarquee: React.FC = () => {
-  // Multiply items for smooth infinite loop
+  // Multiply items for smooth continuous infinite loop
   const loopItems = [...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS];
 
   return (
-    <section className="py-10 sm:py-14 bg-black text-[#F1EDE3] overflow-hidden relative border-t border-white/[0.06]">
+    <section className="py-10 sm:py-12 bg-black text-[#F1EDE3] overflow-hidden relative border-t border-white/[0.06]">
       {/* Subtle Ambient Background Light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-white/[0.015] rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Clean Minimal Header */}
+      {/* Clean Editorial Minimal Header */}
       <div className="max-w-6xl mx-auto px-5 sm:px-8 mb-6 sm:mb-8 text-center relative z-10">
-        <div className="inline-flex items-center gap-2.5 mb-2">
+        <div className="inline-flex items-center gap-2 mb-1.5">
           <span className="w-5 h-[1px] bg-[#67685D]" />
           <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
-            Selected Clients &amp; Collaborations
+            Collaborations &amp; Work History
           </p>
           <span className="w-5 h-[1px] bg-[#67685D]" />
         </div>
-        <h3 className="font-serif text-xl sm:text-2xl lg:text-[1.75rem] text-[#F1EDE3] font-normal tracking-tight">
-          Trusted by Brands, Agencies <span className="italic text-[#C8BFB0]">&amp; Studios</span>
+        <h3 className="font-serif text-2xl sm:text-3xl lg:text-[2rem] text-[#F1EDE3] font-normal tracking-tight">
+          Brands &amp; Creative Studios
         </h3>
       </div>
 
@@ -101,16 +94,6 @@ const BrandMarquee: React.FC = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Subtle Bottom Highlights Ticker */}
-      <div className="max-w-4xl mx-auto px-5 mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[10px] font-sans font-medium uppercase tracking-[0.22em] text-[#8D8B82]/70">
-        {HIGHLIGHT_TAGS.map((tag) => (
-          <span key={tag} className="flex items-center gap-2">
-            <span className="w-1 h-1 rounded-full bg-[#25D366]/70" />
-            <span>{tag}</span>
-          </span>
-        ))}
       </div>
     </section>
   );
