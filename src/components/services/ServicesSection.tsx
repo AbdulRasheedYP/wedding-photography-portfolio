@@ -18,89 +18,63 @@ const SERVICES: DisciplineCard[] = [
     id: "videography",
     number: "01",
     title: "Videography & Cinematography",
-    description: "Cinematic event, bridal, and commercial coverage. High-production camera movement and intentional framing calibrated for impactful visual storytelling.",
+    description: "Cinematic event, bridal, and promotional video coverage with professional camera operation.",
     img: "/images/services/1.webp",
-    tools: ["Cinema Line", "Gimbal", "4K / 60fps"],
+    tools: ["4K", "Cinema", "Gimbal"],
   },
   {
     id: "photography",
     number: "02",
-    title: "Editorial & Event Photography",
-    description: "Portraits and stills that speak volumes. High-fashion lookbooks, bridal campaigns, and cultural galas with a sharp eye for light and raw emotion.",
+    title: "Photography",
+    description: "Editorial portraits, bridal fashion campaigns, and social event stills with natural light mastery.",
     img: "/images/services/2.webp",
-    tools: ["Editorial", "Bridal", "Lighting"],
+    tools: ["Editorial", "Bridal", "Events"],
   },
   {
     id: "reels",
     number: "03",
-    title: "Reel Editing & Short-Form Video",
-    description: "Instagram Reels and TikToks engineered to stop the scroll. Dynamic pacing, rhythmic cuts, and immersive audio synced for peak audience engagement.",
+    title: "Reel Editing & Short-Form Content",
+    description: "Instagram Reels and digital campaign videos with fast-paced cuts and rhythmic sound sync.",
     img: "/images/services/3.webp",
-    tools: ["Instagram Reels", "CapCut Pro", "Pacing"],
+    tools: ["Reels", "CapCut", "Transitions"],
   },
   {
     id: "colorgrading",
     number: "04",
-    title: "DaVinci Resolve Color Grading",
-    description: "Advanced color correction and grading. Transforming raw LOG footage into rich, filmic palettes that define your brand identity across all screens.",
+    title: "Color Correction & Grading",
+    description: "Post-production workflows on DaVinci Resolve, creating rich cinematic color and brand tonality.",
     img: "/images/services/4.webp",
-    tools: ["DaVinci Resolve", "10-Bit Log", "Color Science"],
+    tools: ["DaVinci Resolve", "Color Science"],
   },
   {
     id: "fashion",
     number: "05",
     title: "Fashion Shows & Bridal Campaigns",
-    description: "Experienced in filming runway fashion shows and seasonal collection launches. Fast-paced multi-angle coverage that brings garments to life.",
+    description: "Runway fashion shows and bridal collection launch films designed to elevate brand presence.",
     img: "/images/services/5.webp",
-    tools: ["3 Fashion Shows", "Lookbooks", "Runway"],
+    tools: ["3 Fashion Shows", "Lookbooks"],
   },
   {
     id: "social",
     number: "06",
-    title: "Digital Strategy & Meta Ads",
-    description: "Full-funnel digital content strategy. From campaign reels to Meta Ads management, ensuring visual content generates tangible reach and engagement.",
+    title: "Meta Ads & Social Media Content",
+    description: "Social media content optimization and Meta Ads campaign execution to drive audience reach.",
     img: "/images/services/6.webp",
-    tools: ["Meta Ads", "Content Strategy", "SMM"],
+    tools: ["Meta Ads", "SMM", "WordPress"],
   },
 ];
 
-const SKILL_GROUPS = [
-  {
-    category: "Camera & Cinematography",
-    icon: "📹",
-    skills: [
-      "Videography & Cinematography",
-      "Editorial & Bridal Photography",
-      "Professional Camera Operation",
-      "Runway & Multi-Camera Setup",
-      "Gimbal & Motion Stabilization",
-      "Creative Lighting & Framing",
-    ],
-  },
-  {
-    category: "Post-Production & Color",
-    icon: "🎨",
-    skills: [
-      "DaVinci Resolve (Advanced)",
-      "10-Bit Color Correction & Grading",
-      "Reel Editing & Short-Form Video",
-      "CapCut Pro & Kinetic Cuts",
-      "Audio Sync & Dynamic Sound Design",
-      "Custom LUT Creation & Color Science",
-    ],
-  },
-  {
-    category: "Marketing & Digital Strategy",
-    icon: "📈",
-    skills: [
-      "Social Media Content Optimization",
-      "Meta Ads Campaign Execution",
-      "SMM Audits & Performance Growth",
-      "WordPress Website Management",
-      "High-Turnaround Social Delivery",
-      "Creative Brand Identity Building",
-    ],
-  },
+// EXACT 9 SKILLS VERBATIM FROM ADIL MUBARAK'S CV
+const EXACT_CV_SKILLS = [
+  "Videography & Cinematography",
+  "Photography",
+  "Reel Editing & Short-Form Content Creation",
+  "DaVinci Resolve (Advanced)",
+  "CapCut",
+  "Color Correction & Color Grading",
+  "Social Media Content Optimization",
+  "Meta Ads & Digital Marketing",
+  "WordPress Website Management",
 ];
 
 interface Props {
@@ -140,12 +114,12 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
         if (gridRef.current) {
           gsap.fromTo(
             Array.from(gridRef.current.children),
-            { opacity: 0, y: 35 },
+            { opacity: 0, y: 30 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.7,
-              stagger: 0.07,
+              duration: 0.6,
+              stagger: 0.06,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: gridRef.current,
@@ -159,11 +133,11 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
         if (skillsRef.current) {
           gsap.fromTo(
             skillsRef.current,
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 25 },
             {
               opacity: 1,
               y: 0,
-              duration: 0.8,
+              duration: 0.7,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: skillsRef.current,
@@ -194,14 +168,14 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
     <section
       ref={sectionRef}
       id="services"
-      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#080B09] scroll-mt-20 relative"
+      className="py-12 sm:py-16 lg:py-20 px-5 sm:px-8 bg-[#080B09] scroll-mt-20 relative"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
         {/* Section Header */}
-        <div ref={headerRef} className="mb-10 sm:mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div ref={headerRef} className="mb-7 sm:mb-9 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-1.5">
               <span className="w-5 h-[1px] bg-[#67685D]" />
               <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
                 What I Offer
@@ -211,133 +185,94 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
               Services &amp; Expertise
             </h2>
           </div>
-          <p className="text-sm text-[#8D8B82] font-sans max-w-sm hidden sm:block leading-relaxed">
-            Six comprehensive production areas built on real hands-on experience across Dubai, UAE and Kerala.
+          <p className="text-xs sm:text-sm text-[#8D8B82] font-sans max-w-xs hidden sm:block leading-relaxed">
+            Hands-on production across Dubai, UAE and Kerala.
           </p>
         </div>
 
-        {/* 6 Services Cards Grid */}
+        {/* 6 Services Cards Grid — Compact Box Sizes */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-14 sm:mb-20"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8 sm:mb-10"
         >
           {SERVICES.map((serv) => (
             <div
               key={serv.id}
               onClick={() => handleCardClick(serv.id)}
-              className="group relative overflow-hidden rounded-2xl border border-[#F1EDE3]/[0.08] hover:border-[#F1EDE3]/25 bg-[#0D100E] cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5"
+              className="group relative overflow-hidden rounded-xl border border-[#F1EDE3]/[0.08] hover:border-[#F1EDE3]/25 bg-[#0D100E] cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
             >
-              {/* Image */}
-              <div className="relative aspect-[16/9] overflow-hidden">
+              {/* Compact Letterbox Image */}
+              <div className="relative aspect-[16/7.5] overflow-hidden">
                 <img
                   src={serv.img}
                   alt={serv.title}
-                  className="w-full h-full object-cover filter brightness-75 contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="w-full h-full object-cover filter brightness-75 contrast-105 transition-transform duration-500 ease-out group-hover:scale-105"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D100E] via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D100E] via-black/25 to-transparent pointer-events-none" />
 
                 {/* Number badge */}
-                <div className="absolute top-3 right-3">
-                  <span className="font-serif text-xs text-[#F1EDE3]/40 font-normal">{serv.number}</span>
+                <div className="absolute top-2 right-2.5">
+                  <span className="font-serif text-[11px] text-[#F1EDE3]/40 font-normal">{serv.number}</span>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <h3 className="font-serif text-lg sm:text-xl text-[#F1EDE3] font-normal leading-snug mb-2 group-hover:text-white transition-colors duration-300">
+              {/* Compact Content */}
+              <div className="p-3.5 sm:p-4">
+                <h3 className="font-serif text-base sm:text-[17px] text-[#F1EDE3] font-normal leading-snug mb-1 group-hover:text-white transition-colors duration-200">
                   {serv.title}
                 </h3>
-                <p className="text-[#8D8B82] text-[13px] leading-relaxed font-sans mb-4">
+                <p className="text-[#8D8B82] text-xs leading-relaxed font-sans mb-2.5 line-clamp-2">
                   {serv.description}
                 </p>
 
                 {/* Tool tags */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {serv.tools.map((tool) => (
                     <span
                       key={tool}
-                      className="text-[9px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-[#F1EDE3]/[0.05] border border-[#F1EDE3]/[0.08] px-2 py-1 rounded-full"
+                      className="text-[8.5px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-[#F1EDE3]/[0.05] border border-[#F1EDE3]/[0.07] px-2 py-0.5 rounded-full"
                     >
                       {tool}
                     </span>
                   ))}
-                </div>
-
-                {/* Hover CTA */}
-                <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#F1EDE3]">
-                    Book Shoot
-                  </span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Dedicated Technical Skills & Toolkit (Direct from CV) */}
+        {/* Technical Skills & Software Arsenal — Exact 9 CV Skills Only */}
         <div
           ref={skillsRef}
-          className="rounded-3xl p-6 sm:p-9 bg-gradient-to-br from-[#121614]/80 via-[#0D100E]/90 to-[#0A0D0B] border border-white/[0.08] shadow-2xl relative overflow-hidden"
+          className="rounded-2xl p-4 sm:p-6 bg-[#0D100E] border border-white/[0.08] shadow-lg"
         >
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-4 h-[1px] bg-[#67685D]" />
-                <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-                  Capabilities
-                </p>
-              </div>
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-tight">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
+              <h3 className="font-serif text-lg sm:text-xl text-[#F1EDE3] font-normal tracking-tight">
                 Technical Skills &amp; Software Arsenal
               </h3>
             </div>
-            <p className="text-xs text-[#8D8B82] font-sans max-w-xs leading-relaxed">
-              Every tool and methodology mastered through hands-on campaign execution.
-            </p>
+            <span className="text-[10px] font-sans uppercase tracking-widest text-[#8D8B82]">
+              From Verified CV
+            </span>
           </div>
 
-          {/* 3 Skill Clusters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {SKILL_GROUPS.map((group) => (
+          {/* Exact 9 CV Skills Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2.5">
+            {EXACT_CV_SKILLS.map((skill) => (
               <div
-                key={group.category}
-                className="rounded-2xl p-5 bg-[#080B09]/80 border border-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
+                key={skill}
+                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#080B09] border border-white/[0.06] hover:border-white/20 transition-all duration-200"
               >
-                <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-white/[0.06]">
-                  <span className="text-lg">{group.icon}</span>
-                  <h4 className="font-serif text-base text-[#F1EDE3] font-normal">
-                    {group.category}
-                  </h4>
-                </div>
-
-                <ul className="space-y-2.5">
-                  {group.skills.map((skill) => (
-                    <li key={skill} className="flex items-center gap-2 text-xs font-sans text-[#A8A499]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]/70 flex-shrink-0" />
-                      <span>{skill}</span>
-                    </li>
-                  ))}
-                </ul>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]/80 flex-shrink-0" />
+                <span className="text-xs sm:text-[12.5px] font-sans font-medium text-[#E5E0D5]">
+                  {skill}
+                </span>
               </div>
             ))}
-          </div>
-
-          {/* Bottom Action strip */}
-          <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs font-sans text-[#8D8B82] text-center sm:text-left">
-              Looking for a custom video production, reel package, or fashion show coverage?
-            </p>
-            <button
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-6 py-2.5 rounded-full border border-white/20 hover:border-white/50 text-[#F1EDE3] text-xs font-sans font-semibold uppercase tracking-wider transition-all duration-300 hover:bg-white/5 flex-shrink-0"
-            >
-              Start a Conversation &rarr;
-            </button>
           </div>
         </div>
 
