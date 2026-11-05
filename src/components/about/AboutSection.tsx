@@ -142,25 +142,46 @@ const AboutSection: React.FC = () => {
               ))}
             </div>
 
-            {/* Identity card */}
-            <div className="pt-3 flex items-center gap-4 border-t border-[#F1EDE3]/[0.07]">
-              <div className="w-11 h-11 rounded-full border border-[#F1EDE3]/15 overflow-hidden bg-[#111412] flex-shrink-0">
-                <img
-                  src="/images/about/founder.webp"
-                  alt="Adil Mubarak"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
+            {/* Identity card & Download CV */}
+            <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-[#F1EDE3]/[0.07]">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-full border border-[#F1EDE3]/15 overflow-hidden bg-[#111412] flex-shrink-0">
+                  <img
+                    src="/images/about/founder.webp"
+                    alt="Adil Mubarak"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div>
+                  <p className="font-serif text-base text-[#F1EDE3] font-semibold leading-tight">
+                    Adil Mubarak MK
+                  </p>
+                  <p className="text-[10px] font-sans text-[#67685D] uppercase tracking-widest mt-0.5">
+                    Videographer &amp; Photographer — Dubai, UAE
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-serif text-base text-[#F1EDE3] font-semibold leading-tight">
-                  Adil Mubarak MK
-                </p>
-                <p className="text-[10px] font-sans text-[#67685D] uppercase tracking-widest mt-0.5">
-                  Videographer & Photographer — Dubai, UAE
-                </p>
-              </div>
+
+              {/* Download CV Button */}
+              <a
+                href="/documents/Adil_Mubarak_Resume.pdf"
+                download="Adil_Mubarak_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full border border-[#F1EDE3]/25 hover:border-[#F1EDE3] bg-[#F1EDE3]/5 hover:bg-[#F1EDE3]/15 text-[#F1EDE3] transition-all duration-300 text-xs font-sans font-semibold tracking-wider shadow-sm hover:shadow-md"
+              >
+                <svg
+                  className="w-3.5 h-3.5 stroke-current fill-none stroke-[2] transition-transform duration-300 group-hover:translate-y-0.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Download CV</span>
+              </a>
             </div>
           </div>
 
