@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="py-10 sm:py-12 px-5 sm:px-8 bg-[#141414] border-t border-white/10 relative z-10 text-[#F1EDE3]">
+      <footer className="py-10 sm:py-12 px-5 sm:px-8 bg-black border-t border-white/10 relative z-10 text-[#F1EDE3]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           
           {/* Brand & Copyright */}
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-black border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl text-[#F1EDE3]"
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[#141414] border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl text-[#F1EDE3]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}

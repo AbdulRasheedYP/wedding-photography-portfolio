@@ -156,7 +156,7 @@ const ServicesSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="py-12 sm:py-16 lg:py-20 px-5 sm:px-8 bg-[#141414] scroll-mt-20 relative"
+      className="py-12 sm:py-16 lg:py-20 px-5 sm:px-8 bg-black scroll-mt-20 relative"
     >
       <div className="max-w-6xl mx-auto">
 
@@ -175,7 +175,7 @@ const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 6 Services Cards Grid — Pure Black Cards on Ash Canvas */}
+        {/* 6 Services Cards Grid — Elevated Ash Cards on Pure Black Canvas */}
         <div
           ref={gridRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8 sm:mb-10"
@@ -183,7 +183,7 @@ const ServicesSection: React.FC = () => {
           {SERVICES.map((serv) => (
             <div
               key={serv.id}
-              className="group relative overflow-hidden rounded-xl border border-white/[0.08] hover:border-white/25 bg-black transition-all duration-300 hover:shadow-2xl"
+              className="group relative overflow-hidden rounded-xl border border-white/[0.08] hover:border-white/25 bg-[#141414] hover:bg-[#181818] transition-all duration-300 hover:shadow-2xl"
             >
               {/* Compact Letterbox Image */}
               <div className="relative aspect-[16/7.5] overflow-hidden">
@@ -194,7 +194,7 @@ const ServicesSection: React.FC = () => {
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-black/25 to-transparent pointer-events-none" />
 
                 {/* Number badge */}
                 <div className="absolute top-2 right-2.5">
@@ -227,10 +227,10 @@ const ServicesSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Technical Skills & Software Arsenal — Pure Black Plaque */}
+        {/* Technical Skills & Software Arsenal — Elevated Ash Plaque */}
         <div
           ref={skillsRef}
-          className="rounded-2xl p-4 sm:p-6 bg-black border border-white/[0.08] shadow-lg"
+          className="rounded-2xl p-4 sm:p-6 bg-[#141414] border border-white/[0.08] shadow-lg"
         >
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.06]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
@@ -244,7 +244,7 @@ const ServicesSection: React.FC = () => {
             {EXACT_CV_SKILLS.map((skill) => (
               <div
                 key={skill}
-                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#141414] border border-white/[0.06] hover:border-white/20 transition-all duration-200"
+                className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-black border border-white/[0.06] hover:border-white/20 transition-all duration-200"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]/80 flex-shrink-0" />
                 <span className="text-xs sm:text-[12.5px] font-sans font-medium text-[#E5E0D5]">

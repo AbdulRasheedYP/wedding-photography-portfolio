@@ -80,7 +80,7 @@ const AboutSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#141414] scroll-mt-20 relative overflow-hidden text-[#F1EDE3]"
+      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-black scroll-mt-20 relative overflow-hidden text-[#F1EDE3]"
     >
       {/* Soft Ambient Cinematic Glows */}
       <div className="absolute top-1/4 -left-40 w-96 h-96 bg-white/[0.02] rounded-full blur-[160px] pointer-events-none" />
@@ -102,7 +102,7 @@ const AboutSection: React.FC = () => {
           {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
           <div ref={imageRef} className="lg:col-span-5">
             {/* Primary Large Editorial Image */}
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-black border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#141414] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
               <img
                 src="/images/about/camera_rig.webp"
                 alt="Behind the Lens — Adil Mubarak"
@@ -150,7 +150,7 @@ const AboutSection: React.FC = () => {
                 {CV_SPECIALTIES.map((item) => (
                   <span
                     key={item}
-                    className="text-[11px] font-sans font-medium text-[#D8D1C2] bg-black border border-white/10 px-3.5 py-1.5 rounded-full hover:border-white/25 hover:text-[#F1EDE3] transition-colors duration-200"
+                    className="text-[11px] font-sans font-medium text-[#D8D1C2] bg-[#141414] border border-white/10 px-3.5 py-1.5 rounded-full hover:border-white/25 hover:text-[#F1EDE3] transition-colors duration-200"
                   >
                     {item}
                   </span>
@@ -158,12 +158,12 @@ const AboutSection: React.FC = () => {
               </div>
             </div>
 
-            {/* 4 Stats Grid Cards — Pure Black Cards on Ash Canvas */}
+            {/* 4 Stats Grid Cards — Elevated Ash Cards on Pure Black Canvas */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
               {STATS.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl p-4 bg-black border border-white/10 hover:border-white/20 transition-all duration-300"
+                  className="rounded-2xl p-4 bg-[#141414] border border-white/10 hover:border-white/20 hover:bg-[#181818] transition-all duration-300"
                 >
                   <p className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-tight">
                     {stat.value}
@@ -182,7 +182,7 @@ const AboutSection: React.FC = () => {
             <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 {/* Round Profile DP Avatar */}
-                <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-black shadow-md flex-shrink-0 overflow-hidden">
+                <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-[#141414] shadow-md flex-shrink-0 overflow-hidden">
                   <img
                     src="/images/about/founder.webp"
                     alt="Adil Mubarak"

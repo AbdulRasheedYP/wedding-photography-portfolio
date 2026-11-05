@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-[#141414]/98 backdrop-blur-2xl pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
+            className="fixed inset-0 z-40 bg-black/98 backdrop-blur-2xl pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
           >
             <div className="flex flex-col justify-center flex-1 space-y-6">
               {NAV_LINKS.map((link, idx) => {

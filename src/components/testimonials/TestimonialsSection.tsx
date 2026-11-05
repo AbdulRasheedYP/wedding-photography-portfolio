@@ -18,7 +18,7 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
   const marqueeList = [...testimonials, ...testimonials];
 
   return (
-    <section className="py-16 sm:py-20 bg-[#141414] text-[#F1EDE3] overflow-hidden relative">
+    <section className="py-16 sm:py-20 bg-black text-[#F1EDE3] overflow-hidden relative">
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-10 text-center">
         <p className="text-[10px] font-sans font-bold uppercase tracking-[0.25em] text-[#8D8B82] mb-2">
@@ -32,17 +32,17 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
       {/* Marquee Row Container with Left & Right Vignette Fades */}
       <div className="relative w-full overflow-hidden py-2">
         {/* Left Fade Mask */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-44 bg-gradient-to-r from-[#141414] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-44 bg-gradient-to-r from-black to-transparent z-20" />
         
         {/* Right Fade Mask */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-44 bg-gradient-to-l from-[#141414] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-44 bg-gradient-to-l from-black to-transparent z-20" />
 
         {/* Continuous Horizontal Ticker (1 Line) */}
         <div className="animate-marquee flex gap-4 sm:gap-5 py-2 px-3">
           {marqueeList.map((t, idx) => (
             <div
               key={`${t.id}-${idx}`}
-              className="w-[260px] sm:w-[320px] lg:w-[340px] h-[170px] sm:h-[185px] flex-shrink-0 bg-black border border-white/[0.08] hover:border-white/20 rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 shadow-md cursor-default group"
+              className="w-[260px] sm:w-[320px] lg:w-[340px] h-[170px] sm:h-[185px] flex-shrink-0 bg-[#141414] hover:bg-[#181818] border border-white/[0.08] hover:border-white/20 rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300 shadow-md cursor-default group"
             >
               {/* Star Rating & Quote mark */}
               <div className="flex items-center justify-between">

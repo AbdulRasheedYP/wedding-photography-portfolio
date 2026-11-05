@@ -56,10 +56,10 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
   };
 
   const inputCls = (field: keyof ContactFormState) =>
-    `w-full bg-black border ${errors[field] ? "border-red-500/50" : "border-white/10 focus:border-white/30"} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none transition-colors text-base sm:text-sm`;
+    `w-full bg-[#141414] border ${errors[field] ? "border-red-500/50" : "border-white/10 focus:border-white/30"} px-4 py-3.5 rounded-xl text-[#F1EDE3] placeholder-[#67685D] focus:outline-none focus:bg-[#181818] transition-colors text-base sm:text-sm`;
 
   return (
-    <section ref={sectionRef} id="contact" className="py-24 px-5 sm:px-8 bg-[#141414] text-[#F1EDE3] relative overflow-hidden scroll-mt-20">
+    <section ref={sectionRef} id="contact" className="py-24 px-5 sm:px-8 bg-black text-[#F1EDE3] relative overflow-hidden scroll-mt-20">
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -159,7 +159,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                     <div>
                       <label htmlFor="project_type" className="block text-[11px] font-display font-bold uppercase tracking-widest text-[#A8A499] mb-2">Celebration Type</label>
                       <select id="project_type" name="project_type" value={form.project_type} onChange={handleChange} className={`${inputCls("project_type")} appearance-none`}>
-                        {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-black">{t.label}</option>)}
+                        {SHOOT_TYPES.map((t) => <option key={t.value} value={t.value} className="bg-[#141414]">{t.label}</option>)}
                       </select>
                     </div>
                   </div>

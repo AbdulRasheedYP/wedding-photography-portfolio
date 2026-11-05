@@ -57,7 +57,7 @@ const Preloader: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[999] bg-[#141414] text-[#F1EDE3] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[999] bg-black text-[#F1EDE3] flex flex-col items-center justify-center"
     >
       <div ref={textGroupRef} className="flex flex-col items-center">
         <span className="text-[10px] font-display font-bold uppercase tracking-[0.4em] opacity-70 mb-4">

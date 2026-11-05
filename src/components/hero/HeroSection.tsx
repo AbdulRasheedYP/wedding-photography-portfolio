@@ -124,7 +124,7 @@ export default function HeroSection({ onExploreClick }: Props) {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative w-full h-[100dvh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-[#141414]"
+      className="relative w-full h-[100dvh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden bg-black"
     >
       {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
@@ -140,8 +140,8 @@ export default function HeroSection({ onExploreClick }: Props) {
           fetchPriority="high"
         />
         {/* Cinematic Multi-Layer Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-black/40 to-black/50 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#141414]/30 via-transparent to-[#141414]/30 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 pointer-events-none" />
       </div>
 
       {/* Hero Content */}

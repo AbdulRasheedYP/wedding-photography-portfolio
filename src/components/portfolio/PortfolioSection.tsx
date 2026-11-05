@@ -50,7 +50,7 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       onClick={() => onSelectProject(project)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-black border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
+      className="group relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#141414] hover:bg-[#181818] border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
     >
       {/* Background Poster Image */}
       <img
@@ -154,7 +154,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
     <section
       ref={sectionRef}
       id="work"
-      className="py-14 sm:py-20 lg:py-24 bg-[#141414] scroll-mt-20 overflow-hidden relative"
+      className="py-14 sm:py-20 lg:py-24 bg-black scroll-mt-20 overflow-hidden relative"
     >
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/[0.02] rounded-full blur-[160px] pointer-events-none" />
@@ -176,11 +176,11 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           </div>
         </div>
 
-        {/* 1. FEATURED MAIN REEL SPOTLIGHT — Pure Black Cinema Frame */}
+        {/* 1. FEATURED MAIN REEL SPOTLIGHT */}
         <div
           ref={containerRef}
           onClick={handlePlayMain}
-          className="group relative w-full aspect-[16/9] sm:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-black border border-white/10 hover:border-white/30 cursor-pointer shadow-[0_20px_70px_rgba(0,0,0,0.85)] transition-all duration-700 hover:shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
+          className="group relative w-full aspect-[16/9] sm:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#141414] border border-white/10 hover:border-white/30 cursor-pointer shadow-[0_20px_70px_rgba(0,0,0,0.85)] transition-all duration-700 hover:shadow-[0_25px_90px_rgba(0,0,0,0.95)]"
         >
           {/* Silent Video Loop (No Sound, 2-3s Repeating Preview) */}
           <video

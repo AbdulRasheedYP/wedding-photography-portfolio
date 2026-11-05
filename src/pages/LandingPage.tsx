@@ -14,7 +14,7 @@ import { projects, categories, testimonials } from "../data/mockData";
 import { Project } from "../types";
 
 const SectionGap: React.FC = () => (
-  <div className="w-full h-16 sm:h-24 lg:h-32 bg-[#141414] flex items-center justify-center pointer-events-none select-none">
+  <div className="w-full h-16 sm:h-24 lg:h-32 bg-black flex items-center justify-center pointer-events-none select-none">
     <div className="w-full max-w-7xl px-5 sm:px-8">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#F1EDE3]/[0.07] to-transparent" />
     </div>
@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <main className="bg-[#141414] text-[#F1EDE3]">
+    <main className="bg-black text-[#F1EDE3]">
       <HeroSection
         onExploreClick={() => scrollToSection("work")}
         onBookClick={() => scrollToSection("contact")}
