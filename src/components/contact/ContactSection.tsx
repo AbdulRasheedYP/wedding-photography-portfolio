@@ -116,36 +116,21 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
     setStatus("sending");
 
     try {
-      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "";
-      if (!accessKey) {
-        // Fallback if access key is not yet set: open pre-filled mailto
-        const subject = encodeURIComponent(`Project Enquiry from ${form.name} (${form.project_type})`);
-        const body = encodeURIComponent(
-          `Hi Adil,\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "N/A"}\nProject Type: ${form.project_type}\n\nProject Details:\n${form.message}\n`
-        );
-        window.open(`mailto:adilmubarack03@gmail.com?subject=${subject}&body=${body}`, "_blank");
-        setStatus("success");
-        setForm(INITIAL_FORM);
-        setTouched({});
-        return;
-      }
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "032e1406-c71b-44a7-ad05-5167fb9f8f0e";
+
+      const formData = new FormData();
+      formData.append("access_key", accessKey);
+      formData.append("from_name", "Adil Mubarak Portfolio");
+      formData.append("subject", `New Project Enquiry: ${form.name} [${form.project_type}]`);
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone || "Not provided");
+      formData.append("project_type", form.project_type);
+      formData.append("message", form.message);
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          from_name: "Adil Mubarak Portfolio",
-          subject: `New Project Enquiry: ${form.name} [${form.project_type}]`,
-          name: form.name,
-          email: form.email,
-          phone: form.phone || "Not provided",
-          project_type: form.project_type,
-          message: form.message,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
@@ -154,6 +139,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
         setForm(INITIAL_FORM);
         setTouched({});
       } else {
+        console.error("Web3Forms error response:", data);
         setStatus("error");
       }
     } catch (err) {
