@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "../../types";
 
@@ -38,9 +38,11 @@ const isDirectVideo = (url?: string): boolean => {
 
 const VideoModal: React.FC<Props> = ({ project, onClose }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isBuffering, setIsBuffering] = useState(true);
 
   useEffect(() => {
     if (!project) return;
+    setIsBuffering(true);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -126,6 +128,19 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
 
           {/* Large Video Frame (Native HTML5 or YouTube) */}
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.95)] border border-[#F1EDE3]/15">
+            {/* YouTube-style Buffering / Loading Indicator */}
+            {isDirect && isBuffering && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 backdrop-blur-[2px] z-20 pointer-events-none transition-opacity duration-200">
+                <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border-3 sm:border-4 border-white/10" />
+                  <div className="absolute inset-0 rounded-full border-3 sm:border-4 border-transparent border-t-[#F1EDE3] border-r-[#F1EDE3]/50 animate-spin" />
+                </div>
+                <span className="text-[10px] font-sans font-medium uppercase tracking-[0.25em] text-[#D8D1C2] mt-3 drop-shadow-md">
+                  Buffering HD Stream
+                </span>
+              </div>
+            )}
+
             {isDirect ? (
               <video
                 ref={videoRef}
@@ -134,6 +149,13 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
                 autoPlay
                 playsInline
                 preload="auto"
+                onLoadStart={() => setIsBuffering(true)}
+                onWaiting={() => setIsBuffering(true)}
+                onSeeking={() => setIsBuffering(true)}
+                onCanPlay={() => setIsBuffering(false)}
+                onPlaying={() => setIsBuffering(false)}
+                onPause={() => setIsBuffering(false)}
+                onError={() => setIsBuffering(false)}
                 className="w-full h-full object-contain bg-black focus:outline-none"
               >
                 <source src={rawUrl} type="video/mp4" />
