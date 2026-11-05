@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
       <header className="fixed top-0 inset-x-0 z-50 px-4 sm:px-8 pt-4 sm:pt-5 transition-all duration-300">
         <div className="max-w-7xl mx-auto">
           <div
-            className={`rounded-full px-5 py-2.5 flex items-center justify-between transition-all duration-500 ${
+            className={`rounded-full px-5 py-2.5 flex items-center justify-between relative transition-all duration-500 ${
               scrolled
                 ? "bg-[#080B09]/80 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/70"
                 : "bg-black/25 backdrop-blur-xl backdrop-saturate-150 border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_32px_0_rgba(0,0,0,0.37)]"
@@ -75,21 +75,18 @@ const Navbar: React.FC = () => {
           >
 
             {/* Logo */}
-            <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="Adil Mubarak Photography Home">
+            <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="Adil Mubarak Home">
               <div className="w-7 h-7 rounded-full bg-[#F1EDE3] flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
                 <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-[#080B09] fill-none stroke-[2]">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 3L15 9M21 9.5L14.5 12M19.5 17.5L14 15M12 21L9 15M3 14.5L9.5 12M4.5 6.5L10 9" />
                 </svg>
               </div>
-              <div>
-                <p className="font-serif font-semibold text-base tracking-tight text-[#F1EDE3] leading-none">Adil Mubarak</p>
-                <p className="text-[8px] font-sans font-semibold text-[#8D8B82] uppercase tracking-[0.25em] leading-none mt-0.5">Photography &amp; Cinema</p>
-              </div>
+              <p className="font-serif font-semibold text-base tracking-tight text-[#F1EDE3] leading-none">Adil Mubarak</p>
             </button>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-7">
+            {/* Desktop Nav — absolutely centered */}
+            <nav className="hidden md:flex items-center gap-7 absolute left-1/2 -translate-x-1/2">
               {NAV_LINKS.map((link) => (
                 <button
                   key={link.id}
@@ -118,7 +115,7 @@ const Navbar: React.FC = () => {
                 onClick={() => scrollTo("contact")}
                 className="hidden sm:inline-flex items-center gap-2 bg-[#F1EDE3] text-[#080B09] font-display font-semibold text-xs py-2 px-5 rounded-full hover:bg-white hover:scale-102 transition-all duration-200 shadow-md"
               >
-                Inquire Date
+                Contact
               </button>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
