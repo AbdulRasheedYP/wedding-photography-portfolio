@@ -1,47 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
-  { value: "100+", label: "Projects Completed", detail: "Campaigns, Events & Reels" },
-  { value: "03", label: "Fashion Shows Filmed", detail: "Runway & Bridal Launches" },
-  { value: "02", label: "Global Bases", detail: "Dubai, UAE & Kerala, India" },
-  { value: "04", label: "Languages", detail: "English · Malayalam · Hindi · Tamil" },
+  { value: "100+", label: "Visual Projects", detail: "Campaigns & Events" },
+  { value: "03", label: "Fashion Shows", detail: "Runway & Bridal Launches" },
+  { value: "02", label: "Global Bases", detail: "Dubai, UAE & Kerala" },
+  { value: "04", label: "Languages", detail: "English, Malayalam, Hindi, Tamil" },
 ];
 
-const TECH_STACK = [
-  { name: "DaVinci Resolve", category: "Color & Grade", level: "Advanced" },
-  { name: "Cinematography", category: "Capture", level: "4K / 60fps" },
-  { name: "Reel Production", category: "Short-Form", level: "High Engagement" },
-  { name: "Color Science", category: "Post-Production", level: "10-Bit Log" },
-  { name: "Meta Ads & SMM", category: "Marketing", level: "Growth & Reach" },
-  { name: "CapCut Pro", category: "Fast Turnaround", level: "Rapid Social" },
+const SKILLS = [
+  "Videography & Cinema",
+  "Fashion & Bridal",
+  "Reel Editing & Pacing",
+  "DaVinci Resolve",
+  "Color Grading",
+  "Corporate Galas",
+  "Social Media Strategy",
 ];
 
 const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const hudTimeRef = useRef<HTMLSpanElement>(null);
-  const [dubaiTime, setDubaiTime] = useState("");
-
-  useEffect(() => {
-    // Live Dubai clock
-    const updateTime = () => {
-      const now = new Date();
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Dubai",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      };
-      setDubaiTime(new Intl.DateTimeFormat("en-US", options).format(now));
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 768) return;
@@ -49,17 +32,32 @@ const AboutSection: React.FC = () => {
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
-        const cards = sectionRef.current?.querySelectorAll(".bento-card");
-        if (cards && cards.length > 0) {
+        if (imageRef.current) {
           gsap.fromTo(
-            cards,
-            { opacity: 0, y: 35, scale: 0.98 },
+            imageRef.current,
+            { opacity: 0, x: -30 },
             {
               opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.9,
-              stagger: 0.1,
+              x: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 75%",
+                once: true,
+              },
+            }
+          );
+        }
+
+        if (contentRef.current) {
+          gsap.fromTo(
+            contentRef.current,
+            { opacity: 0, x: 30 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: sectionRef.current,
@@ -84,107 +82,169 @@ const AboutSection: React.FC = () => {
       id="about"
       className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#080B09] scroll-mt-20 relative overflow-hidden text-[#F1EDE3]"
     >
-      {/* Futuristic Ambient Laser Glows */}
-      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-[#25D366]/[0.025] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -right-40 w-96 h-96 bg-[#F1EDE3]/[0.02] rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(#F1EDE3_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.02] pointer-events-none" />
+      {/* Soft Ambient Cinematic Glows */}
+      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-[#F1EDE3]/[0.025] rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/3 -right-40 w-96 h-96 bg-[#8D8B82]/[0.03] rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* Section Header: Just "About" */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-6 h-[1px] bg-[#67685D]" />
-              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
-                Profile
-              </p>
-            </div>
-            <h2 className="font-serif text-4xl sm:text-6xl text-[#F1EDE3] font-normal tracking-tight leading-[1.05]">
-              About
-            </h2>
-          </div>
-
-          {/* Futuristic Viewfinder Meta */}
-          <div className="flex items-center gap-3 text-[10px] font-mono text-[#8D8B82] bg-white/[0.03] border border-white/[0.08] px-3.5 py-1.5 rounded-full backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-            <span>SYS: 4K_LOG</span>
-            <span className="text-white/20">|</span>
-            <span>COLOR: DAVINCI_MGMT</span>
-            <span className="text-white/20">|</span>
-            <span className="text-[#D8D1C2]">DXB {dubaiTime || "12:00:00"}</span>
-          </div>
+        {/* Section Header */}
+        <div className="flex items-center gap-3 mb-10 sm:mb-14">
+          <span className="w-8 h-[1px] bg-[#67685D]" />
+          <h2 className="text-[11px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
+            About
+          </h2>
         </div>
 
-        {/* Futuristic Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+        {/* 2-Column Creative Editorial Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
-          {/* 1. MAIN BIO & VISION CARD (Span 8) */}
-          <div className="bento-card lg:col-span-8 relative rounded-3xl p-6 sm:p-9 bg-gradient-to-br from-[#121614]/90 via-[#0D100E]/80 to-[#0A0D0B]/90 border border-white/[0.09] shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-500">
-            {/* Viewfinder corner crosshairs */}
-            <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-white/20 pointer-events-none" />
-            <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-white/20 pointer-events-none" />
-            <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-white/20 pointer-events-none" />
-            <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-white/20 pointer-events-none" />
+          {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
+          <div ref={imageRef} className="lg:col-span-5 space-y-4">
+            {/* Primary Large Editorial Image */}
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
+              <img
+                src="/images/about/camera_rig.webp"
+                alt="Behind the Lens — Adil Mubarak"
+                className="w-full h-full object-cover filter brightness-[0.92] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-            {/* Glowing top line */}
-            <div className="absolute top-0 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-[#F1EDE3]/20 to-transparent" />
-
-            <div>
-              <div className="flex items-center justify-between mb-5">
-                <span className="text-[10px] font-mono tracking-widest text-[#8D8B82] uppercase">
-                  // 01 · ARTISTIC PHILOSOPHY
-                </span>
-                <span className="text-[9px] font-mono uppercase tracking-widest text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-2.5 py-0.5 rounded-full">
-                  Available Worldwide
-                </span>
-              </div>
-
-              <h3 className="font-serif text-2xl sm:text-4xl text-[#F1EDE3] font-normal leading-[1.2] tracking-tight mb-5">
-                Merging cinematic precision with <span className="italic text-[#C8BFB0]">raw human emotion.</span>
-              </h3>
-
-              <div className="space-y-4 text-xs sm:text-[14px] text-[#A8A499] font-sans leading-[1.8] max-w-2xl">
-                <p>
-                  I'm <strong className="text-[#F1EDE3] font-medium">Adil Mubarak MK</strong> — a creative Videographer, Photographer, and Reel Editor operating between <strong className="text-[#F1EDE3] font-medium">Dubai, UAE</strong> and <strong className="text-[#F1EDE3] font-medium">Calicut, Kerala</strong>.
-                </p>
-                <p>
-                  With <strong className="text-[#F1EDE3] font-medium">100+ visual projects</strong> spanning luxury bridal campaigns, high-fashion runway shows, and corporate galas — my camera work is grounded in intentional framing, dynamic camera movement, and high-engagement social storytelling.
-                </p>
-                <p>
-                  Every piece of footage is developed inside <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong>. From custom color management to rhythmic sound design, I construct visual experiences engineered to stop the scroll and leave a lasting memory.
-                </p>
+              {/* Floating Base Badge */}
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="bg-[#080B09]/85 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 flex items-center justify-between shadow-xl">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse flex-shrink-0" />
+                    <div>
+                      <p className="text-[11px] font-sans font-semibold text-[#F1EDE3] leading-none">
+                        Based in Dubai, UAE
+                      </p>
+                      <p className="text-[9px] font-sans text-[#8D8B82] mt-1">
+                        Available for Worldwide Assignments
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-[9px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-white/10 px-2.5 py-1 rounded-full">
+                    Active
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Identity & Download Action Bar */}
-            <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-[#171B19] shadow-inner flex-shrink-0">
-                  <img
-                    src="/images/about/founder.webp"
-                    alt="Adil Mubarak"
-                    className="w-full h-full object-cover rounded-full"
-                    loading="lazy"
-                  />
-                </div>
-                <div>
-                  <p className="font-serif text-base text-[#F1EDE3] font-normal leading-tight">
-                    Adil Mubarak MK
-                  </p>
-                  <p className="text-[10px] font-mono text-[#8D8B82] uppercase tracking-wider mt-0.5">
-                    Videographer · Reel Editor · Colorist
-                  </p>
+            {/* Secondary Dual Visual Cards */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {/* Creator Portrait Thumbnail */}
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/10 group shadow-md">
+                <img
+                  src="/images/about/founder.webp"
+                  alt="Adil Mubarak MK"
+                  className="w-full h-full object-cover filter brightness-95 transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-2.5 left-3 right-3 pointer-events-none">
+                  <p className="font-serif text-sm text-[#F1EDE3] leading-tight">Adil Mubarak</p>
+                  <p className="text-[9px] font-sans text-[#8D8B82] uppercase tracking-wider">Cinematographer</p>
                 </div>
               </div>
 
-              {/* Futuristic CV Download Button */}
+              {/* Color Grading Suite Photo */}
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/10 group shadow-md">
+                <img
+                  src="/images/about/color_grading.webp"
+                  alt="Color Grading on DaVinci Resolve"
+                  className="w-full h-full object-cover filter brightness-95 transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-2.5 left-3 right-3 pointer-events-none">
+                  <p className="font-serif text-sm text-[#F1EDE3] leading-tight">DaVinci Resolve</p>
+                  <p className="text-[9px] font-sans text-[#8D8B82] uppercase tracking-wider">10-Bit Colorist</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: STORY, SKILLS, STATS & CV (Span 7) */}
+          <div ref={contentRef} className="lg:col-span-7 space-y-7">
+            
+            {/* Main Headline */}
+            <div>
+              <h3 className="font-serif text-3xl sm:text-5xl text-[#F1EDE3] font-normal leading-[1.12] tracking-tight">
+                Every frame is <span className="italic text-[#C8BFB0]">a deliberate act.</span>
+              </h3>
+              <p className="font-serif text-base sm:text-lg text-[#D8D1C2] font-normal italic border-l-2 border-[#67685D] pl-4 py-1 mt-4">
+                "Light, motion, truth — captured in a single breath."
+              </p>
+            </div>
+
+            {/* Narrative Bio */}
+            <div className="space-y-4 text-xs sm:text-[14.5px] text-[#A8A499] font-sans leading-[1.85]">
+              <p>
+                I'm <strong className="text-[#F1EDE3] font-medium">Adil Mubarak MK</strong> — a creative Videographer, Photographer, and Reel Editor operating between <strong className="text-[#F1EDE3] font-medium">Dubai, UAE</strong> and <strong className="text-[#F1EDE3] font-medium">Calicut, Kerala</strong>.
+              </p>
+              <p>
+                With over <strong className="text-[#F1EDE3] font-medium">100+ visual projects</strong> across luxury bridal campaigns, high-fashion runway shows, and corporate events — I merge cinematic storytelling with rhythmic reel pacing.
+              </p>
+              <p>
+                Every project is graded and finished on <strong className="text-[#F1EDE3] font-medium">DaVinci Resolve</strong>. From custom color grading to sound design, every visual is crafted with intention to evoke emotion and capture the true spirit of the moment.
+              </p>
+            </div>
+
+            {/* Creative Skill Chips */}
+            <div>
+              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8D8B82] mb-3">
+                Disciplines &amp; Craft
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {SKILLS.map((skill) => (
+                  <span
+                    key={skill}
+                    className="text-[11px] font-sans font-medium text-[#D8D1C2] bg-[#121614] border border-[#F1EDE3]/10 px-3.5 py-1.5 rounded-full hover:border-[#F1EDE3]/30 hover:text-[#F1EDE3] transition-colors duration-200"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* 4 Stats Grid Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              {STATS.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl p-4 bg-[#111412] border border-[#F1EDE3]/10 hover:border-[#F1EDE3]/25 transition-all duration-300"
+                >
+                  <p className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-tight">
+                    {stat.value}
+                  </p>
+                  <p className="font-sans text-[11px] font-semibold text-[#D8D1C2] mt-1 leading-tight">
+                    {stat.label}
+                  </p>
+                  <p className="font-sans text-[9px] text-[#67685D] mt-0.5">
+                    {stat.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Action Bar with Download CV */}
+            <div className="pt-4 border-t border-[#F1EDE3]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <p className="font-serif text-base text-[#F1EDE3]">Adil Mubarak MK</p>
+                <p className="text-[11px] font-sans text-[#8D8B82]">adilmubarack03@gmail.com · +971 56 870 9412</p>
+              </div>
+
               <a
                 href="/documents/Adil_Mubarak_Resume.pdf"
                 download="Adil_Mubarak_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F1EDE3] text-[#080B09] font-sans font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_4px_20px_rgba(241,237,227,0.15)]"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F1EDE3] text-[#080B09] font-sans font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-lg"
               >
                 <svg
                   className="w-3.5 h-3.5 stroke-current fill-none stroke-[2.2] transition-transform duration-300 group-hover:translate-y-0.5"
@@ -195,140 +255,12 @@ const AboutSection: React.FC = () => {
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
                 <span>Download CV</span>
-                <span className="text-[9px] font-mono text-[#080B09]/60 border-l border-[#080B09]/20 pl-2">
-                  PDF · 52KB
+                <span className="text-[9px] font-sans text-[#080B09]/60 border-l border-[#080B09]/20 pl-2">
+                  PDF
                 </span>
               </a>
             </div>
-          </div>
 
-          {/* 2. LIVE LOCATION & HUD RADAR CARD (Span 4) */}
-          <div className="bento-card lg:col-span-4 relative rounded-3xl p-6 bg-gradient-to-br from-[#121614]/90 to-[#0A0D0B]/90 border border-white/[0.09] shadow-xl backdrop-blur-xl flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-500">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-mono tracking-widest text-[#8D8B82] uppercase">
-                  // 02 · LOCATION &amp; RADAR
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#25D366] animate-ping" />
-              </div>
-
-              {/* Futuristic Radar Grid Mockup */}
-              <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-[#080B09] border border-white/[0.08] p-4 flex flex-col justify-between mb-5">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,211,102,0.08)_0,transparent_70%)]" />
-                {/* Radar rings */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-32 h-32 rounded-full border border-white/5 animate-pulse" />
-                  <div className="absolute w-20 h-20 rounded-full border border-white/10" />
-                  <div className="absolute w-2 h-2 rounded-full bg-[#25D366] shadow-[0_0_12px_#25D366]" />
-                </div>
-
-                <div className="relative z-10 flex items-center justify-between text-[9px] font-mono text-[#8D8B82]">
-                  <span>LAT: 25.2048° N</span>
-                  <span>LNG: 55.2708° E</span>
-                </div>
-
-                <div className="relative z-10 flex items-center justify-between text-[10px] font-mono text-[#F1EDE3]">
-                  <span className="text-[#25D366] font-bold">STATUS: READY TO SHOOT</span>
-                  <span>ZONE: UAE / IND</span>
-                </div>
-              </div>
-
-              <h4 className="font-serif text-xl text-[#F1EDE3] font-normal leading-tight mb-2">
-                Dubai &amp; Worldwide
-              </h4>
-              <p className="text-xs text-[#8D8B82] font-sans leading-relaxed">
-                Primary production base in Dubai, UAE with frequent shoots across Calicut, Kochi, and international locations.
-              </p>
-            </div>
-
-            <div className="mt-5 pt-4 border-t border-white/[0.07] flex items-center justify-between text-[11px] font-mono text-[#D8D1C2]">
-              <span>Direct WhatsApp:</span>
-              <a
-                href="https://wa.me/971568709412?text=Hi%20Adil,%20inquiring%20about%20a%20project."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#25D366] hover:underline"
-              >
-                +971 56 870 9412 &rarr;
-              </a>
-            </div>
-          </div>
-
-          {/* 3. FOUR STATS METRIC BENTO CARDS (Span 6, grid 2x2) */}
-          <div className="bento-card lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4">
-            {STATS.map((stat, i) => (
-              <div
-                key={stat.label}
-                className="rounded-2xl p-5 bg-[#121614]/80 border border-white/[0.08] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-md"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[9px] font-mono text-[#67685D] uppercase tracking-wider">
-                    0{i + 1} //
-                  </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-[#F1EDE3] transition-colors" />
-                </div>
-                <div>
-                  <p className="font-serif text-3xl sm:text-4xl text-[#F1EDE3] font-normal tracking-tight group-hover:translate-x-1 transition-transform duration-300">
-                    {stat.value}
-                  </p>
-                  <p className="font-sans text-[11px] font-semibold text-[#D8D1C2] uppercase tracking-wider mt-1">
-                    {stat.label}
-                  </p>
-                  <p className="font-sans text-[10px] text-[#8D8B82] mt-0.5">
-                    {stat.detail}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 4. DAVINCI RESOLVE & POST-PRODUCTION WORKFLOW (Span 6) */}
-          <div className="bento-card lg:col-span-6 relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-[#121614]/90 to-[#0A0D0B]/90 border border-white/[0.09] shadow-xl backdrop-blur-xl flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-500">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-mono tracking-widest text-[#8D8B82] uppercase">
-                  // 03 · POST-PRODUCTION ENGINE
-                </span>
-                <span className="text-[10px] font-mono text-[#D8D1C2] bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full">
-                  DaVinci Resolve Studio
-                </span>
-              </div>
-
-              {/* Color scopes & grade simulation */}
-              <div className="mb-4 p-3 rounded-2xl bg-[#080B09] border border-white/[0.06] flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#E25B45]" />
-                  <div className="w-3 h-3 rounded-full bg-[#F3B23E]" />
-                  <div className="w-3 h-3 rounded-full bg-[#3B90B2]" />
-                  <div className="w-3 h-3 rounded-full bg-[#25D366]" />
-                </div>
-                <span className="text-[10px] font-mono text-[#8D8B82]">
-                  10-BIT COLOR PIPELINE · LOG &rarr; REC.709
-                </span>
-                <span className="text-[10px] font-mono text-[#25D366]">PASS ✓</span>
-              </div>
-
-              {/* Interactive Tool Chips */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4">
-                {TECH_STACK.map((tech) => (
-                  <div
-                    key={tech.name}
-                    className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/20 transition-all duration-200"
-                  >
-                    <p className="text-[11px] font-sans font-semibold text-[#F1EDE3] leading-snug">
-                      {tech.name}
-                    </p>
-                    <p className="text-[9px] font-mono text-[#8D8B82] uppercase tracking-wider mt-0.5">
-                      {tech.level}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-[11px] font-sans text-[#67685D] mt-4 pt-3 border-t border-white/[0.06]">
-              Engineered for social speed, calibrated for cinema projection.
-            </p>
           </div>
 
         </div>
