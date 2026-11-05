@@ -100,7 +100,7 @@ const AboutSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
           {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
-          <div ref={imageRef} className="lg:col-span-5 space-y-4">
+          <div ref={imageRef} className="lg:col-span-5">
             {/* Primary Large Editorial Image */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/15 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
               <img
@@ -112,60 +112,6 @@ const AboutSection: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-              {/* Floating Base Badge */}
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-[#080B09]/85 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 flex items-center justify-between shadow-xl">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse flex-shrink-0" />
-                    <div>
-                      <p className="text-[11px] font-sans font-semibold text-[#F1EDE3] leading-none">
-                        Based in Dubai, UAE
-                      </p>
-                      <p className="text-[9px] font-sans text-[#8D8B82] mt-1">
-                        Available for Worldwide Assignments
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-[9px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-white/10 px-2.5 py-1 rounded-full">
-                    Active
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Secondary Dual Visual Cards */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {/* Creator Portrait Thumbnail */}
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/10 group shadow-md">
-                <img
-                  src="/images/about/founder.webp"
-                  alt="Adil Mubarak MK"
-                  className="w-full h-full object-cover filter brightness-95 transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-2.5 left-3 right-3 pointer-events-none">
-                  <p className="font-serif text-sm text-[#F1EDE3] leading-tight">Adil Mubarak</p>
-                  <p className="text-[9px] font-sans text-[#8D8B82] uppercase tracking-wider">Cinematographer</p>
-                </div>
-              </div>
-
-              {/* Color Grading Suite Photo */}
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#111412] border border-[#F1EDE3]/10 group shadow-md">
-                <img
-                  src="/images/about/color_grading.webp"
-                  alt="Color Grading on DaVinci Resolve"
-                  className="w-full h-full object-cover filter brightness-95 transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-2.5 left-3 right-3 pointer-events-none">
-                  <p className="font-serif text-sm text-[#F1EDE3] leading-tight">DaVinci Resolve</p>
-                  <p className="text-[9px] font-sans text-[#8D8B82] uppercase tracking-wider">10-Bit Colorist</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -232,11 +178,26 @@ const AboutSection: React.FC = () => {
               ))}
             </div>
 
-            {/* Action Bar with Download CV */}
+            {/* Action Bar with Round DP Avatar and Download CV */}
             <div className="pt-4 border-t border-[#F1EDE3]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <p className="font-serif text-base text-[#F1EDE3]">Adil Mubarak MK</p>
-                <p className="text-[11px] font-sans text-[#8D8B82]">adilmubarack03@gmail.com · +971 56 870 9412</p>
+              <div className="flex items-center gap-3.5">
+                {/* Round Profile DP Avatar */}
+                <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-[#171B19] shadow-md flex-shrink-0 overflow-hidden">
+                  <img
+                    src="/images/about/founder.webp"
+                    alt="Adil Mubarak"
+                    className="w-full h-full object-cover rounded-full"
+                    loading="lazy"
+                  />
+                </div>
+                <div>
+                  <p className="font-serif text-base text-[#F1EDE3] font-semibold leading-tight">
+                    Adil Mubarak MK
+                  </p>
+                  <p className="text-[11px] font-sans text-[#8D8B82] mt-0.5">
+                    adilmubarack03@gmail.com · +971 56 870 9412
+                  </p>
+                </div>
               </div>
 
               <a
