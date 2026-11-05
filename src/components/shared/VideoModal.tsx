@@ -104,16 +104,13 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
 
           {/* Large Video Frame (Native HTML5 or YouTube) */}
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.95)] border border-[#F1EDE3]/15">
-            {/* YouTube-style Buffering / Loading Indicator */}
+            {/* Sleek Minimal Spinner */}
             {isDirect && isBuffering && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/45 backdrop-blur-[2px] z-20 pointer-events-none transition-opacity duration-200">
-                <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border-3 sm:border-4 border-white/10" />
-                  <div className="absolute inset-0 rounded-full border-3 sm:border-4 border-transparent border-t-[#F1EDE3] border-r-[#F1EDE3]/50 animate-spin" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px] z-20 pointer-events-none transition-opacity duration-200">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border-2 sm:border-3 border-white/10" />
+                  <div className="absolute inset-0 rounded-full border-2 sm:border-3 border-transparent border-t-[#F1EDE3] border-r-[#F1EDE3]/60 animate-spin" />
                 </div>
-                <span className="text-[10px] font-sans font-medium uppercase tracking-[0.25em] text-[#D8D1C2] mt-3 drop-shadow-md">
-                  Buffering HD Stream
-                </span>
               </div>
             )}
 
