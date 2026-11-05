@@ -46,7 +46,7 @@ def optimize_file(img_path: Path):
 
 def main():
     print('====================================================')
-    print(' FrameStory Studios - Automated Image Optimizer     ')
+    print(' Adil Mubarak Photography - Automated Image Optimizer')
     print('====================================================')
 
     total_processed = 0

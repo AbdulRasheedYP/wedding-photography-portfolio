@@ -1,8 +1,8 @@
-// FrameStory Studios - Service Worker
+// Adil Mubarak Photography - Service Worker
 // Provides 0ms instant image loading for repeat visitors via CacheStorage
 
-const CACHE_NAME = "framestory-assets-v1";
-const IMAGE_CACHE = "framestory-images-v1";
+const CACHE_NAME = "adil-assets-v1";
+const IMAGE_CACHE = "adil-images-v1";
 
 // Cache static app assets on install
 self.addEventListener("install", (event) => {

@@ -71,7 +71,7 @@ export default function HeroSection({ onExploreClick }: Props) {
       <div className="absolute inset-0 z-0">
         <img
           src="/images/hero/hero_bg.webp"
-          alt="Sunset Serenity in Lace - Luxury Wedding Photography by FrameStory Studios"
+          alt="Sunset Serenity in Lace - Luxury Wedding Photography by Adil Mubarak"
           width="1920"
           height="1080"
           className="w-full h-full object-cover object-center"

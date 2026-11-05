@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
           >
 
             {/* Logo */}
-            <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="FrameStory Studios Home">
+            <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="Adil Mubarak Photography Home">
               <div className="w-7 h-7 rounded-full bg-[#F1EDE3] flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
                 <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-[#080B09] fill-none stroke-[2]">
                   <circle cx="12" cy="12" r="9" />
@@ -83,8 +83,8 @@ const Navbar: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <p className="font-serif font-semibold text-base tracking-tight text-[#F1EDE3] leading-none">FrameStory</p>
-                <p className="text-[8px] font-sans font-semibold text-[#8D8B82] uppercase tracking-[0.25em] leading-none mt-0.5">Studios</p>
+                <p className="font-serif font-semibold text-base tracking-tight text-[#F1EDE3] leading-none">Adil Mubarak</p>
+                <p className="text-[8px] font-sans font-semibold text-[#8D8B82] uppercase tracking-[0.25em] leading-none mt-0.5">Photography &amp; Cinema</p>
               </div>
             </button>
 
@@ -174,10 +174,10 @@ const Navbar: React.FC = () => {
               })}
             </div>
 
-            {/* Subtle Minimal Studio Brand Mark */}
+            {/* Subtle Minimal Personal Brand Mark */}
             <div className="pt-6 border-t border-[#F1EDE3]/10 flex items-center justify-between text-xs font-sans text-[#8D8B82]">
               <span className="tracking-wider uppercase text-[10px] font-display">
-                FrameStory Studios
+                Adil Mubarak Photography
               </span>
               <span className="text-[10px] font-sans">
                 Kerala • Pan-India • UAE

@@ -96,7 +96,7 @@ export const testimonials: Testimonial[] = [
     id: 1,
     client_name: "Sarah & John",
     role: "Bride & Groom · Cochin",
-    text: "FrameStory Studios captured our day perfectly. The cinematic quality and emotional storytelling was beyond our expectations!",
+    text: "Adil captured our day perfectly. The cinematic quality and emotional storytelling was beyond our expectations!",
     rating: 5,
   },
   {

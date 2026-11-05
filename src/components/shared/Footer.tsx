@@ -17,7 +17,7 @@ const LEGAL_DOCS: Record<string, LegalModalContent> = {
       },
       {
         heading: "2. Artistic Discretion",
-        body: "FrameStory Studios operates with distinct cinematic sensibilities. Final decisions regarding editing rhythm and color grading palettes remain at the studio's creative discretion.",
+        body: "Adil Mubarak operates with distinct cinematic and editorial sensibilities. Final decisions regarding editing rhythm and color grading palettes remain at the artist's creative discretion.",
       },
       {
         heading: "3. Delivery Timeline",
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
           {/* Brand & Copyright */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
             <span className="font-serif font-bold text-base sm:text-lg tracking-tight text-[#F1EDE3]">
-              FrameStory Studios
+              Adil Mubarak Photography
             </span>
             <span className="hidden sm:inline-block text-[#8D8B82]/40">•</span>
             <span className="text-xs font-sans text-[#8D8B82]">
@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
               Privacy Policy
             </button>
             <a
-              href="mailto:hello@framestorystudios.com"
+              href="mailto:contact@adilmubarak.com"
               className="py-1 hover:text-[#F1EDE3] transition-colors"
             >
               Contact
@@ -138,7 +138,7 @@ const Footer: React.FC = () => {
             {/* Modal Header */}
             <div className="mb-6 pr-8">
               <span className="text-[10px] font-display font-bold uppercase tracking-[0.25em] text-[#8D8B82] block mb-1">
-                FrameStory Legal
+                Adil Mubarak Legal
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-wide">
                 {LEGAL_DOCS[activeModal]?.title}

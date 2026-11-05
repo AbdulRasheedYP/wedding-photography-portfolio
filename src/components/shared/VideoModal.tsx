@@ -95,7 +95,7 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
           <div className="px-5 py-4 border-t border-[#F1EDE3]/10 flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-display text-[#8D8B82] uppercase tracking-widest">Client</p>
-              <p className="font-display font-bold text-sm text-[#F1EDE3]">{project.client_name || "FrameStory Production"}</p>
+              <p className="font-display font-bold text-sm text-[#F1EDE3]">{project.client_name || "Adil Mubarak Films"}</p>
             </div>
             <button
               onClick={() => { onClose(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}

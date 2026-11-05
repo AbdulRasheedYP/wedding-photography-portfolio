@@ -27,7 +27,7 @@
 }
 
 /* Minimal Card Styling */
-.framestory-card {
+.adil-card, .framestory-card {
   background: #111412;
   border: 1px solid rgba(241, 237, 227, 0.05);
   border-radius: 16px;
@@ -35,7 +35,7 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.framestory-card:hover {
+.adil-card:hover, .framestory-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
   border-color: rgba(241, 237, 227, 0.15);

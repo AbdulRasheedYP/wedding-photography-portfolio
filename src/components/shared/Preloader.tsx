@@ -61,7 +61,7 @@ const Preloader: React.FC = () => {
     >
       <div ref={textGroupRef} className="flex flex-col items-center">
         <span className="text-[10px] font-display font-bold uppercase tracking-[0.4em] opacity-70 mb-4">
-          Lumen Films
+          Adil Mubarak
         </span>
         <div className="font-display text-7xl sm:text-9xl font-black tracking-tighter flex items-end">
           <span ref={counterRef}>0</span>

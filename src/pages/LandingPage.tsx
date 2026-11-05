@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
   const [contactPrefill, setContactPrefill] = useState<Partial<ContactFormState> | null>(null);
 
   useEffect(() => {
-    document.title = "FrameStory Studios — Photography & Videography";
+    document.title = "Adil Mubarak — Wedding Photography & Cinema";
   }, []);
 
   const scrollToSection = (id: string): void => {

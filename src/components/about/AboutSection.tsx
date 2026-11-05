@@ -54,26 +54,26 @@ const AboutSection: React.FC = () => {
           <div className="flex items-center gap-3 mb-3.5 sm:mb-4">
             <span className="w-8 h-[1px] bg-[#67685D]" />
             <p className="text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-              About The Studio
+              About The Artist
             </p>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl lg:text-[3.75rem] text-[#F1EDE3] font-normal leading-[1.08] tracking-tight">
-            We preserve feelings, <br className="hidden sm:block" />
-            <span className="text-[#D8D1C2] italic">not just footage.</span>
+            I preserve feelings, <br className="hidden sm:block" />
+            <span className="text-[#D8D1C2] italic">not just photographs.</span>
           </h2>
         </div>
 
         {/* 2-Column Main Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Manifesto & Studio Story */}
+          {/* Left Column: Manifesto & Personal Story */}
           <div className="lg:col-span-6 space-y-8">
             <p className="font-serif text-xl sm:text-2xl text-[#D8D1C2] font-normal leading-relaxed italic border-l-2 border-[#67685D] pl-6 py-1">
               "The most poignant moments are never scripted. They live in a shared breath, an unposed smile, and the quiet spaces between."
             </p>
 
             <p className="text-[#8D8B82] text-sm sm:text-[15px] leading-relaxed font-sans">
-              Founded in Calicut and traveling pan-India, <strong className="text-[#F1EDE3] font-medium">FrameStory Studios</strong> is a boutique visual collective specializing in intimate wedding cinema, brand commercials, and fine-art films. We merge documentary authenticity with high-end anamorphic optics to produce films that endure for generations.
+              Based in Calicut and traveling pan-India and overseas, I am <strong className="text-[#F1EDE3] font-medium">Adil Mubarak</strong>, a documentary wedding photographer and filmmaker. My approach merges candid authenticity with cinematic elegance, capturing honest human emotions and timeless frames that endure for generations.
             </p>
 
             {/* Founder Sign-off */}
@@ -81,7 +81,7 @@ const AboutSection: React.FC = () => {
               <div className="w-12 h-12 rounded-full border border-[#F1EDE3]/15 overflow-hidden bg-[#080B09] flex-shrink-0">
                 <img
                   src="/images/about/founder.jpg"
-                  alt="Adil Rasheed, Creative Director of FrameStory Studios"
+                  alt="Adil Mubarak, Photographer & Filmmaker"
                   className="w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -92,7 +92,7 @@ const AboutSection: React.FC = () => {
                   Adil Mubarak 
                 </p>
                 <p className="text-[11px] font-sans text-[#A8A499] uppercase tracking-widest mt-0.5">
-                  Founder &amp; Creative Director
+                  Photographer &amp; Filmmaker
                 </p>
               </div>
             </div>

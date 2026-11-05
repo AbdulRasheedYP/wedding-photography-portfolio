@@ -76,15 +76,15 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 <span className="text-[#D8D1C2] italic">Your Story</span>
               </h2>
               <p className="text-[#8D8B82] text-[15px] leading-relaxed max-w-sm">
-                Fill in the details below. Our production coordinator will review your brief and respond within 24 hours.
+                Fill in the details below. I will personally review your brief and get back to you within 24 hours.
               </p>
             </div>
 
             <div className="space-y-6 pt-6 border-t border-[#F1EDE3]/8">
               {[
-                { label: "Studio Email",    val: "hello@framestory.in", href: "mailto:hello@framestory.in"       },
-                { label: "WhatsApp & Call", val: "+91 98765 43210",      href: "https://wa.me/919876543210"       },
-                { label: "Location",        val: "Calicut, Kerala — India Wide"                                   },
+                { label: "Direct Email",    val: "contact@adilmubarak.com", href: "mailto:contact@adilmubarak.com" },
+                { label: "WhatsApp & Call", val: "+91 98765 43210",         href: "https://wa.me/919876543210"      },
+                { label: "Location",        val: "Calicut, Kerala — India Wide"                                     },
               ].map((c) => (
                 <div key={c.label}>
                   <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">{c.label}</p>
@@ -110,7 +110,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center space-y-4">
                   <div className="w-14 h-14 rounded-full bg-[#F1EDE3] text-[#080B09] text-2xl flex items-center justify-center mx-auto font-bold">✓</div>
                   <h3 className="font-display font-extrabold text-xl text-[#F1EDE3]">Request Received!</h3>
-                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">We'll review your brief and get back to you within 24 hours.</p>
+                  <p className="text-[#8D8B82] text-xs max-w-xs mx-auto">I'll review your brief and get back to you within 24 hours.</p>
                   <button onClick={() => setStatus("idle")} className="bg-[#F1EDE3] text-[#080B09] px-6 py-2 rounded-full font-bold text-xs mt-4 hover:bg-[#D8D1C2] transition-colors">
                     Submit Another Request
                   </button>
@@ -119,7 +119,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {[
-                      { name: "name" as const,  label: "Full Name *", type: "text",  placeholder: "Adil Rasheed"     },
+                      { name: "name" as const,  label: "Full Name *", type: "text",  placeholder: "e.g. Rahul Sharma" },
                       { name: "email" as const, label: "Email *",      type: "email", placeholder: "you@example.com" },
                     ].map((f) => (
                       <div key={f.name}>
@@ -150,7 +150,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                   </div>
 
                   {status === "error" && (
-                    <p className="text-red-400 text-xs text-center">Submission failed. Please email <a href="mailto:hello@framestory.in" className="underline">hello@framestory.in</a>.</p>
+                    <p className="text-red-400 text-xs text-center">Submission failed. Please email <a href="mailto:contact@adilmubarak.com" className="underline">contact@adilmubarak.com</a>.</p>
                   )}
 
                   <button type="submit" disabled={status === "sending"}
