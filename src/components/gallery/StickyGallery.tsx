@@ -283,15 +283,21 @@ const StickyGallery: React.FC = () => {
           <button
             type="button"
             onClick={handleViewMore}
-            className="group relative inline-flex items-center gap-3 px-8 py-3.5 rounded-full text-xs font-sans uppercase tracking-[0.2em] text-black bg-[#F1EDE3] hover:bg-white transition-all duration-300 shadow-[0_4px_20px_rgba(241,237,227,0.15)] hover:shadow-[0_6px_25px_rgba(241,237,227,0.3)] hover:scale-[1.02] active:scale-[0.98] font-medium cursor-pointer"
+            className="group inline-flex items-center gap-2 px-5 py-2 rounded-full text-[11px] font-sans font-semibold uppercase tracking-[0.16em] text-black bg-[#F1EDE3] hover:bg-white transition-all duration-200 shadow-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <span>View More Photographs</span>
-            <span className="w-5 h-5 rounded-full bg-black/10 text-black flex items-center justify-center text-[10px] font-mono group-hover:translate-y-0.5 transition-transform">
-              ↓
-            </span>
+            <span>View More</span>
+            <svg
+              className="w-3 h-3 text-black/70 group-hover:translate-y-0.5 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path d="M19 9l-7 7-7-7" />
+            </svg>
           </button>
-          <p className="text-[11px] text-[#8D8B82] font-sans tracking-wide">
-            Showing {displayedItems.length} of {filteredItems.length} photographs
+          <p className="text-[10px] text-[#67685D] font-sans tracking-wide">
+            {displayedItems.length} of {filteredItems.length} photos
           </p>
         </div>
       )}
