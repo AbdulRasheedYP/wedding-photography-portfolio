@@ -8,6 +8,7 @@ import StickyGallery from "../components/gallery/StickyGallery";
 import TestimonialsSection from "../components/testimonials/TestimonialsSection";
 import DestinationsSection from "../components/destinations/DestinationsSection";
 import DirectorNoteSection from "../components/director/DirectorNoteSection";
+import JourneySection from "../components/journey/JourneySection";
 import ContactSection from "../components/contact/ContactSection";
 import Footer from "../components/shared/Footer";
 import VideoModal from "../components/shared/VideoModal";
@@ -18,7 +19,7 @@ import { Project, ContactFormState } from "../types";
 const SectionGap: React.FC = () => (
   <div className="w-full h-16 sm:h-24 lg:h-32 bg-[#080B09] flex items-center justify-center pointer-events-none select-none">
     <div className="w-full max-w-7xl px-5 sm:px-8">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#F1EDE3]/[0.08] to-transparent" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#F1EDE3]/[0.07] to-transparent" />
     </div>
   </div>
 );
@@ -28,7 +29,7 @@ const LandingPage: React.FC = () => {
   const [contactPrefill, setContactPrefill] = useState<Partial<ContactFormState> | null>(null);
 
   useEffect(() => {
-    document.title = "Adil Mubarak — Wedding Photography & Cinema";
+    document.title = "Adil Mubarak — Videographer & Photographer";
   }, []);
 
   const scrollToSection = (id: string): void => {
@@ -36,12 +37,12 @@ const LandingPage: React.FC = () => {
   };
 
   const handleInquireDestination = (destination: string): void => {
-    setContactPrefill({ message: `Inquiring about destination shoot coverage for ${destination}.\n\n` });
+    setContactPrefill({ message: `Interested in coverage for ${destination}.\n\n` });
     scrollToSection("contact");
   };
 
   const handleSelectService = (category: string): void => {
-    setContactPrefill({ project_type: category, message: `Inquiring about ${category} coverage.` });
+    setContactPrefill({ project_type: category, message: `Enquiring about ${category}.` });
     scrollToSection("contact");
   };
 
@@ -62,6 +63,10 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
+      <JourneySection />
+
+      <SectionGap />
+
       <PortfolioSection
         projects={projects}
         categories={categories}
@@ -78,16 +83,16 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
-      <DestinationsSection onInquireDestination={handleInquireDestination} />
-
-      <SectionGap />
-
       <DirectorNoteSection onCommissionClick={() => scrollToSection("contact")} />
 
       <SectionGap />
 
+      <DestinationsSection onInquireDestination={handleInquireDestination} />
+
+      <SectionGap />
+
       <ProcessFaqSection />
-      
+
       <SectionGap />
 
       <ContactSection prefill={contactPrefill} />

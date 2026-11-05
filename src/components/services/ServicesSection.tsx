@@ -1,73 +1,66 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface ServiceCardData {
+interface DisciplineCard {
   id: string;
+  number: string;
   title: string;
+  description: string;
   img: string;
-  categoryValue: string;
+  tools: string[];
 }
 
-const CORE_SERVICES: ServiceCardData[] = [
+const DISCIPLINES: DisciplineCard[] = [
   {
-    id: "weddings",
-    title: "Weddings & Elopements",
+    id: "videography",
+    number: "01",
+    title: "Videography & Cinema",
+    description: "Cinematic event and fashion coverage. Every scene composed with intention — from golden-hour exteriors to intimate interior moments.",
     img: "/images/services/1.webp",
-    categoryValue: "wedding",
+    tools: ["Sony / Canon", "Gimbal", "DaVinci Resolve"],
   },
   {
-    id: "prewedding",
-    title: "Couple & Pre-Weddings",
+    id: "photography",
+    number: "02",
+    title: "Photography",
+    description: "Stills that tell full stories. Editorial portraits, bridal campaigns, event coverage — with a sharp eye for light and authentic emotion.",
     img: "/images/services/2.webp",
-    categoryValue: "wedding",
+    tools: ["Editorial", "Bridal", "Events"],
   },
   {
-    id: "portraits",
-    title: "Bridal & Editorial",
+    id: "reels",
+    number: "03",
+    title: "Reel Editing & Short-Form",
+    description: "Instagram Reels and short-form video built to stop the scroll. Fast-paced cuts, immersive sound design, optimised for digital platforms.",
     img: "/images/services/3.webp",
-    categoryValue: "other",
+    tools: ["Instagram Reels", "CapCut", "Transitions"],
   },
   {
-    id: "cinema",
-    title: "Cinema & Highlight Films",
+    id: "colorgrading",
+    number: "04",
+    title: "Color Grading & Post",
+    description: "Advanced color correction and grading on DaVinci Resolve. Setting the final mood — cinematic, editorial, or vibrant brand identity.",
     img: "/images/services/4.webp",
-    categoryValue: "wedding",
+    tools: ["DaVinci Resolve", "LUTs", "Color Science"],
   },
   {
-    id: "destination",
-    title: "Destination Ceremonies",
+    id: "fashion",
+    number: "05",
+    title: "Fashion & Bridal Campaigns",
+    description: "Three full fashion shows filmed and edited. Promotional content for bridal and clothing brands that captures the essence of the collection.",
     img: "/images/services/5.webp",
-    categoryValue: "other",
+    tools: ["Fashion Shows", "Lookbooks", "Brand Content"],
   },
   {
-    id: "rituals",
-    title: "Haldi, Mehndi & Sangeet",
+    id: "social",
+    number: "06",
+    title: "Social Media Content",
+    description: "End-to-end content creation for Instagram and social campaigns — from shooting to editing to delivery. Built for engagement and aesthetics.",
     img: "/images/services/6.webp",
-    categoryValue: "event",
-  },
-  {
-    id: "twilight",
-    title: "Post-Wedding Portraits",
-    img: "/images/services/7.webp",
-    categoryValue: "wedding",
-  },
-  {
-    id: "albums",
-    title: "Heirloom Fine-Art Albums",
-    img: "/images/services/8.webp",
-    categoryValue: "other",
-  },
-];
-
-const ADDITIONAL_SERVICES: ServiceCardData[] = [
-  {
-    id: "albums",
-    title: "Fine-Art Print Albums",
-    img: "/images/services/9.webp",
-    categoryValue: "other",
+    tools: ["Meta Ads", "Content Strategy", "Scheduling"],
   },
 ];
 
@@ -77,32 +70,46 @@ interface Props {
 
 const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
   const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const extraGridRef = useRef<HTMLDivElement>(null);
-  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    // Skip GSAP layout calculation on mobile to prevent main-thread blocking
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      return;
-    }
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
 
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
+        if (headerRef.current) {
+          gsap.fromTo(
+            headerRef.current,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 78%",
+                once: true,
+              },
+            }
+          );
+        }
+
         if (gridRef.current) {
           gsap.fromTo(
             Array.from(gridRef.current.children),
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 35 },
             {
               opacity: 1,
               y: 0,
               duration: 0.7,
-              stagger: 0.06,
+              stagger: 0.07,
               ease: "power2.out",
               scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 78%",
+                trigger: gridRef.current,
+                start: "top 80%",
                 once: true,
               },
             }
@@ -117,22 +124,11 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (showMore && extraGridRef.current) {
-      gsap.fromTo(
-        Array.from(extraGridRef.current.children),
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power2.out" }
-      );
-    }
-  }, [showMore]);
-
-  const handleCardClick = (categoryValue: string) => {
+  const handleCardClick = (id: string) => {
     if (onSelectService) {
-      onSelectService(categoryValue);
+      onSelectService(id);
     } else {
-      const contactEl = document.getElementById("contact");
-      contactEl?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -140,113 +136,87 @@ const ServicesSection: React.FC<Props> = ({ onSelectService }) => {
     <section
       ref={sectionRef}
       id="services"
-      className="py-12 sm:py-16 lg:py-12 px-5 sm:px-8 bg-[#080B09] scroll-mt-20 flex flex-col justify-center"
+      className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-[#080B09] scroll-mt-20"
     >
-      <div className="max-w-7xl mx-auto w-full">
-        
-        {/* Section Header - Sleek & Compact */}
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+      <div className="max-w-7xl mx-auto">
+
+        {/* Header */}
+        <div ref={headerRef} className="mb-10 sm:mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex items-center gap-2 mb-2">
               <span className="w-5 h-[1px] bg-[#67685D]" />
-              <p className="text-[10px] font-display font-semibold uppercase tracking-[0.25em] text-[#8D8B82]">
-                Artistic Disciplines
+              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.28em] text-[#8D8B82]">
+                What I Do
               </p>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#F1EDE3] font-normal tracking-tight">
-              Offerings &amp; Disciplines
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#F1EDE3] font-normal tracking-tight leading-[1.1]">
+              Creative Disciplines
             </h2>
           </div>
-          <p className="text-xs text-[#8D8B82] font-sans max-w-md hidden sm:block leading-relaxed">
-            Candid emotion, timeless cinema, and editorial portraiture crafted with intimate care.
+          <p className="text-sm text-[#67685D] font-sans max-w-xs hidden sm:block leading-relaxed">
+            Six areas of craft — each built on years of hands-on production across events, fashion, and social media.
           </p>
         </div>
 
-        {/* Unified 8-Service Grid: 2 columns on mobile, 4 columns on laptop */}
+        {/* Grid — 2 col mobile, 3 col desktop */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
         >
-          {CORE_SERVICES.map((svc, i) => (
+          {DISCIPLINES.map((disc) => (
             <div
-              key={svc.id}
-              onClick={() => handleCardClick(svc.categoryValue)}
-              className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-[#F1EDE3]/10 hover:border-[#F1EDE3]/30 bg-[#111412] cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
+              key={disc.id}
+              onClick={() => handleCardClick(disc.id)}
+              className="group relative overflow-hidden rounded-2xl border border-[#F1EDE3]/[0.07] hover:border-[#F1EDE3]/20 bg-[#0D100E] cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-0.5"
             >
-              {/* Background Photo with subtle zoom on hover */}
-              <img
-                src={svc.img}
-                alt={svc.title}
-                className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
-                loading="lazy"
-                decoding="async"
-              />
-
-              {/* Cinematic Bottom Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent group-hover:from-black/95 transition-colors duration-500 pointer-events-none" />
-
-              {/* Bottom Content Bar */}
-              <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-4 z-10">
-                <span className="text-[8px] sm:text-[9px] font-display font-medium tracking-[0.2em] uppercase text-[#D8D1C2]/60 mb-0.5 sm:mb-1 block">
-                  0{i + 1}
-                </span>
-                <h3 className="font-serif text-[13px] sm:text-base lg:text-[1.2rem] text-[#F1EDE3] font-normal leading-snug tracking-wide drop-shadow-md group-hover:text-white transition-colors duration-300">
-                  {svc.title}
-                </h3>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Expandable Additional Services (Reveals only when user clicks View More) */}
-        {showMore && (
-          <div
-            ref={extraGridRef}
-            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-4 mt-2.5 sm:mt-4"
-          >
-            {ADDITIONAL_SERVICES.map((svc, i) => (
-              <div
-                key={svc.id}
-                onClick={() => handleCardClick(svc.categoryValue)}
-                className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-[#F1EDE3]/10 hover:border-[#F1EDE3]/30 bg-[#111412] cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
-              >
+              {/* Image */}
+              <div className="relative aspect-[16/9] overflow-hidden">
                 <img
-                  src={svc.img}
-                  alt={svc.title}
-                  className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                  src={disc.img}
+                  alt={disc.title}
+                  className="w-full h-full object-cover filter brightness-75 contrast-105 transition-transform duration-700 ease-out group-hover:scale-105"
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent group-hover:from-black/95 transition-colors duration-500 pointer-events-none" />
-                <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-4 z-10">
-                  <span className="text-[8px] sm:text-[9px] font-display font-medium tracking-[0.2em] uppercase text-[#D8D1C2]/60 mb-0.5 sm:mb-1 block">
-                    {i + 9 < 10 ? `0${i + 9}` : `${i + 9}`}
-                  </span>
-                  <h3 className="font-serif text-[13px] sm:text-base lg:text-[1.2rem] text-[#F1EDE3] font-normal leading-snug tracking-wide drop-shadow-md group-hover:text-white transition-colors duration-300">
-                    {svc.title}
-                  </h3>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D100E] via-black/20 to-transparent pointer-events-none" />
+
+                {/* Number overlay */}
+                <div className="absolute top-3 right-3">
+                  <span className="font-serif text-xs text-[#F1EDE3]/30 font-normal">{disc.number}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        {/* Centered Small Non-Round "View More" Text Link */}
-        <div className="mt-6 sm:mt-7 flex justify-center">
-          <button
-            onClick={() => setShowMore((prev) => !prev)}
-            className="group inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-sans font-medium uppercase tracking-[0.25em] text-[#8D8B82] hover:text-[#F1EDE3] transition-colors pb-0.5 border-b border-[#F1EDE3]/20 hover:border-[#F1EDE3]"
-          >
-            <span>{showMore ? "View Less" : "View More"}</span>
-            <svg
-              viewBox="0 0 24 24"
-              className={`w-3 h-3 stroke-current fill-none stroke-[2] transition-transform duration-300 ${
-                showMore ? "rotate-180" : "group-hover:translate-y-0.5"
-              }`}
-            >
-              <path d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+              {/* Content */}
+              <div className="p-5">
+                <h3 className="font-serif text-lg sm:text-xl text-[#F1EDE3] font-normal leading-snug mb-2 group-hover:text-white transition-colors duration-300">
+                  {disc.title}
+                </h3>
+                <p className="text-[#67685D] text-[13px] leading-relaxed font-sans mb-4">
+                  {disc.description}
+                </p>
+
+                {/* Tool tags */}
+                <div className="flex flex-wrap gap-1.5">
+                  {disc.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="text-[9px] font-sans font-semibold uppercase tracking-wider text-[#8D8B82] bg-[#F1EDE3]/[0.05] border border-[#F1EDE3]/[0.07] px-2 py-1 rounded-full"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Hover CTA */}
+                <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-[10px] font-sans font-semibold uppercase tracking-widest text-[#D8D1C2]">Enquire</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="translate-x-0 group-hover:translate-x-1 transition-transform duration-300">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
       </div>

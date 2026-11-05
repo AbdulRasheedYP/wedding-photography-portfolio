@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { ContactFormState } from "../../types";
 
 const SHOOT_TYPES = [
-  { value: "wedding",       label: "Full Wedding Coverage"     },
-  { value: "prewedding",    label: "Couple & Pre-Wedding Shoot" },
-  { value: "destination",   label: "Destination Wedding"       },
-  { value: "bridal",        label: "Bridal & Editorial Portrait"},
-  { value: "rituals",       label: "Ceremonies & Haldi / Sangeet" },
-  { value: "other",         label: "Custom Celebration"        },
+  { value: "videography",  label: "Event Videography"            },
+  { value: "photography",  label: "Photography & Portraits"      },
+  { value: "reels",        label: "Reel Editing & Short-Form"    },
+  { value: "colorgrading", label: "Color Grading & Post-Prod."   },
+  { value: "fashion",      label: "Fashion & Bridal Campaigns"   },
+  { value: "social",       label: "Social Media Content"         },
+  { value: "other",        label: "Other / Custom Project"       },
 ];
 
 const INITIAL_FORM: ContactFormState = {
@@ -70,33 +71,40 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
             className="lg:col-span-5 space-y-7"
           >
             <div>
-              <p className="text-[11px] font-display font-bold uppercase tracking-widest text-[#8D8B82] mb-3">Inquire &amp; Connect</p>
+              <p className="text-[11px] font-display font-bold uppercase tracking-widest text-[#8D8B82] mb-3">Enquire &amp; Connect</p>
               <h2 className="font-serif text-5xl sm:text-6xl tracking-tight leading-[0.95] mb-4 font-normal">
                 Let's Create<br />
-                <span className="text-[#D8D1C2] italic">Your Story</span>
+                <span className="text-[#D8D1C2] italic">Something Real</span>
               </h2>
               <p className="text-[#8D8B82] text-[15px] leading-relaxed max-w-sm">
-                Tell me about your celebration. I will personally review your story and get back to you within 24 hours.
+                Based in Dubai — available for events, fashion, and content projects worldwide. I'll personally get back to you within 24 hours.
               </p>
             </div>
 
             <div className="space-y-5 pt-6 border-t border-[#F1EDE3]/8">
               <div>
-                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Direct Email</p>
-                <a href="mailto:contact@adilmubarak.com" className="font-display font-semibold text-[15px] text-[#D8D1C2] hover:text-[#F1EDE3] transition-colors">
-                  contact@adilmubarak.com
+                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Email</p>
+                <a href="mailto:adilmubarack03@gmail.com" className="font-display font-semibold text-[15px] text-[#D8D1C2] hover:text-[#F1EDE3] transition-colors">
+                  adilmubarack03@gmail.com
                 </a>
               </div>
 
               <div>
-                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Base &amp; Travel</p>
-                <p className="font-display font-semibold text-[15px] text-[#D8D1C2]">Calicut, Kerala — Pan-India &amp; Worldwide</p>
+                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Instagram</p>
+                <a href="https://instagram.com/adilmubarackk" target="_blank" rel="noopener noreferrer" className="font-display font-semibold text-[15px] text-[#D8D1C2] hover:text-[#F1EDE3] transition-colors">
+                  @adilmubarackk
+                </a>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-display font-bold uppercase tracking-widest text-[#67685D] mb-1">Base &amp; Availability</p>
+                <p className="font-display font-semibold text-[15px] text-[#D8D1C2]">Dubai, UAE · Available Worldwide</p>
               </div>
 
               {/* Direct WhatsApp Action */}
               <div className="pt-2">
                 <a
-                  href="https://wa.me/919876543210?text=Hi%20Adil,%20I'm%20inquiring%20about%20wedding%20photography%20coverage."
+                  href="https://wa.me/971568709412?text=Hi%20Adil,%20I'd%20like%20to%20enquire%20about%20your%20work."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/20 transition-all font-display text-xs font-semibold tracking-wider group"

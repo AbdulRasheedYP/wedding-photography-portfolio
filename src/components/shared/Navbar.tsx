@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
-  { id: "hero",         label: "Home"         },
-  { id: "about",        label: "The Artist"   },
-  { id: "services",     label: "Offerings"    },
-  { id: "work",         label: "Works"        },
-  { id: "destinations", label: "Destinations" },
-  { id: "contact",      label: "Inquire"      },
+  { id: "hero",         label: "Home"        },
+  { id: "about",        label: "About"       },
+  { id: "services",     label: "Disciplines" },
+  { id: "journey",      label: "Journey"     },
+  { id: "work",         label: "Portfolio"   },
+  { id: "contact",      label: "Contact"     },
 ];
 
 const Navbar: React.FC = () => {

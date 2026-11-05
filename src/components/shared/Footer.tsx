@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
           {/* Brand & Copyright */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
             <span className="font-serif font-bold text-base sm:text-lg tracking-tight text-[#F1EDE3]">
-              Adil Mubarak Photography
+              Adil Mubarak
             </span>
             <span className="hidden sm:inline-block text-[#8D8B82]/40">•</span>
             <span className="text-xs font-sans text-[#8D8B82]">
@@ -87,13 +87,13 @@ const Footer: React.FC = () => {
               Privacy Policy
             </button>
             <a
-              href="mailto:contact@adilmubarak.com"
+              href="mailto:adilmubarack03@gmail.com"
               className="py-1 hover:text-[#F1EDE3] transition-colors"
             >
-              Contact
+              Email
             </a>
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/adilmubarackk"
               target="_blank"
               rel="noopener noreferrer"
               className="py-1 hover:text-[#F1EDE3] transition-colors"
