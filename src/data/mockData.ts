@@ -1,95 +1,25 @@
 import { Category, Project, TeamMember, Service, Testimonial } from "../types";
 
 export const categories: Category[] = [
-  { id: 1, name: "Events & Corporate", slug: "events" },
+  { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
   { id: 2, name: "Fashion & Bridal", slug: "fashion" },
   { id: 3, name: "Reels & Social Media", slug: "reels" },
 ];
 
+/**
+ * SHOWREEL & VIDEO PROJECTS
+ * - The 1st project is displayed as the Main Featured Spotlight Reel with silent video loop.
+ * - Any additional projects added here in the future will automatically appear in the grid below!
+ */
 export const projects: Project[] = [
   {
-    id: 1,
-    title: "Shobhika — Autumn Collection Launch",
-    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
-    thumbnail: "/images/gallery/1.webp",
+    id: "official-showreel",
+    title: "Adil Mubarak — Official Showreel 2026",
+    category: { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
+    thumbnail: "/images/hero/hero_bg.webp",
     video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 2,
-    title: "Calicut Fashion Show — Season II",
-    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
-    thumbnail: "/images/gallery/2.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 3,
-    title: "Bridal Campaign — Shobhika Weddings",
-    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
-    thumbnail: "/images/gallery/3.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 4,
-    title: "Corporate Event Coverage — Dubai",
-    category: { id: 1, name: "Events & Corporate", slug: "events" },
-    thumbnail: "/images/gallery/4.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 5,
-    title: "Cultural Gala — Jovial Events",
-    category: { id: 1, name: "Events & Corporate", slug: "events" },
-    thumbnail: "/images/gallery/5.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 6,
-    title: "Social Media Campaign Reel",
-    category: { id: 3, name: "Reels & Social Media", slug: "reels" },
-    thumbnail: "/images/gallery/6.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 7,
-    title: "Dubai Marina — Event Film",
-    category: { id: 1, name: "Events & Corporate", slug: "events" },
-    thumbnail: "/images/gallery/7.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 8,
-    title: "Bridal Lookbook — Calicut",
-    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
-    thumbnail: "/images/gallery/8.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 9,
-    title: "Instagram Reel Series — Brand Launch",
-    category: { id: 3, name: "Reels & Social Media", slug: "reels" },
-    thumbnail: "/images/gallery/9.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 10,
-    title: "Behind the Lens — BTS Coverage",
-    category: { id: 1, name: "Events & Corporate", slug: "events" },
-    thumbnail: "/images/gallery/10.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 11,
-    title: "Shobhika — Lehenga Collection Film",
-    category: { id: 2, name: "Fashion & Bridal", slug: "fashion" },
-    thumbnail: "/images/gallery/11.webp",
-    video_url: "/videos/showreel.mp4",
-  },
-  {
-    id: 12,
-    title: "Promotional Reel — Seasonal Campaign",
-    category: { id: 3, name: "Reels & Social Media", slug: "reels" },
-    thumbnail: "/images/gallery/12.webp",
-    video_url: "/videos/showreel.mp4",
+    client_name: "Adil Mubarak Films",
+    description: "Cinematic montage of bridal campaigns, fashion shows, and event films captured across Dubai and Kerala.",
   },
 ];
 
