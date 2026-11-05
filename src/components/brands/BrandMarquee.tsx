@@ -49,7 +49,7 @@ const BrandMarquee: React.FC = () => {
   const loopItems = [...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS];
 
   return (
-    <section className="py-10 sm:py-12 bg-black text-[#F1EDE3] overflow-hidden relative border-t border-white/[0.06]">
+    <section className="py-8 sm:py-12 bg-black text-[#F1EDE3] overflow-hidden relative">
       {/* Subtle Ambient Background Light */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-white/[0.015] rounded-full blur-[120px] pointer-events-none" />
 

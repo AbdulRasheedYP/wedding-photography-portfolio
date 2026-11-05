@@ -53,14 +53,14 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
+      {/* Sleek Minimal Brand & Client Logos Marquee right above Showreel */}
+      <BrandMarquee />
+
       <PortfolioSection
         projects={projects}
         categories={categories}
         onSelectProject={(project: Project) => setSelectedVideo(project)}
       />
-
-      {/* Sleek Minimal Brand & Client Logos Marquee right below Showreel */}
-      <BrandMarquee />
 
       <SectionGap />
 
