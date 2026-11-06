@@ -114,6 +114,66 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextCard, prevCard]);
 
+  // Mouse Wheel & Trackpad scroll listener
+  // Scrolling down (deltaY > 0) -> move to next card (right)
+  // Scrolling up (deltaY < 0) -> move to prev card (left)
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let accumulatedDelta = 0;
+    let isCoolingDown = false;
+    let cooldownTimer: ReturnType<typeof setTimeout> | null = null;
+    let resetTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Check horizontal or vertical scroll delta
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+      // Ignore micro-jitters
+      if (Math.abs(delta) < 8) return;
+
+      // Prevent vertical page jump over the carousel so cards smoothly rotate sideways
+      e.preventDefault();
+
+      if (isCoolingDown) return;
+
+      accumulatedDelta += delta;
+      const threshold = 35; // Responsive snappy threshold
+
+      if (accumulatedDelta > threshold) {
+        // Down -> Next card (right)
+        nextCard();
+        accumulatedDelta = 0;
+        isCoolingDown = true;
+        cooldownTimer = setTimeout(() => {
+          isCoolingDown = false;
+        }, 360);
+      } else if (accumulatedDelta < -threshold) {
+        // Up -> Prev card (left)
+        prevCard();
+        accumulatedDelta = 0;
+        isCoolingDown = true;
+        cooldownTimer = setTimeout(() => {
+          isCoolingDown = false;
+        }, 360);
+      }
+
+      if (resetTimer) clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        accumulatedDelta = 0;
+      }, 200);
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+      if (cooldownTimer) clearTimeout(cooldownTimer);
+      if (resetTimer) clearTimeout(resetTimer);
+    };
+  }, [nextCard, prevCard]);
+
   // Touch / Drag event handlers
   const handleDragStart = (clientX: number) => {
     setIsDragging(true);
