@@ -4,12 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATS = [
-  { value: "100+", label: "Visual Projects", detail: "Campaigns & Events" },
-  { value: "03", label: "Fashion Shows", detail: "Runway & Bridal Launches" },
-  { value: "02", label: "Operating Bases", detail: "Dubai, UAE & Kerala" },
-  { value: "04", label: "Languages", detail: "English, Hindi, Malayalam, Tamil" },
-];
 
 const CV_SPECIALTIES = [
   "Bridal & Fashion Campaigns",
@@ -158,25 +152,6 @@ const AboutSection: React.FC = () => {
               </div>
             </div>
 
-            {/* 4 Stats Grid Cards — Elevated Ash Cards on Pure Black Canvas */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl p-4 bg-[#141414] border border-white/10 hover:border-white/20 hover:bg-[#181818] transition-all duration-300"
-                >
-                  <p className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-tight">
-                    {stat.value}
-                  </p>
-                  <p className="font-sans text-[11px] font-semibold text-[#D8D1C2] mt-1 leading-tight">
-                    {stat.label}
-                  </p>
-                  <p className="font-sans text-[9px] text-[#67685D] mt-0.5">
-                    {stat.detail}
-                  </p>
-                </div>
-              ))}
-            </div>
 
             {/* Action Bar with Round DP Avatar and Download CV */}
             <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
