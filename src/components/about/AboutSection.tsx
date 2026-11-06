@@ -152,14 +152,6 @@ const AboutSection: React.FC = () => {
 
               {/* Cinematic Vignette Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-              {/* Interactive Pill Hint at Top-Right */}
-              <div className="absolute top-4 right-4 z-10 pointer-events-none">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-[9.5px] font-sans font-medium tracking-wider uppercase text-[#DDD6C8] shadow-md transition-all duration-300">
-                  <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isHovered ? "bg-[#25D366]" : "bg-[#E8DCC8] animate-pulse"}`} />
-                  {isHovered ? "On Set · Dubai" : "Hover / Tap"}
-                </span>
-              </div>
             </div>
           </div>
 
