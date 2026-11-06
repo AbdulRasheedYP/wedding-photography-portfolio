@@ -72,7 +72,9 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   onCardCtaClick,
   className = "",
 }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  // Start on the 3rd card (index 2: "03 | Reel Editing & Short-Form Content")
+  const [activeIndex, setActiveIndex] = useState<number>(2);
+  const activeIndexRef = useRef<number>(2);
   const [dragOffset, setDragOffset] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -82,6 +84,11 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   const currentDragRef = useRef<number>(0);
   const hasDraggedRef = useRef<boolean>(false);
   const animationFrameRef = useRef<number | null>(null);
+
+  // Sync ref with state for event listeners
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   // Responsive stepX check (desktop: 230px, mobile: 190px)
   useEffect(() => {
@@ -96,12 +103,13 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   const totalCards = cards.length;
   const stepX = isMobile ? 190 : 230;
 
+  // Bounded navigation (stops at first/last card, no repeating)
   const nextCard = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % totalCards);
+    setActiveIndex((prev) => Math.min(prev + 1, totalCards - 1));
   }, [totalCards]);
 
   const prevCard = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + totalCards) % totalCards);
+    setActiveIndex((prev) => Math.max(prev - 1, 0));
   }, [totalCards]);
 
   // Keyboard navigation
@@ -117,7 +125,8 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   // Mouse Wheel & Trackpad scroll listener
   // Scrolling down (deltaY > 0) -> move to next card (right)
   // Scrolling up (deltaY < 0) -> move to prev card (left)
-  // Strictly prevent page scroll while mouse is over carousel
+  // When at last card (card 6), let page scroll down to next section (projects)!
+  // When at first card (card 1), let page scroll up to previous section!
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -128,7 +137,20 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
     const handleWheel = (e: WheelEvent) => {
-      // 1. Strictly prevent vertical page scroll immediately on all wheel events!
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+      // 1. Boundary check:
+      // If at last card (index 5) and scrolling down -> pass through to scroll page down to projects!
+      if (delta > 0 && activeIndexRef.current >= totalCards - 1) {
+        return;
+      }
+
+      // If at first card (index 0) and scrolling up -> pass through to scroll page up!
+      if (delta < 0 && activeIndexRef.current <= 0) {
+        return;
+      }
+
+      // 2. In-between cards: intercept and advance carousel cards horizontally
       e.preventDefault();
       e.stopPropagation();
       if (typeof e.stopImmediatePropagation === "function") {
@@ -136,29 +158,29 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       }
 
       if (isCoolingDown) return;
-
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       if (Math.abs(delta) < 6) return;
 
       accumulatedDelta += delta;
-      const threshold = 25; // Snappy & immediate response
+      const threshold = 25; // Snappy response
 
       if (accumulatedDelta > threshold) {
-        // Down -> Next card (right)
-        nextCard();
-        accumulatedDelta = 0;
-        isCoolingDown = true;
-        cooldownTimer = setTimeout(() => {
-          isCoolingDown = false;
-        }, 320);
+        if (activeIndexRef.current < totalCards - 1) {
+          nextCard();
+          accumulatedDelta = 0;
+          isCoolingDown = true;
+          cooldownTimer = setTimeout(() => {
+            isCoolingDown = false;
+          }, 320);
+        }
       } else if (accumulatedDelta < -threshold) {
-        // Up -> Prev card (left)
-        prevCard();
-        accumulatedDelta = 0;
-        isCoolingDown = true;
-        cooldownTimer = setTimeout(() => {
-          isCoolingDown = false;
-        }, 320);
+        if (activeIndexRef.current > 0) {
+          prevCard();
+          accumulatedDelta = 0;
+          isCoolingDown = true;
+          cooldownTimer = setTimeout(() => {
+            isCoolingDown = false;
+          }, 320);
+        }
       }
 
       if (resetTimer) clearTimeout(resetTimer);
@@ -174,7 +196,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       if (cooldownTimer) clearTimeout(cooldownTimer);
       if (resetTimer) clearTimeout(resetTimer);
     };
-  }, [nextCard, prevCard]);
+  }, [nextCard, prevCard, totalCards]);
 
   // Touch / Drag event handlers
   const handleDragStart = (clientX: number) => {
@@ -186,9 +208,16 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
 
   const handleDragMove = (clientX: number) => {
     if (!isDragging) return;
-    const delta = clientX - startXRef.current;
+    let delta = clientX - startXRef.current;
     if (Math.abs(delta) > 8) {
       hasDraggedRef.current = true;
+    }
+
+    // Elastic resistance when dragging past boundaries
+    if (activeIndexRef.current === 0 && delta > 0) {
+      delta *= 0.25;
+    } else if (activeIndexRef.current === totalCards - 1 && delta < 0) {
+      delta *= 0.25;
     }
 
     if (animationFrameRef.current) {
@@ -210,7 +239,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     }
 
     const delta = currentDragRef.current;
-    const swipeThreshold = isMobile ? 40 : 50;
+    const swipeThreshold = isMobile ? 35 : 45;
 
     if (delta < -swipeThreshold) {
       nextCard();
@@ -225,8 +254,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   return (
     <div
       ref={containerRef}
-      data-lenis-prevent="true"
-      className={`relative w-full select-none py-2 overscroll-contain cursor-grab active:cursor-grabbing ${className}`}
+      className={`relative w-full select-none py-2 cursor-grab active:cursor-grabbing ${className}`}
       onMouseDown={(e) => handleDragStart(e.clientX)}
       onMouseMove={(e) => handleDragMove(e.clientX)}
       onMouseUp={handleDragEnd}
@@ -237,14 +265,19 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     >
       {/* 3D Carousel Stage */}
       <div className="relative h-[410px] sm:h-[450px] w-full max-w-5xl mx-auto flex items-center justify-center overflow-visible">
-        {/* Floating Navigation Arrows */}
+        {/* Floating Navigation Arrows (Disabled at boundaries) */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             prevCard();
           }}
+          disabled={activeIndex === 0}
           aria-label="Previous service"
-          className="absolute left-1 sm:left-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+          className={`absolute left-1 sm:left-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
+            activeIndex === 0
+              ? "opacity-20 pointer-events-none border-white/5 text-white/20"
+              : "hover:scale-105 active:scale-95"
+          }`}
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
@@ -254,18 +287,21 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
             e.stopPropagation();
             nextCard();
           }}
+          disabled={activeIndex === totalCards - 1}
           aria-label="Next service"
-          className="absolute right-1 sm:right-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+          className={`absolute right-1 sm:right-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
+            activeIndex === totalCards - 1
+              ? "opacity-20 pointer-events-none border-white/5 text-white/20"
+              : "hover:scale-105 active:scale-95"
+          }`}
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Carousel Cards */}
         {cards.map((card, i) => {
-          // Calculate circular shortest relative offset
-          let diff = i - activeIndex;
-          if (diff > totalCards / 2) diff -= totalCards;
-          if (diff < -totalCards / 2) diff += totalCards;
+          // Linear relative offset without repeating
+          const diff = i - activeIndex;
 
           const isActive = diff === 0;
           const absDiff = Math.abs(diff);
