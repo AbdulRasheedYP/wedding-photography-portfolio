@@ -21,23 +21,25 @@ const AboutSection: React.FC = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) return;
+    if (typeof window === "undefined") return;
 
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
       ctx = gsap.context(() => {
         if (imageRef.current) {
           gsap.fromTo(
             imageRef.current,
-            { opacity: 0, x: -30 },
+            { opacity: 0, y: isMobile ? 25 : 0, x: isMobile ? 0 : -30 },
             {
               opacity: 1,
+              y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.9,
               ease: "power3.out",
               scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 75%",
+                trigger: imageRef.current,
+                start: "top 85%",
                 once: true,
               },
             }
@@ -47,15 +49,16 @@ const AboutSection: React.FC = () => {
         if (contentRef.current) {
           gsap.fromTo(
             contentRef.current,
-            { opacity: 0, x: 30 },
+            { opacity: 0, y: isMobile ? 25 : 0, x: isMobile ? 0 : 30 },
             {
               opacity: 1,
+              y: 0,
               x: 0,
-              duration: 1,
+              duration: 0.9,
               ease: "power3.out",
               scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 75%",
+                trigger: contentRef.current,
+                start: "top 85%",
                 once: true,
               },
             }

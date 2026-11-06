@@ -164,7 +164,7 @@ const StickyGallery: React.FC = () => {
 
   // GSAP reveal animation on mount
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
+    if (typeof window === "undefined") {
       return;
     }
 

@@ -83,26 +83,95 @@ const JourneySection: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".journey-fade-in",
-        { opacity: 0, y: 25 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            once: true,
-          },
-        }
-      );
-    }, sectionRef);
+    let ctx: gsap.Context;
+    const timer = setTimeout(() => {
+      ctx = gsap.context(() => {
+        // 1. Editorial Header animation
+        gsap.fromTo(
+          ".journey-header-anim",
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
 
-    return () => ctx.revert();
+        // 2. Desktop cards slide in individually as you scroll down
+        gsap.utils.toArray<HTMLElement>(".journey-card-desktop").forEach((card, i) => {
+          const isLeft = i % 2 === 0;
+          gsap.fromTo(
+            card,
+            { opacity: 0, x: isLeft ? -45 : 45, y: 20 },
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 0.85,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                once: true,
+              },
+            }
+          );
+        });
+
+        // 3. Mobile cards slide in individually as you scroll down!
+        gsap.utils.toArray<HTMLElement>(".journey-card-mobile").forEach((card, i) => {
+          const isLeft = i % 2 === 1; // Card 01 on right, Card 02 on left
+          gsap.fromTo(
+            card,
+            { opacity: 0, x: isLeft ? -35 : 35, y: 25 },
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                once: true,
+              },
+            }
+          );
+        });
+
+        // 4. Road node badges pop in with bounce when scrolled into view
+        gsap.utils.toArray<HTMLElement>(".journey-node-badge").forEach((badge) => {
+          gsap.fromTo(
+            badge,
+            { scale: 0, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.65,
+              ease: "back.out(1.8)",
+              scrollTrigger: {
+                trigger: badge,
+                start: "top 90%",
+                once: true,
+              },
+            }
+          );
+        });
+      }, sectionRef);
+
+      ScrollTrigger.refresh();
+    }, 120);
+
+    return () => {
+      clearTimeout(timer);
+      ctx?.revert();
+    };
   }, []);
 
   return (
@@ -133,7 +202,7 @@ const JourneySection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* 2. Editorial Header */}
-        <div className="text-center mb-14 sm:mb-20 journey-fade-in">
+        <div className="text-center mb-14 sm:mb-20 journey-header-anim">
           <div className="inline-flex items-center gap-3 mb-4">
             <span className="w-6 h-[1px] bg-[#67685D]" />
             <p className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.3em] text-[#D8D1C2]">
@@ -150,7 +219,7 @@ const JourneySection: React.FC = () => {
         </div>
 
         {/* 3. DESKTOP ROADMAP VIEW (Hidden on Mobile/Tablet < 1024px) */}
-        <div className="hidden lg:block relative w-full max-w-[1200px] mx-auto h-[1080px] journey-fade-in">
+        <div className="hidden lg:block relative w-full max-w-[1200px] mx-auto h-[1080px]">
 
           {/* SVG Winding Road Path with Champagne Glow & Markings */}
           <svg
@@ -237,7 +306,7 @@ const JourneySection: React.FC = () => {
                 onMouseEnter={() => setActiveNode(idx)}
                 onMouseLeave={() => setActiveNode(null)}
                 style={{ left: `${m.desktopNode.x}px`, top: `${m.desktopNode.y}px` }}
-                className={`absolute z-20 -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-[#121212]/95 border backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-300 group shadow-[0_5px_15px_rgba(0,0,0,0.8)] ${
+                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-[#121212]/95 border backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-300 group shadow-[0_5px_15px_rgba(0,0,0,0.8)] ${
                   isHovered
                     ? "border-white/90 shadow-[0_0_22px_rgba(255,255,255,0.4)] scale-110 -translate-y-[52%]"
                     : "border-[#C4BAA9]/60 shadow-[0_0_12px_rgba(241,237,227,0.25)] hover:scale-105"
@@ -263,7 +332,7 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(0)}
             onMouseLeave={() => setActiveNode(null)}
-            className="absolute z-20 top-[65px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[65px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
           >
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               01
@@ -304,7 +373,7 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(1)}
             onMouseLeave={() => setActiveNode(null)}
-            className="absolute z-20 top-[315px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[315px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
           >
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               02
@@ -345,7 +414,7 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(2)}
             onMouseLeave={() => setActiveNode(null)}
-            className="absolute z-20 top-[575px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[575px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
           >
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               03
@@ -386,7 +455,7 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(3)}
             onMouseLeave={() => setActiveNode(null)}
-            className="absolute z-20 top-[825px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[825px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
           >
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               04
@@ -425,67 +494,275 @@ const JourneySection: React.FC = () => {
 
         </div>
 
-        {/* 4. MOBILE & TABLET ROADMAP VIEW (< 1024px) */}
-        <div className="block lg:hidden relative pl-12 sm:pl-16 space-y-8 sm:space-y-10 journey-fade-in">
-          {/* Vertical Glowing Roadway Spine */}
-          <div className="absolute left-4 sm:left-6 top-3 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-[#F1EDE3]/40 to-transparent shadow-[0_0_8px_rgba(241,237,227,0.3)]" />
+        {/* 4. MOBILE & TABLET WINDING ROADMAP VIEW (< 1024px) */}
+        {/* Matches desktop: authentic winding illuminated highway, asphalt roadbed, and road node brand badges */}
+        <div className="block lg:hidden relative w-full max-w-[460px] mx-auto h-[1340px]">
+          {/* Mobile SVG Winding Road Path with Champagne Glow & Markings */}
+          <svg
+            viewBox="0 0 380 1340"
+            className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <filter id="roadGlowMob" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
 
-          {MILESTONES.map((m) => (
-            <div key={m.number} className="relative group">
-              {/* Glowing Road Node Pin with Brand Icon on the line */}
-              <div className="absolute -left-12 sm:-left-16 top-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#121212]/95 border border-[#C4BAA9] shadow-[0_0_10px_rgba(241,237,227,0.35)] flex items-center justify-center p-1.5">
+              <linearGradient id="roadRailGradMob" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#7E7B72" stopOpacity="0.35" />
+                <stop offset="25%" stopColor="#DDD6C8" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.9" />
+                <stop offset="75%" stopColor="#DDD6C8" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#7E7B72" stopOpacity="0.35" />
+              </linearGradient>
+            </defs>
+
+            {/* Ambient Underglow */}
+            <path
+              d="M 190,-10 C 190,55 45,80 42,155 C 38,280 342,350 338,475 C 334,600 38,675 42,800 C 46,925 334,1000 338,1125 C 342,1220 190,1260 190,1340"
+              stroke="rgba(241, 237, 227, 0.12)"
+              strokeWidth="32"
+              strokeLinecap="round"
+              filter="url(#roadGlowMob)"
+            />
+
+            {/* Outer Illuminated Rails */}
+            <path
+              d="M 190,-10 C 190,55 45,80 42,155 C 38,280 342,350 338,475 C 334,600 38,675 42,800 C 46,925 334,1000 338,1125 C 342,1220 190,1260 190,1340"
+              stroke="url(#roadRailGradMob)"
+              strokeWidth="20"
+              strokeLinecap="round"
+            />
+
+            {/* Dark Asphalt Road Surface */}
+            <path
+              d="M 190,-10 C 190,55 45,80 42,155 C 38,280 342,350 338,475 C 334,600 38,675 42,800 C 46,925 334,1000 338,1125 C 342,1220 190,1260 190,1340"
+              stroke="#0B0C0E"
+              strokeWidth="15"
+              strokeLinecap="round"
+            />
+
+            {/* Horizontal Dashed Connector Lines */}
+            <line x1="58" y1="155" x2="68" y2="155" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
+            <line x1="322" y1="475" x2="312" y2="475" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
+            <line x1="58" y1="800" x2="68" y2="800" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
+            <line x1="322" y1="1125" x2="312" y2="1125" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
+
+            {/* Pulsing Light Rings Behind Mobile Road Nodes */}
+            <circle cx="42" cy="155" r="20" fill="none" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" className="animate-node-pulse" />
+            <circle cx="338" cy="475" r="20" fill="none" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" className="animate-node-pulse" />
+            <circle cx="42" cy="800" r="20" fill="none" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" className="animate-node-pulse" />
+            <circle cx="338" cy="1125" r="20" fill="none" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" className="animate-node-pulse" />
+          </svg>
+
+          {/* BRAND LOGO BADGES POSITIONED DIRECTLY ON MOBILE HIGHWAY CURVES */}
+          {MILESTONES.map((m, idx) => {
+            const isLeft = idx % 2 === 0;
+            const isHovered = activeNode === idx;
+            const topY = idx === 0 ? 155 : idx === 1 ? 475 : idx === 2 ? 800 : 1125;
+            return (
+              <div
+                key={`mob-road-badge-${m.number}`}
+                onClick={() => setActiveNode(activeNode === idx ? null : idx)}
+                style={{
+                  top: `${topY}px`,
+                  left: isLeft ? "11%" : "89%",
+                }}
+                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#121212]/95 border backdrop-blur-md flex items-center justify-center p-1.5 cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.8)] ${
+                  isHovered
+                    ? "border-white/90 shadow-[0_0_18px_rgba(255,255,255,0.4)] scale-110"
+                    : "border-[#C4BAA9]/70 shadow-[0_0_10px_rgba(241,237,227,0.25)]"
+                }`}
+                title={`${m.company} (${m.role})`}
+              >
                 {m.logo ? (
-                  <img src={m.logo} alt={m.company} className="w-full h-full object-contain filter brightness-110" />
+                  <img
+                    src={m.logo}
+                    alt={m.company}
+                    className="w-full h-full object-contain filter brightness-110 contrast-105"
+                  />
                 ) : (
-                  <svg className="w-4 h-4 text-[#DDD6C8] fill-current" viewBox="0 0 24 24">
-                    <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
-                  </svg>
+                  <CinemaBadge compact />
                 )}
               </div>
+            );
+          })}
 
-              {/* Card Container with Numeral */}
-              <div className="flex items-start gap-3">
-                <span className="font-serif italic text-3xl sm:text-4xl text-[#E8DCC8]/60 flex-shrink-0 pt-1 select-none">
-                  {m.number}
-                </span>
+          {/* 4 CARDS ALTERNATING ON LEFT AND RIGHT */}
 
-                <div className="w-full bg-[#121212]/90 backdrop-blur-md border border-white/10 rounded-2xl p-5 shadow-lg">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
-                      {m.year}
-                    </span>
-                    {m.logo ? (
-                      <div className="h-5 px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
-                        <img src={m.logo} alt={m.company} className="h-3 w-auto object-contain filter brightness-110" />
-                      </div>
-                    ) : (
-                      <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
-                        <CinemaBadge compact />
-                      </div>
-                    )}
-                  </div>
-
-                  <h3 className="font-serif text-base sm:text-lg text-[#F1EDE3] font-normal leading-snug mb-0.5">
-                    {m.role}
-                  </h3>
-                  <p className="text-[10px] font-sans font-semibold uppercase tracking-wider text-[#A8A499] mb-2">
-                    {m.company} · {m.location}
-                  </p>
-                  <p className="text-[#8D8B82] text-xs leading-relaxed font-sans">
-                    {m.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-white/[0.06]">
-                    {m.tags.map((tag) => (
-                      <span key={tag} className="text-[9px] font-sans uppercase tracking-wider text-[#67685D]">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
+          {/* CARD 01: Top Right */}
+          <div
+            onClick={() => setActiveNode(activeNode === 0 ? null : 0)}
+            className="journey-card-mobile absolute z-20 top-[35px] left-[calc(11%+24px)] right-[3%]"
+          >
+            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+              activeNode === 0 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
+            }`}>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
+                    01
+                  </span>
+                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                    {MILESTONES[0].year}
+                  </span>
                 </div>
+                {MILESTONES[0].logo && (
+                  <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
+                    <img src={MILESTONES[0].logo} alt={MILESTONES[0].company} className="h-3 w-auto object-contain filter brightness-110" />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-serif text-sm sm:text-base text-[#F1EDE3] font-normal leading-snug mb-0.5">
+                {MILESTONES[0].role}
+              </h3>
+              <p className="text-[9.5px] font-sans font-semibold uppercase tracking-wider text-[#A8A499] mb-1.5">
+                {MILESTONES[0].company} · {MILESTONES[0].location}
+              </p>
+              <p className="text-[#8D8B82] text-[11px] leading-relaxed font-sans">
+                {MILESTONES[0].description}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+                {MILESTONES[0].tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className="text-[8.5px] font-sans uppercase tracking-wider text-[#67685D]">
+                    #{tag}
+                  </span>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* CARD 02: Upper Left */}
+          <div
+            onClick={() => setActiveNode(activeNode === 1 ? null : 1)}
+            className="journey-card-mobile absolute z-20 top-[360px] left-[3%] right-[calc(11%+24px)]"
+          >
+            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+              activeNode === 1 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
+            }`}>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
+                    02
+                  </span>
+                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                    {MILESTONES[1].year}
+                  </span>
+                </div>
+                {MILESTONES[1].logo && (
+                  <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
+                    <img src={MILESTONES[1].logo} alt={MILESTONES[1].company} className="h-3 w-auto object-contain filter brightness-110" />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-serif text-sm sm:text-base text-[#F1EDE3] font-normal leading-snug mb-0.5">
+                {MILESTONES[1].role}
+              </h3>
+              <p className="text-[9.5px] font-sans font-semibold uppercase tracking-wider text-[#A8A499] mb-1.5">
+                {MILESTONES[1].company} · {MILESTONES[1].location}
+              </p>
+              <p className="text-[#8D8B82] text-[11px] leading-relaxed font-sans">
+                {MILESTONES[1].description}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+                {MILESTONES[1].tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className="text-[8.5px] font-sans uppercase tracking-wider text-[#67685D]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 03: Lower Right */}
+          <div
+            onClick={() => setActiveNode(activeNode === 2 ? null : 2)}
+            className="journey-card-mobile absolute z-20 top-[685px] left-[calc(11%+24px)] right-[3%]"
+          >
+            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+              activeNode === 2 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
+            }`}>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
+                    03
+                  </span>
+                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                    {MILESTONES[2].year}
+                  </span>
+                </div>
+                {MILESTONES[2].logo && (
+                  <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
+                    <img src={MILESTONES[2].logo} alt={MILESTONES[2].company} className="h-3 w-auto object-contain filter brightness-110" />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-serif text-sm sm:text-base text-[#F1EDE3] font-normal leading-snug mb-0.5">
+                {MILESTONES[2].role}
+              </h3>
+              <p className="text-[9.5px] font-sans font-semibold uppercase tracking-wider text-[#A8A499] mb-1.5">
+                {MILESTONES[2].company} · {MILESTONES[2].location}
+              </p>
+              <p className="text-[#8D8B82] text-[11px] leading-relaxed font-sans">
+                {MILESTONES[2].description}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+                {MILESTONES[2].tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className="text-[8.5px] font-sans uppercase tracking-wider text-[#67685D]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 04: Bottom Left */}
+          <div
+            onClick={() => setActiveNode(activeNode === 3 ? null : 3)}
+            className="journey-card-mobile absolute z-20 top-[1010px] left-[3%] right-[calc(11%+24px)]"
+          >
+            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+              activeNode === 3 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
+            }`}>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
+                    04
+                  </span>
+                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                    {MILESTONES[3].year}
+                  </span>
+                </div>
+                {MILESTONES[3].logo && (
+                  <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
+                    <img src={MILESTONES[3].logo} alt={MILESTONES[3].company} className="h-3 w-auto object-contain filter brightness-110" />
+                  </div>
+                )}
+              </div>
+              <h3 className="font-serif text-sm sm:text-base text-[#F1EDE3] font-normal leading-snug mb-0.5">
+                {MILESTONES[3].role}
+              </h3>
+              <p className="text-[9.5px] font-sans font-semibold uppercase tracking-wider text-[#A8A499] mb-1.5">
+                {MILESTONES[3].company} · {MILESTONES[3].location}
+              </p>
+              <p className="text-[#8D8B82] text-[11px] leading-relaxed font-sans">
+                {MILESTONES[3].description}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+                {MILESTONES[3].tags.slice(0, 2).map((tag) => (
+                  <span key={tag} className="text-[8.5px] font-sans uppercase tracking-wider text-[#67685D]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* 5. Bottom Narrative Transition */}

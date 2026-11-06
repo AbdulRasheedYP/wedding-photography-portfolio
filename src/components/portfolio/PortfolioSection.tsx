@@ -114,7 +114,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
   const additionalReels = projects.length > 1 ? projects.slice(1) : [];
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) return;
+    if (typeof window === "undefined") return;
 
     let ctx: gsap.Context;
     const timer = setTimeout(() => {

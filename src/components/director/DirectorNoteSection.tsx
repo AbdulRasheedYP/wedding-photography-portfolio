@@ -13,7 +13,7 @@ const DirectorNoteSection: React.FC<Props> = ({ onCommissionClick }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) return;
+    if (typeof window === "undefined") return;
 
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
