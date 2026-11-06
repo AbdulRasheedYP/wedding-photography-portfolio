@@ -344,11 +344,8 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(0)}
             onMouseLeave={() => setActiveNode(null)}
-            className="journey-card-desktop absolute z-20 top-[65px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[65px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] group cursor-pointer"
           >
-            <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
-              01
-            </span>
             <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 0 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
@@ -385,11 +382,8 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(1)}
             onMouseLeave={() => setActiveNode(null)}
-            className="journey-card-desktop absolute z-20 top-[315px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[315px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] group cursor-pointer"
           >
-            <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
-              02
-            </span>
             <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 1 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
@@ -426,11 +420,8 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(2)}
             onMouseLeave={() => setActiveNode(null)}
-            className="journey-card-desktop absolute z-20 top-[575px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[575px] left-0 xl:left-[20px] w-[360px] xl:w-[390px] group cursor-pointer"
           >
-            <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
-              03
-            </span>
             <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 2 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
@@ -467,11 +458,8 @@ const JourneySection: React.FC = () => {
           <div
             onMouseEnter={() => setActiveNode(3)}
             onMouseLeave={() => setActiveNode(null)}
-            className="journey-card-desktop absolute z-20 top-[825px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] flex items-start gap-3.5 group cursor-pointer"
+            className="journey-card-desktop absolute z-20 top-[825px] right-0 xl:right-[20px] w-[360px] xl:w-[390px] group cursor-pointer"
           >
-            <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
-              04
-            </span>
             <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 3 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
@@ -616,14 +604,9 @@ const JourneySection: React.FC = () => {
               activeNode === 0 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
-                    01
-                  </span>
-                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
-                    {MILESTONES[0].year}
-                  </span>
-                </div>
+                <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                  {MILESTONES[0].year}
+                </span>
                 {MILESTONES[0].logo && (
                   <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
                     <img src={MILESTONES[0].logo} alt={MILESTONES[0].company} className="h-3 w-auto object-contain filter brightness-110" />
@@ -658,14 +641,9 @@ const JourneySection: React.FC = () => {
               activeNode === 1 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
-                    02
-                  </span>
-                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
-                    {MILESTONES[1].year}
-                  </span>
-                </div>
+                <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                  {MILESTONES[1].year}
+                </span>
                 {MILESTONES[1].logo && (
                   <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
                     <img src={MILESTONES[1].logo} alt={MILESTONES[1].company} className="h-3 w-auto object-contain filter brightness-110" />
@@ -700,14 +678,9 @@ const JourneySection: React.FC = () => {
               activeNode === 2 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
-                    03
-                  </span>
-                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
-                    {MILESTONES[2].year}
-                  </span>
-                </div>
+                <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                  {MILESTONES[2].year}
+                </span>
                 {MILESTONES[2].logo && (
                   <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
                     <img src={MILESTONES[2].logo} alt={MILESTONES[2].company} className="h-3 w-auto object-contain filter brightness-110" />
@@ -742,14 +715,9 @@ const JourneySection: React.FC = () => {
               activeNode === 3 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-serif italic text-2xl text-[#E8DCC8]/60 select-none">
-                    04
-                  </span>
-                  <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
-                    {MILESTONES[3].year}
-                  </span>
-                </div>
+                <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.18em] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
+                  {MILESTONES[3].year}
+                </span>
                 {MILESTONES[3].logo && (
                   <div className="h-5 px-1.5 py-0.5 rounded-md bg-white/[0.05] border border-white/10 flex items-center">
                     <img src={MILESTONES[3].logo} alt={MILESTONES[3].company} className="h-3 w-auto object-contain filter brightness-110" />

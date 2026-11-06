@@ -50,10 +50,6 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
             </span>
           </div>
         </div>
-        <div className="sticky-note-text mt-2 sm:mt-2.5 flex items-center justify-between text-xs px-1 text-[#D8D1C2] min-w-0 w-full">
-          <span className="sticky-note-label font-serif tracking-wide truncate pr-2 min-w-0 flex-1">{item.note}</span>
-          <span className="sticky-note-dot w-1.5 h-1.5 rounded-full bg-[#67685D] flex-shrink-0" />
-        </div>
       </div>
     </div>
   );

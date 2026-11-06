@@ -427,12 +427,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#DDD6C8]/[0.08] via-transparent to-[#DDD6C8]/[0.05] pointer-events-none" />
               )}
 
-              {/* Top-Left: Mono-Spaced Index Number */}
-              <div className="absolute top-4 left-4 z-10">
-                <span className="font-mono text-xs sm:text-[13px] font-semibold tracking-widest text-[#DDD6C8] bg-black/85 px-3 py-1 rounded-full border border-[#DDD6C8]/30 select-none shadow-md">
-                  {card.number}
-                </span>
-              </div>
+
 
               {/* Bottom Content Area: Bold Service Title & Tool Badges */}
               <div className="absolute bottom-0 inset-x-0 p-5 z-10">

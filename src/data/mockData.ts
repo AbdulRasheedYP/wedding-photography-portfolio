@@ -26,7 +26,8 @@ export const projects: Project[] = [
   },
   {
     id: "western-ghats-reel",
-    title: "Travel & Cinema",
+    title: "",
+    category: { id: 3, name: "Travel & Cinema", slug: "travel" },
     thumbnail: "/images/hero/concert_thumb.webp",
     video_url: "/videos/concert-reel.mp4",
     preview_url: "/videos/concert-preview.mp4",
