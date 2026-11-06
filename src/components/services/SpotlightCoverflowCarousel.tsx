@@ -84,6 +84,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   const currentDragRef = useRef<number>(0);
   const hasDraggedRef = useRef<boolean>(false);
   const animationFrameRef = useRef<number | null>(null);
+  const isCenteringRef = useRef<boolean>(false);
 
   // Sync ref with state for event listeners
   useEffect(() => {
@@ -138,6 +139,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
 
     // Helper to auto-center the carousel cards in the screen viewport when scrolling starts
     const centerCarouselInViewport = () => {
+      if (isCenteringRef.current) return;
       const el = containerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -145,15 +147,22 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       const elementCenter = rect.top + rect.height / 2;
       const diff = elementCenter - viewportCenter;
 
-      // If cards are more than 35px away from screen center, glide smoothly into center
-      if (Math.abs(diff) > 35) {
+      // If cards are more than 40px away from screen center, glide smoothly into center
+      if (Math.abs(diff) > 40) {
+        isCenteringRef.current = true;
         if (typeof (window as any).__lenis?.scrollTo === "function") {
           (window as any).__lenis.scrollTo(el, {
             offset: -(window.innerHeight - rect.height) / 2,
-            duration: 0.65,
+            duration: 0.55,
+            onComplete: () => {
+              isCenteringRef.current = false;
+            },
           });
         } else {
           el.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            isCenteringRef.current = false;
+          }, 500);
         }
       }
     };
@@ -172,7 +181,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
         return;
       }
 
-      // Auto-center cards in the center of the screen when user starts scrolling!
+      // Auto-center cards in the center of the screen when user starts scrolling
       centerCarouselInViewport();
 
       // 2. In-between cards: intercept and advance carousel cards horizontally
@@ -183,10 +192,11 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       }
 
       if (isCoolingDown) return;
-      if (Math.abs(delta) < 6) return;
+      if (Math.abs(delta) < 4) return;
 
       accumulatedDelta += delta;
-      const threshold = 25; // Snappy response
+      // Faster, snappy threshold
+      const threshold = 12;
 
       if (accumulatedDelta > threshold) {
         if (activeIndexRef.current < totalCards - 1) {
@@ -195,7 +205,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           isCoolingDown = true;
           cooldownTimer = setTimeout(() => {
             isCoolingDown = false;
-          }, 320);
+          }, 160); // 160ms fast fluid transition
         }
       } else if (accumulatedDelta < -threshold) {
         if (activeIndexRef.current > 0) {
@@ -204,14 +214,14 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           isCoolingDown = true;
           cooldownTimer = setTimeout(() => {
             isCoolingDown = false;
-          }, 320);
+          }, 160); // 160ms fast fluid transition
         }
       }
 
       if (resetTimer) clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
         accumulatedDelta = 0;
-      }, 180);
+      }, 110);
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false, capture: true });
@@ -264,7 +274,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     }
 
     const delta = currentDragRef.current;
-    const swipeThreshold = isMobile ? 35 : 45;
+    const swipeThreshold = isMobile ? 22 : 32;
 
     if (delta < -swipeThreshold) {
       nextCard();
@@ -366,9 +376,9 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
                 zIndex,
                 transition: isDragging
                   ? "none"
-                  : "transform 420ms cubic-bezier(0.25, 1, 0.5, 1), opacity 420ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 420ms ease, border-color 420ms ease",
+                  : "transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, border-color 300ms ease",
               }}
-              className={`absolute left-1/2 top-1/2 w-[260px] h-[345px] sm:w-[275px] sm:h-[365px] rounded-2xl overflow-hidden cursor-pointer will-change-transform ${
+              className={`absolute left-1/2 top-1/2 w-[260px] h-[345px] sm:w-[275px] sm:h-[365px] rounded-2xl overflow-hidden cursor-pointer will-change-transform transform-gpu backface-hidden ${
                 isActive
                   ? "border border-[#DDD6C8]/60 shadow-[0_25px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(221,214,200,0.18)] bg-[#141414]"
                   : "border border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.7)] hover:border-white/20 bg-[#121212]"
