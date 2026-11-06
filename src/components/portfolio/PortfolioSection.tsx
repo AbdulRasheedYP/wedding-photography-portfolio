@@ -25,9 +25,10 @@ const DEFAULT_MAIN_PROJECT: Project = {
 interface GridReelCardProps {
   project: Project;
   onSelectProject: (project: Project) => void;
+  className?: string;
 }
 
-const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject }) => {
+const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject, className = "" }) => {
   const cardVideoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const isPortrait = project.aspect === "portrait";
@@ -54,7 +55,7 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       onMouseLeave={handleMouseLeave}
       className={`group relative rounded-2xl overflow-hidden bg-[#141414] hover:bg-[#181818] border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 ${
         isPortrait ? "aspect-[9/16]" : "aspect-[16/10] sm:aspect-[16/9]"
-      }`}
+      } ${className}`}
     >
       {/* Background Poster Image */}
       <img
@@ -82,17 +83,6 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
         />
       )}
 
-      {/* Top Reel Badge for Portrait */}
-      {isPortrait && (
-        <div className="absolute top-3 left-3 z-10 pointer-events-none">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] font-sans font-semibold tracking-wider uppercase text-[#F1EDE3]">
-            <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 fill-current text-[#F1EDE3]" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-            </svg>
-            Reel 9:16
-          </span>
-        </div>
-      )}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/30 group-hover:from-black/95 transition-colors duration-300 pointer-events-none" />
@@ -128,7 +118,11 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
 
 const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) => {
   const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const playBtnRef = useRef<HTMLDivElement>(null);
+  const cinematicSectionRef = useRef<HTMLDivElement>(null);
+  const socialSectionRef = useRef<HTMLDivElement>(null);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
 
   const mainProject = projects.length > 0 ? projects[0] : DEFAULT_MAIN_PROJECT;
@@ -141,20 +135,204 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+    // Desktop
+    mm.add("(min-width: 1024px)", () => {
+      // 1. Show Reel Header Reveal
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, x: -75 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1.05,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 82%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 2. Featured Main Reel Spotlight Zoom & Slide-up
       if (containerRef.current) {
         gsap.fromTo(
           containerRef.current,
-          { opacity: 0, y: 35, scale: 0.98 },
+          { opacity: 0, y: 75, scale: 0.92 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 3. Play Button Pulse Entrance
+      if (playBtnRef.current) {
+        gsap.fromTo(
+          playBtnRef.current,
+          { scale: 0.35, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: "back.out(1.8)",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 82%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 4. Cinematic Landscape Cards Reveal
+      if (cinematicSectionRef.current) {
+        gsap.fromTo(
+          ".cinematic-reel-card",
+          { opacity: 0, y: 55, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.95,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: cinematicSectionRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 5. Commercial 9:16 Cards Reveal
+      if (socialSectionRef.current) {
+        gsap.fromTo(
+          ".social-reel-card",
+          { opacity: 0, y: 60, scale: 0.93 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.95,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: socialSectionRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    // Mobile / Tablet
+    mm.add("(max-width: 1023px)", () => {
+      // 1. Show Reel Header Reveal
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, x: -40 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 78%",
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 2. Featured Main Reel Spotlight
+      if (containerRef.current) {
+        gsap.fromTo(
+          containerRef.current,
+          { opacity: 0, y: 45, scale: 0.94 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 88%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 3. Play button entrance
+      if (playBtnRef.current) {
+        gsap.fromTo(
+          playBtnRef.current,
+          { scale: 0.5, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: "back.out(1.8)",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 4. Cinematic Cards
+      if (cinematicSectionRef.current) {
+        gsap.fromTo(
+          ".cinematic-reel-card",
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.85,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: cinematicSectionRef.current,
+              start: "top 88%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // 5. Commercial 9:16 Cards
+      if (socialSectionRef.current) {
+        gsap.fromTo(
+          ".social-reel-card",
+          { opacity: 0, y: 45, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: socialSectionRef.current,
+              start: "top 88%",
               once: true,
             },
           }
@@ -181,7 +359,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
+        <div ref={headerRef} className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-6 h-[1px] bg-[#67685D]" />
@@ -218,7 +396,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none" />
 
           {/* Center Play Button with Expanding Pulse */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none z-10">
+          <div ref={playBtnRef} className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none z-10">
             <div className="relative flex items-center justify-center">
               <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 animate-ping opacity-40 pointer-events-none" />
               
@@ -253,7 +431,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
 
         {/* 2. ADDITIONAL CINEMATIC REELS (Landscape) */}
         {cinematicReels.length > 0 && (
-          <div className="mt-12 sm:mt-16">
+          <div ref={cinematicSectionRef} className="mt-12 sm:mt-16">
             <div className="flex items-center gap-3 mb-6">
               <span className="w-5 h-[1px] bg-[#67685D]" />
               <h3 className="font-serif text-xl sm:text-2xl text-[#F1EDE3]">
@@ -267,6 +445,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
                   key={reel.id}
                   project={reel}
                   onSelectProject={onSelectProject}
+                  className="cinematic-reel-card"
                 />
               ))}
             </div>
@@ -275,7 +454,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
 
         {/* 3. SOCIAL MEDIA REELS & COMMERCIAL SHORTS (Portrait 9:16) */}
         {socialReels.length > 0 && (
-          <div className="mt-12 sm:mt-16">
+          <div ref={socialSectionRef} className="mt-12 sm:mt-16">
             <div className="flex items-center justify-between gap-3 mb-6">
               <div className="flex items-center gap-3">
                 <span className="w-5 h-[1px] bg-[#67685D]" />
@@ -294,6 +473,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
                   key={reel.id}
                   project={reel}
                   onSelectProject={onSelectProject}
+                  className="social-reel-card"
                 />
               ))}
             </div>

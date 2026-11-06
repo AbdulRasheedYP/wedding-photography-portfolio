@@ -26,12 +26,10 @@ export const projects: Project[] = [
   },
   {
     id: "western-ghats-reel",
-    title: "Western Ghats Trail Expedition",
-    category: { id: 3, name: "Travel & Cinema", slug: "travel" },
+    title: "Travel & Cinema",
     thumbnail: "/images/hero/concert_thumb.webp",
     video_url: "/videos/concert-reel.mp4",
     preview_url: "/videos/concert-preview.mp4",
-    client_name: "Adil Mubarak Films",
     description: "Atmospheric ridge exploration and high-altitude wilderness moments filmed across Kerala's Western Ghats.",
     aspect: "landscape",
   },

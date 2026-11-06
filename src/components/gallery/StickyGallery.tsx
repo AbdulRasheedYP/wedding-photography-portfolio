@@ -22,36 +22,38 @@ const StickyCard: React.FC<StickyCardProps> = ({ item, onClick }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div
-      className="sticky-card cursor-pointer transition-transform duration-300 hover:scale-[1.02] min-w-0 w-full"
-      style={{ transform: `rotate(${item.rotation}deg)` }}
-      onClick={onClick}
-    >
-      <div className="sticky-tape-bar" />
-      <div className="sticky-img-wrap relative overflow-hidden rounded-lg bg-[#0a0a0a] min-w-0 w-full">
-        {/* Shimmer skeleton placeholder */}
-        {!loaded && (
-          <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#1f1f1f] to-[#141414] animate-pulse pointer-events-none" />
-        )}
-        <img
-          src={item.thumb}
-          alt={item.note}
-          className={`sticky-img w-full h-full object-cover transition-all duration-500 hover:scale-105 ${
-            loaded ? "opacity-100 filter-none" : "opacity-0 scale-95"
-          }`}
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setLoaded(true)}
-        />
-        <div className="sticky-img-overlay absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <span className="sticky-hover-tag px-3 py-1 bg-black/70 text-[#F1EDE3] text-[10px] font-sans uppercase tracking-widest rounded border border-white/20">
-            {item.tag}
-          </span>
+    <div className="sticky-card-wrapper min-w-0 w-full">
+      <div
+        className="sticky-card cursor-pointer transition-transform duration-300 hover:scale-[1.02] min-w-0 w-full"
+        style={{ transform: `rotate(${item.rotation}deg)` }}
+        onClick={onClick}
+      >
+        <div className="sticky-tape-bar" />
+        <div className="sticky-img-wrap relative overflow-hidden rounded-lg bg-[#0a0a0a] min-w-0 w-full">
+          {/* Shimmer skeleton placeholder */}
+          {!loaded && (
+            <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#1f1f1f] to-[#141414] animate-pulse pointer-events-none" />
+          )}
+          <img
+            src={item.thumb}
+            alt={item.note}
+            className={`sticky-img w-full h-full object-cover transition-all duration-500 hover:scale-105 ${
+              loaded ? "opacity-100 filter-none" : "opacity-0 scale-95"
+            }`}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+          />
+          <div className="sticky-img-overlay absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span className="sticky-hover-tag px-3 py-1 bg-black/70 text-[#F1EDE3] text-[10px] font-sans uppercase tracking-widest rounded border border-white/20">
+              {item.tag}
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="sticky-note-text mt-2 sm:mt-2.5 flex items-center justify-between text-xs px-1 text-[#D8D1C2] min-w-0 w-full">
-        <span className="sticky-note-label font-serif tracking-wide truncate pr-2 min-w-0 flex-1">{item.note}</span>
-        <span className="sticky-note-dot w-1.5 h-1.5 rounded-full bg-[#67685D] flex-shrink-0" />
+        <div className="sticky-note-text mt-2 sm:mt-2.5 flex items-center justify-between text-xs px-1 text-[#D8D1C2] min-w-0 w-full">
+          <span className="sticky-note-label font-serif tracking-wide truncate pr-2 min-w-0 flex-1">{item.note}</span>
+          <span className="sticky-note-dot w-1.5 h-1.5 rounded-full bg-[#67685D] flex-shrink-0" />
+        </div>
       </div>
     </div>
   );
@@ -167,42 +169,85 @@ const StickyGallery: React.FC = () => {
 
     const mm = gsap.matchMedia();
 
-    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
-      gsap.fromTo(
-        ".sticky-card",
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.04,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            once: true,
-          },
-        }
-      );
-
+    // Desktop
+    mm.add("(min-width: 1024px)", () => {
       const header = sectionRef.current?.querySelector(".sticky-gallery-header");
       if (header) {
         gsap.fromTo(
           header,
-          { opacity: 0, y: 20 },
+          { opacity: 0, y: 35 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            ease: "power2.out",
+            duration: 0.9,
+            ease: "power3.out",
             scrollTrigger: { trigger: header, start: "top 85%", once: true },
           }
         );
       }
+
+      // Smooth scroll reveal batch for wall image cards as you scroll down
+      ScrollTrigger.batch(".sticky-card-wrapper", {
+        start: "top 90%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 55, scale: 0.94 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              stagger: 0.08,
+              duration: 0.85,
+              ease: "power3.out",
+              overwrite: true,
+            }
+          );
+        },
+      });
+    });
+
+    // Mobile / Tablet
+    mm.add("(max-width: 1023px)", () => {
+      const header = sectionRef.current?.querySelector(".sticky-gallery-header");
+      if (header) {
+        gsap.fromTo(
+          header,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: header, start: "top 88%", once: true },
+          }
+        );
+      }
+
+      ScrollTrigger.batch(".sticky-card-wrapper", {
+        start: "top 92%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 40, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              stagger: 0.06,
+              duration: 0.8,
+              ease: "power3.out",
+              overwrite: true,
+            }
+          );
+        },
+      });
     });
 
     return () => mm.revert();
-  }, []);
+  }, [displayedItems.length]);
 
   const activeLightboxItem =
     lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
