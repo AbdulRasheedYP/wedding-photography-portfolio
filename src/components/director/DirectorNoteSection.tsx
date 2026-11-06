@@ -12,7 +12,33 @@ const DirectorNoteSection: React.FC<Props> = ({ onCommissionClick }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Note remains immediately 100% visible with zero opacity lag
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+      if (containerRef.current) {
+        gsap.fromTo(
+          containerRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 78%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
     <section

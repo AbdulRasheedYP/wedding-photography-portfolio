@@ -80,6 +80,73 @@ const JourneySection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeNode, setActiveNode] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+      // 1. Editorial Header animation (Desktop)
+      gsap.fromTo(
+        ".journey-header-anim",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        }
+      );
+
+      // 2. Desktop cards slide in individually as you scroll down
+      gsap.utils.toArray<HTMLElement>(".journey-card-desktop").forEach((card, i) => {
+        const isLeft = i % 2 === 0;
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: isLeft ? -45 : 45, y: 20 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      });
+
+      // 3. Desktop Road node badges pop in
+      gsap.utils.toArray<HTMLElement>(".journey-node-badge").forEach((badge) => {
+        gsap.fromTo(
+          badge,
+          { scale: 0, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.65,
+            ease: "back.out(1.8)",
+            scrollTrigger: {
+              trigger: badge,
+              start: "top 90%",
+              once: true,
+            },
+          }
+        );
+      });
+    });
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <section
       ref={sectionRef}

@@ -16,11 +16,22 @@ export const projects: Project[] = [
   {
     id: "official-showreel",
     title: "Official Showreel 2026",
-    category: { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
-    thumbnail: "/images/hero/hero_bg.webp",
+    category: { id: 1, name: "Travel & Nature Cinema", slug: "showreel" },
+    thumbnail: "/images/hero/showreel_thumb.webp",
     video_url: "/videos/showreel.mp4",
+    preview_url: "/videos/showreel-preview.mp4",
     client_name: "Adil Mubarak Films",
-    description: "Cinematic montage of bridal campaigns, fashion shows, and event films captured across Dubai and Kerala.",
+    description: "Cinematic expedition montage captured across the lush mountains and cloudscapes of Western Ghats, Kerala.",
+  },
+  {
+    id: "concert-reel",
+    title: "Live Concert & Stage Cinema",
+    category: { id: 4, name: "Events & Corporate", slug: "events" },
+    thumbnail: "/images/hero/concert_thumb.webp",
+    video_url: "/videos/concert-reel.mp4",
+    preview_url: "/videos/concert-preview.mp4",
+    client_name: "Adil Mubarak Films",
+    description: "High-energy stage lighting, live music performances, and festival concert cinema.",
   },
 ];
 

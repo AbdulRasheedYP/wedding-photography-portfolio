@@ -28,30 +28,63 @@ const ServicesSection: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Desktop only: auto-center carousel stage using Lenis smooth scroll
-    let trigger: ScrollTrigger | null = null;
-    if (
-      stageRef.current &&
-      typeof (window as any).__lenis?.scrollTo === "function" &&
-      window.innerWidth >= 1024
-    ) {
-      trigger = ScrollTrigger.create({
-        trigger: stageRef.current,
-        start: "top 65%",
-        end: "bottom 35%",
-        once: true,
-        onEnter: () => {
-          (window as any).__lenis?.scrollTo(stageRef.current, {
-            offset: 0,
-            duration: 0.7,
-          });
-        },
-      });
-    }
+    const mm = gsap.matchMedia();
 
-    return () => {
-      trigger?.kill();
-    };
+    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+      // Desktop auto-center carousel stage using Lenis smooth scroll
+      if (stageRef.current && typeof (window as any).__lenis?.scrollTo === "function") {
+        ScrollTrigger.create({
+          trigger: stageRef.current,
+          start: "top 65%",
+          end: "bottom 35%",
+          once: true,
+          onEnter: () => {
+            (window as any).__lenis?.scrollTo(stageRef.current, {
+              offset: 0,
+              duration: 0.7,
+            });
+          },
+        });
+      }
+
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: stageRef.current,
+              start: "top 78%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (skillsRef.current) {
+        gsap.fromTo(
+          skillsRef.current,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: skillsRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (

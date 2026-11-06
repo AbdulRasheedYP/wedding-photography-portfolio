@@ -20,7 +20,52 @@ const AboutSection: React.FC = () => {
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Elements remain immediately 100% visible with zero opacity lag
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mm = gsap.matchMedia();
+
+    // Desktop only: smooth luxury reveal
+    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+      if (imageRef.current) {
+        gsap.fromTo(
+          imageRef.current,
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: imageRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current,
+          { opacity: 0, x: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
     <section

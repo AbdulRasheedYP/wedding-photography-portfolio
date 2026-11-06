@@ -14,11 +14,12 @@ interface Props {
 const DEFAULT_MAIN_PROJECT: Project = {
   id: "official-showreel",
   title: "Official Showreel 2026",
-  category: { id: 1, name: "Fashion & Event Cinema", slug: "showreel" },
-  thumbnail: "/images/hero/hero_bg.webp",
+  category: { id: 1, name: "Travel & Nature Cinema", slug: "showreel" },
+  thumbnail: "/images/hero/showreel_thumb.webp",
   video_url: "/videos/showreel.mp4",
+  preview_url: "/videos/showreel-preview.mp4",
   client_name: "Adil Mubarak Films",
-  description: "Cinematic montage of bridal campaigns, fashion shows, and event films captured across Dubai and Kerala.",
+  description: "Cinematic expedition montage captured across the lush mountains and cloudscapes of Western Ghats, Kerala.",
 };
 
 interface GridReelCardProps {
@@ -64,10 +65,10 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       />
 
       {/* Hover Silent Video Preview Loop */}
-      {project.video_url && (
+      {(project.preview_url || project.video_url) && (
         <video
           ref={cardVideoRef}
-          src={project.video_url === "/videos/showreel.mp4" ? "/videos/showreel-preview.mp4" : project.video_url}
+          src={project.preview_url || project.video_url}
           muted
           loop
           playsInline
@@ -113,7 +114,34 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
   const mainProject = projects.length > 0 ? projects[0] : DEFAULT_MAIN_PROJECT;
   const additionalReels = projects.length > 1 ? projects.slice(1) : [];
 
-  // Keep portfolio content immediately visible with zero opacity lag
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+      if (containerRef.current) {
+        gsap.fromTo(
+          containerRef.current,
+          { opacity: 0, y: 35, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 78%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => mm.revert();
+  }, []);
 
   const handlePlayMain = () => {
     onSelectProject(mainProject);
@@ -154,7 +182,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           {/* Silent Video Loop (No Sound, 2-3s Repeating Preview) */}
           <video
             ref={heroVideoRef}
-            src="/videos/showreel-preview.mp4"
+            src={mainProject.preview_url || "/videos/showreel-preview.mp4"}
             autoPlay
             muted
             loop
