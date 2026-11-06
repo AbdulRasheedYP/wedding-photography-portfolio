@@ -457,3 +457,32 @@
   animation-timeline: scroll(root block);
 }
 
+/* ═══════════════════════════════════════════════════
+   CINEMATIC WINDING ROADWAY ANIMATIONS
+   ═══════════════════════════════════════════════════ */
+@keyframes roadDash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-road-dash {
+  animation: roadDash 2.5s linear infinite;
+}
+
+@keyframes nodePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.35;
+  }
+}
+
+.animate-node-pulse {
+  transform-origin: center;
+  animation: nodePulse 2.8s ease-in-out infinite;
+}
+
