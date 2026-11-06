@@ -200,15 +200,6 @@ const JourneySection: React.FC = () => {
               strokeLinecap="round"
             />
 
-            {/* Animated Dashed Center Highway Marking */}
-            <path
-              d="M 600,-20 C 600,60 470,90 460,170 C 450,270 750,310 740,420 C 730,530 450,570 460,680 C 470,790 750,820 740,930 C 730,1000 600,1030 600,1100"
-              stroke="#F1EDE3"
-              strokeWidth="2"
-              strokeDasharray="8 12"
-              strokeLinecap="round"
-              className="animate-road-dash opacity-75"
-            />
 
             {/* Clean Horizontal Connector Lines to Milestone Cards */}
             <line x1="440" y1="170" x2="385" y2="170" stroke="rgba(241, 237, 227, 0.35)" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -396,10 +387,7 @@ const JourneySection: React.FC = () => {
         {/* 4. MOBILE & TABLET ROADMAP VIEW (< 1024px) */}
         <div className="block lg:hidden relative pl-10 sm:pl-14 space-y-8 sm:space-y-10 journey-fade-in">
           {/* Vertical Glowing Roadway Spine */}
-          <div className="absolute left-4 sm:left-6 top-3 bottom-6 w-[3px] bg-gradient-to-b from-transparent via-[#F1EDE3]/30 to-transparent">
-            {/* Dashed Center Animation */}
-            <div className="w-full h-full border-l-2 border-dashed border-[#FFF8EE]/50" />
-          </div>
+          <div className="absolute left-4 sm:left-6 top-3 bottom-6 w-[2px] bg-gradient-to-b from-transparent via-[#F1EDE3]/40 to-transparent shadow-[0_0_8px_rgba(241,237,227,0.3)]" />
 
           {MILESTONES.map((m) => (
             <div key={m.number} className="relative group">

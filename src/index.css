@@ -460,15 +460,6 @@
 /* ═══════════════════════════════════════════════════
    CINEMATIC WINDING ROADWAY ANIMATIONS
    ═══════════════════════════════════════════════════ */
-@keyframes roadDash {
-  to {
-    stroke-dashoffset: -40;
-  }
-}
-
-.animate-road-dash {
-  animation: roadDash 2.5s linear infinite;
-}
 
 @keyframes nodePulse {
   0%, 100% {
