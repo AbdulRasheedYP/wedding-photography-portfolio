@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,6 +9,7 @@ const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -120,17 +121,45 @@ const AboutSection: React.FC = () => {
 
           {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
           <div ref={imageRef} className="lg:col-span-5">
-            {/* Primary Large Editorial Image */}
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#141414] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
+            {/* Primary Large Editorial Image with Interactive Hover Reveal */}
+            <div
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onClick={() => setIsHovered((prev) => !prev)}
+              className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#141414] border border-white/10 hover:border-white/25 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group cursor-pointer select-none transition-colors duration-500"
+            >
+              {/* 1. Base Primary Image: In the Field */}
               <img
                 src="/images/about/camera_rig.webp"
-                alt="Behind the Lens — Adil Mubarak"
-                className="w-full h-full object-cover object-bottom filter brightness-[0.92] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                alt="Adil Mubarak — Visual Storyteller"
+                className={`absolute inset-0 w-full h-full object-cover object-bottom filter brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out ${
+                  isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100"
+                }`}
                 loading="lazy"
                 decoding="async"
               />
+
+              {/* 2. Interactive Hover Reveal Image: On Set with Camera & Pass */}
+              <img
+                src="/images/about/camera_rig_hover.webp"
+                alt="Adil Mubarak — On Set"
+                className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out ${
+                  isHovered ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                }`}
+                loading="lazy"
+                decoding="async"
+              />
+
+              {/* Cinematic Vignette Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
+              {/* Interactive Pill Hint at Top-Right */}
+              <div className="absolute top-4 right-4 z-10 pointer-events-none">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-[9.5px] font-sans font-medium tracking-wider uppercase text-[#DDD6C8] shadow-md transition-all duration-300">
+                  <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${isHovered ? "bg-[#25D366]" : "bg-[#E8DCC8] animate-pulse"}`} />
+                  {isHovered ? "On Set · Dubai" : "Hover / Tap"}
+                </span>
+              </div>
             </div>
           </div>
 
