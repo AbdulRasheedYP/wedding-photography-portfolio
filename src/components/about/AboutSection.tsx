@@ -126,7 +126,7 @@ const AboutSection: React.FC = () => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={() => setIsHovered((prev) => !prev)}
-              className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#141414] border border-white/10 hover:border-white/25 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group cursor-pointer select-none transition-colors duration-500"
+              className="relative aspect-[10/11] max-w-[420px] mx-auto lg:max-w-none rounded-3xl overflow-hidden bg-[#141414] border border-white/10 hover:border-white/25 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group cursor-pointer select-none transition-colors duration-500"
             >
               {/* 1. Base Primary Image: In the Field */}
               <img
