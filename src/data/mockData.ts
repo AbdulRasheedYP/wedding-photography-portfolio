@@ -24,14 +24,14 @@ export const projects: Project[] = [
     description: "Cinematic expedition montage captured across the lush mountains and cloudscapes of Western Ghats, Kerala.",
   },
   {
-    id: "concert-reel",
-    title: "Live Concert & Stage Cinema",
-    category: { id: 4, name: "Events & Corporate", slug: "events" },
+    id: "western-ghats-reel",
+    title: "Western Ghats Trail Expedition",
+    category: { id: 3, name: "Reels & Social Media", slug: "reels" },
     thumbnail: "/images/hero/concert_thumb.webp",
     video_url: "/videos/concert-reel.mp4",
     preview_url: "/videos/concert-preview.mp4",
     client_name: "Adil Mubarak Films",
-    description: "High-energy stage lighting, live music performances, and festival concert cinema.",
+    description: "Atmospheric ridge exploration and high-altitude wilderness moments filmed across Kerala's Western Ghats.",
   },
 ];
 

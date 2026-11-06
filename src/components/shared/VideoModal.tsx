@@ -39,10 +39,12 @@ const isDirectVideo = (url?: string): boolean => {
 const VideoModal: React.FC<Props> = ({ project, onClose }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isBuffering, setIsBuffering] = useState(true);
+  const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
     if (!project) return;
     setIsBuffering(true);
+    setIsPortrait(false);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -86,7 +88,9 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 12 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 w-full max-w-6xl mx-auto flex flex-col"
+          className={`relative z-10 w-full mx-auto flex flex-col transition-all duration-300 ${
+            isPortrait ? "max-w-sm sm:max-w-md" : "max-w-6xl"
+          }`}
         >
           {/* Header Bar — Clean Close Button Only on Right */}
           <div className="flex items-center justify-end px-1 py-1 mb-2">
@@ -103,7 +107,11 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
           </div>
 
           {/* Large Video Frame (Native HTML5 or YouTube) */}
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.95)] border border-[#F1EDE3]/15">
+          <div
+            className={`relative w-full rounded-2xl overflow-hidden bg-black shadow-[0_20px_80px_rgba(0,0,0,0.95)] border border-[#F1EDE3]/15 transition-all duration-300 flex items-center justify-center ${
+              isPortrait ? "aspect-[9/16] max-h-[80vh]" : "aspect-video"
+            }`}
+          >
             {/* Sleek Minimal Spinner */}
             {isDirect && isBuffering && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px] z-20 pointer-events-none transition-opacity duration-200">
@@ -122,6 +130,14 @@ const VideoModal: React.FC<Props> = ({ project, onClose }) => {
                 autoPlay
                 playsInline
                 preload="auto"
+                onLoadedMetadata={(e) => {
+                  const v = e.currentTarget;
+                  if (v.videoHeight > v.videoWidth) {
+                    setIsPortrait(true);
+                  } else {
+                    setIsPortrait(false);
+                  }
+                }}
                 onLoadStart={() => setIsBuffering(true)}
                 onWaiting={() => setIsBuffering(true)}
                 onSeeking={() => setIsBuffering(true)}
