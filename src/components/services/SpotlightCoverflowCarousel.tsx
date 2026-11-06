@@ -192,11 +192,11 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       }
 
       if (isCoolingDown) return;
-      if (Math.abs(delta) < 4) return;
+      if (Math.abs(delta) < 6) return;
 
       accumulatedDelta += delta;
-      // Faster, snappy threshold
-      const threshold = 12;
+      // Controlled, smooth threshold
+      const threshold = 26;
 
       if (accumulatedDelta > threshold) {
         if (activeIndexRef.current < totalCards - 1) {
@@ -205,7 +205,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           isCoolingDown = true;
           cooldownTimer = setTimeout(() => {
             isCoolingDown = false;
-          }, 160); // 160ms fast fluid transition
+          }, 400); // 400ms calm, measured pace
         }
       } else if (accumulatedDelta < -threshold) {
         if (activeIndexRef.current > 0) {
@@ -214,14 +214,14 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           isCoolingDown = true;
           cooldownTimer = setTimeout(() => {
             isCoolingDown = false;
-          }, 160); // 160ms fast fluid transition
+          }, 400); // 400ms calm, measured pace
         }
       }
 
       if (resetTimer) clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
         accumulatedDelta = 0;
-      }, 110);
+      }, 180);
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false, capture: true });
@@ -274,7 +274,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     }
 
     const delta = currentDragRef.current;
-    const swipeThreshold = isMobile ? 22 : 32;
+    const swipeThreshold = isMobile ? 32 : 42;
 
     if (delta < -swipeThreshold) {
       nextCard();
@@ -376,7 +376,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
                 zIndex,
                 transition: isDragging
                   ? "none"
-                  : "transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, border-color 300ms ease",
+                  : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 500ms ease, border-color 500ms ease",
               }}
               className={`absolute left-1/2 top-1/2 w-[260px] h-[345px] sm:w-[275px] sm:h-[365px] rounded-2xl overflow-hidden cursor-pointer will-change-transform transform-gpu backface-hidden ${
                 isActive
