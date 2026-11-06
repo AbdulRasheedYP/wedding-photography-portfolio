@@ -23,17 +23,27 @@ const AboutSection: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobileDevice =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    // On mobile devices, ensure elements are immediately visible without opacity:0 lag
+    if (isMobileDevice) {
+      if (imageRef.current) gsap.set(imageRef.current, { opacity: 1, y: 0, x: 0 });
+      if (contentRef.current) gsap.set(contentRef.current, { opacity: 1, y: 0, x: 0 });
+      return;
+    }
+
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
-      const isMobile = window.innerWidth < 768;
       ctx = gsap.context(() => {
         if (imageRef.current) {
           gsap.fromTo(
             imageRef.current,
-            { opacity: 0, y: isMobile ? 25 : 0, x: isMobile ? 0 : -30 },
+            { opacity: 0, x: -30 },
             {
               opacity: 1,
-              y: 0,
               x: 0,
               duration: 0.9,
               ease: "power3.out",
@@ -49,10 +59,9 @@ const AboutSection: React.FC = () => {
         if (contentRef.current) {
           gsap.fromTo(
             contentRef.current,
-            { opacity: 0, y: isMobile ? 25 : 0, x: isMobile ? 0 : 30 },
+            { opacity: 0, x: 30 },
             {
               opacity: 1,
-              y: 0,
               x: 0,
               duration: 0.9,
               ease: "power3.out",

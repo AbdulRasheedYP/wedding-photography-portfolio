@@ -28,25 +28,34 @@ const ServicesSection: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobileDevice =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    // On mobile devices, ensure elements are immediately 100% visible with zero black screen / opacity lag
+    if (isMobileDevice) {
+      if (headerRef.current) gsap.set(headerRef.current, { opacity: 1, y: 0 });
+      if (gridRef.current) gsap.set(gridRef.current, { opacity: 1, y: 0 });
+      if (skillsRef.current) gsap.set(skillsRef.current, { opacity: 1, y: 0 });
+      return;
+    }
+
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
-        // Auto-center carousel stage into screen when scrolling down into services
-        if (stageRef.current) {
+        // Desktop only: auto-center carousel stage using Lenis smooth scroll
+        if (stageRef.current && typeof (window as any).__lenis?.scrollTo === "function") {
           ScrollTrigger.create({
             trigger: stageRef.current,
             start: "top 65%",
             end: "bottom 35%",
             once: true,
             onEnter: () => {
-              if (typeof (window as any).__lenis?.scrollTo === "function") {
-                (window as any).__lenis.scrollTo(stageRef.current, {
-                  offset: 0,
-                  duration: 0.7,
-                });
-              } else {
-                stageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-              }
+              (window as any).__lenis?.scrollTo(stageRef.current, {
+                offset: 0,
+                duration: 0.7,
+              });
             },
           });
         }
@@ -123,7 +132,6 @@ const ServicesSection: React.FC = () => {
       <div
         ref={stageRef}
         className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-8 py-8 sm:py-12 relative z-10 max-w-6xl mx-auto w-full"
-        style={{ scrollSnapAlign: "center" }}
       >
         {/* Section Header */}
         <div ref={headerRef} className="mb-6 sm:mb-8 text-center flex-shrink-0">

@@ -15,6 +15,19 @@ const DirectorNoteSection: React.FC<Props> = ({ onCommissionClick }) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobileDevice =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    // On mobile devices, ensure elements are immediately visible without opacity:0 lag
+    if (isMobileDevice) {
+      if (containerRef.current) {
+        gsap.set(containerRef.current, { opacity: 1, y: 0 });
+      }
+      return;
+    }
+
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {

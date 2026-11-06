@@ -83,10 +83,23 @@ const JourneySection: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const isMobileDevice =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      window.matchMedia("(pointer: coarse)").matches;
+
+    // On mobile devices, ensure cards, badges, and header are immediately visible without opacity:0 lag
+    if (isMobileDevice) {
+      gsap.set(".journey-header-anim", { opacity: 1, y: 0 });
+      gsap.set(".journey-card-mobile", { opacity: 1, x: 0, y: 0 });
+      gsap.set(".journey-node-badge", { scale: 1, opacity: 1 });
+      return;
+    }
+
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
-        // 1. Editorial Header animation
+        // 1. Editorial Header animation (Desktop)
         gsap.fromTo(
           ".journey-header-anim",
           { opacity: 0, y: 25 },
@@ -124,28 +137,7 @@ const JourneySection: React.FC = () => {
           );
         });
 
-        // 3. Mobile cards slide in individually as you scroll down!
-        gsap.utils.toArray<HTMLElement>(".journey-card-mobile").forEach((card, i) => {
-          const isLeft = i % 2 === 1; // Card 01 on right, Card 02 on left
-          gsap.fromTo(
-            card,
-            { opacity: 0, x: isLeft ? -35 : 35, y: 25 },
-            {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 88%",
-                once: true,
-              },
-            }
-          );
-        });
-
-        // 4. Road node badges pop in with bounce when scrolled into view
+        // 3. Desktop Road node badges pop in
         gsap.utils.toArray<HTMLElement>(".journey-node-badge").forEach((badge) => {
           gsap.fromTo(
             badge,

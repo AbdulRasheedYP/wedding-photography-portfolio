@@ -5,6 +5,12 @@ import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
+if (typeof window !== "undefined") {
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+  });
+}
+
 const LenisContext = React.createContext<Lenis | null>(null);
 
 export function useLenis() {
