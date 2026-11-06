@@ -125,7 +125,7 @@ const AboutSection: React.FC = () => {
               <img
                 src="/images/about/camera_rig.webp"
                 alt="Behind the Lens — Adil Mubarak"
-                className="w-full h-full object-cover filter brightness-[0.92] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                className="w-full h-full object-cover object-bottom filter brightness-[0.92] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
