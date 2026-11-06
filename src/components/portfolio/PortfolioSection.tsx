@@ -125,8 +125,8 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
       id="work"
       className="py-14 sm:py-20 lg:py-24 bg-black scroll-mt-20 overflow-hidden relative"
     >
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/[0.02] rounded-full blur-[160px] pointer-events-none" />
+      {/* Ambient background glow — Zero GPU blur overhead */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full pointer-events-none opacity-20" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)" }} />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 

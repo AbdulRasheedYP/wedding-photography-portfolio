@@ -28,9 +28,8 @@ const AboutSection: React.FC = () => {
       id="about"
       className="py-16 sm:py-24 lg:py-28 px-5 sm:px-8 bg-black scroll-mt-20 relative overflow-hidden text-[#F1EDE3]"
     >
-      {/* Soft Ambient Cinematic Glows */}
-      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-white/[0.02] rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -right-40 w-96 h-96 bg-white/[0.02] rounded-full blur-[140px] pointer-events-none" />
+      {/* Soft Ambient Cinematic Glows — Zero GPU blur overhead */}
+      <div className="absolute top-1/4 left-0 w-72 h-72 rounded-full pointer-events-none opacity-25" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)" }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
 

@@ -50,8 +50,8 @@ const BrandMarquee: React.FC = () => {
 
   return (
     <section className="py-8 sm:py-12 bg-black text-[#F1EDE3] overflow-hidden relative">
-      {/* Subtle Ambient Background Light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-white/[0.015] rounded-full blur-[120px] pointer-events-none" />
+      {/* Subtle Ambient Background Light — Zero GPU blur overhead */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[180px] rounded-full pointer-events-none opacity-20" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)" }} />
 
       {/* Clean Editorial Minimal Header */}
       <div className="max-w-6xl mx-auto px-5 sm:px-8 mb-6 sm:mb-8 text-center relative z-10">

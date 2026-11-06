@@ -81,6 +81,8 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
 
   const containerRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef<number>(0);
+  const startYRef = useRef<number>(0);
+  const isHorizSwipeRef = useRef<boolean | null>(null);
   const currentDragRef = useRef<number>(0);
   const hasDraggedRef = useRef<boolean>(false);
   const animationFrameRef = useRef<number | null>(null);
@@ -233,20 +235,36 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     };
   }, [nextCard, prevCard, totalCards]);
 
-  // Touch / Drag event handlers
-  const handleDragStart = (clientX: number) => {
+  // Touch / Drag event handlers (with vertical scroll pass-through)
+  const handleDragStart = (clientX: number, clientY: number = 0) => {
     setIsDragging(true);
     hasDraggedRef.current = false;
     startXRef.current = clientX;
+    startYRef.current = clientY;
+    isHorizSwipeRef.current = null;
     currentDragRef.current = 0;
   };
 
-  const handleDragMove = (clientX: number) => {
+  const handleDragMove = (clientX: number, clientY: number = 0) => {
     if (!isDragging) return;
-    let delta = clientX - startXRef.current;
-    if (Math.abs(delta) > 8) {
-      hasDraggedRef.current = true;
+    const deltaX = clientX - startXRef.current;
+    const deltaY = clientY - startYRef.current;
+
+    // Detect gesture axis: if vertical swipe, do NOT intercept or trigger card renders!
+    if (isHorizSwipeRef.current === null) {
+      if (Math.abs(deltaY) > 8 && Math.abs(deltaY) >= Math.abs(deltaX)) {
+        isHorizSwipeRef.current = false;
+        return;
+      }
+      if (Math.abs(deltaX) > 8) {
+        isHorizSwipeRef.current = true;
+      }
     }
+
+    if (!isHorizSwipeRef.current) return;
+
+    let delta = deltaX;
+    hasDraggedRef.current = true;
 
     // Elastic resistance when dragging past boundaries
     if (activeIndexRef.current === 0 && delta > 0) {
@@ -273,29 +291,32 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       cancelAnimationFrame(animationFrameRef.current);
     }
 
-    const delta = currentDragRef.current;
-    const swipeThreshold = isMobile ? 32 : 42;
+    if (isHorizSwipeRef.current) {
+      const delta = currentDragRef.current;
+      const swipeThreshold = isMobile ? 32 : 42;
 
-    if (delta < -swipeThreshold) {
-      nextCard();
-    } else if (delta > swipeThreshold) {
-      prevCard();
+      if (delta < -swipeThreshold) {
+        nextCard();
+      } else if (delta > swipeThreshold) {
+        prevCard();
+      }
     }
 
     setDragOffset(0);
     currentDragRef.current = 0;
+    isHorizSwipeRef.current = null;
   };
 
   return (
     <div
       ref={containerRef}
-      className={`relative w-full select-none py-2 cursor-grab active:cursor-grabbing ${className}`}
-      onMouseDown={(e) => handleDragStart(e.clientX)}
-      onMouseMove={(e) => handleDragMove(e.clientX)}
+      className={`relative w-full select-none py-2 cursor-grab active:cursor-grabbing touch-pan-y ${className}`}
+      onMouseDown={(e) => handleDragStart(e.clientX, e.clientY)}
+      onMouseMove={(e) => handleDragMove(e.clientX, e.clientY)}
       onMouseUp={handleDragEnd}
       onMouseLeave={handleDragEnd}
-      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-      onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+      onTouchStart={(e) => handleDragStart(e.touches[0].clientX, e.touches[0].clientY)}
+      onTouchMove={(e) => handleDragMove(e.touches[0].clientX, e.touches[0].clientY)}
       onTouchEnd={handleDragEnd}
     >
       {/* 3D Carousel Stage */}
@@ -308,7 +329,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           }}
           disabled={activeIndex === 0}
           aria-label="Previous service"
-          className={`absolute left-1 sm:left-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
+          className={`absolute left-1 sm:left-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#181818] hover:bg-[#222222] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
             activeIndex === 0
               ? "opacity-20 pointer-events-none border-white/5 text-white/20"
               : "hover:scale-105 active:scale-95"
@@ -324,7 +345,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
           }}
           disabled={activeIndex === totalCards - 1}
           aria-label="Next service"
-          className={`absolute right-1 sm:right-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#121212]/90 hover:bg-[#1A1A1A] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white backdrop-blur-md flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
+          className={`absolute right-1 sm:right-4 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#181818] hover:bg-[#222222] border border-white/10 hover:border-[#DDD6C8]/60 text-[#DDD6C8] hover:text-white flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-200 cursor-pointer ${
             activeIndex === totalCards - 1
               ? "opacity-20 pointer-events-none border-white/5 text-white/20"
               : "hover:scale-105 active:scale-95"
@@ -378,7 +399,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
                   ? "none"
                   : "transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 500ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 500ms ease, border-color 500ms ease",
               }}
-              className={`absolute left-1/2 top-1/2 w-[260px] h-[345px] sm:w-[275px] sm:h-[365px] rounded-2xl overflow-hidden cursor-pointer will-change-transform transform-gpu backface-hidden ${
+              className={`absolute left-1/2 top-1/2 w-[260px] h-[345px] sm:w-[275px] sm:h-[365px] rounded-2xl overflow-hidden cursor-pointer ${
                 isActive
                   ? "border border-[#DDD6C8]/60 shadow-[0_25px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(221,214,200,0.18)] bg-[#141414]"
                   : "border border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.7)] hover:border-white/20 bg-[#121212]"
@@ -408,7 +429,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
 
               {/* Top-Left: Mono-Spaced Index Number */}
               <div className="absolute top-4 left-4 z-10">
-                <span className="font-mono text-xs sm:text-[13px] font-semibold tracking-widest text-[#DDD6C8] bg-black/65 backdrop-blur-md px-3 py-1 rounded-full border border-[#DDD6C8]/30 select-none shadow-md">
+                <span className="font-mono text-xs sm:text-[13px] font-semibold tracking-widest text-[#DDD6C8] bg-black/85 px-3 py-1 rounded-full border border-[#DDD6C8]/30 select-none shadow-md">
                   {card.number}
                 </span>
               </div>

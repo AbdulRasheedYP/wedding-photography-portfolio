@@ -69,8 +69,8 @@ const Navbar: React.FC = () => {
           <div
             className={`rounded-full px-5 py-2.5 flex items-center justify-between relative transition-all duration-500 ${
               scrolled
-                ? "bg-[#141414]/90 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/70"
-                : "bg-black/40 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),0_8px_32px_0_rgba(0,0,0,0.45)]"
+                ? "bg-[#141414] md:bg-[#141414]/90 md:backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/70"
+                : "bg-[#141414]/90 md:bg-black/50 md:backdrop-blur-xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]"
             }`}
           >
 
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-black/98 backdrop-blur-2xl pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
+            className="fixed inset-0 z-40 bg-black/98 pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
           >
             <div className="flex flex-col justify-center flex-1 space-y-6">
               {NAV_LINKS.map((link, idx) => {

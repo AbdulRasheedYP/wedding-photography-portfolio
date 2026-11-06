@@ -101,7 +101,7 @@ const JourneySection: React.FC = () => {
         {/* Multi-Layer Seamless Vignettes into Pure Black Canvas */}
         <div className="absolute top-0 inset-x-0 h-44 sm:h-56 bg-gradient-to-b from-black via-black/85 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-48 sm:h-64 bg-gradient-to-t from-black via-black/90 to-transparent" />
-        <div className="absolute inset-0 bg-black/55 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="absolute inset-0 bg-radial-gradient from-transparent via-black/40 to-black/85" />
       </div>
 
@@ -212,7 +212,7 @@ const JourneySection: React.FC = () => {
                 onMouseEnter={() => setActiveNode(idx)}
                 onMouseLeave={() => setActiveNode(null)}
                 style={{ left: `${m.desktopNode.x}px`, top: `${m.desktopNode.y}px` }}
-                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-[#121212]/95 border backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-300 group shadow-[0_5px_15px_rgba(0,0,0,0.8)] ${
+                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full bg-[#181818] border flex items-center justify-center cursor-pointer transition-all duration-300 group shadow-[0_5px_15px_rgba(0,0,0,0.8)] ${
                   isHovered
                     ? "border-white/90 shadow-[0_0_22px_rgba(255,255,255,0.4)] scale-110 -translate-y-[52%]"
                     : "border-[#C4BAA9]/60 shadow-[0_0_12px_rgba(241,237,227,0.25)] hover:scale-105"
@@ -243,7 +243,7 @@ const JourneySection: React.FC = () => {
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               01
             </span>
-            <div className={`w-full bg-[#121212]/85 hover:bg-[#181818]/95 backdrop-blur-md border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
+            <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 0 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -284,7 +284,7 @@ const JourneySection: React.FC = () => {
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               02
             </span>
-            <div className={`w-full bg-[#121212]/85 hover:bg-[#181818]/95 backdrop-blur-md border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
+            <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 1 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -325,7 +325,7 @@ const JourneySection: React.FC = () => {
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               03
             </span>
-            <div className={`w-full bg-[#121212]/85 hover:bg-[#181818]/95 backdrop-blur-md border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
+            <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 2 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -366,7 +366,7 @@ const JourneySection: React.FC = () => {
             <span className="font-serif italic text-4xl xl:text-5xl text-[#E8DCC8]/60 group-hover:text-[#FFF8EE] group-hover:scale-105 transition-all flex-shrink-0 pt-0.5 select-none drop-shadow-md">
               04
             </span>
-            <div className={`w-full bg-[#121212]/85 hover:bg-[#181818]/95 backdrop-blur-md border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
+            <div className={`w-full bg-[#141414] hover:bg-[#1A1A1A] border rounded-2xl p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 ${
               activeNode === 3 ? "border-white/40 shadow-[0_0_25px_rgba(241,237,227,0.2)]" : "border-white/10 hover:border-white/25"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -479,7 +479,7 @@ const JourneySection: React.FC = () => {
                   top: `${topY}px`,
                   left: isLeft ? "11%" : "89%",
                 }}
-                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#121212]/95 border backdrop-blur-md flex items-center justify-center p-1.5 cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.8)] ${
+                className={`journey-node-badge absolute z-20 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#181818] border flex items-center justify-center p-1.5 cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.8)] ${
                   isHovered
                     ? "border-white/90 shadow-[0_0_18px_rgba(255,255,255,0.4)] scale-110"
                     : "border-[#C4BAA9]/70 shadow-[0_0_10px_rgba(241,237,227,0.25)]"
@@ -506,7 +506,7 @@ const JourneySection: React.FC = () => {
             onClick={() => setActiveNode(activeNode === 0 ? null : 0)}
             className="journey-card-mobile absolute z-20 top-[35px] left-[calc(11%+24px)] right-[3%]"
           >
-            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+            <div className={`w-full bg-[#141414] border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
               activeNode === 0 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -548,7 +548,7 @@ const JourneySection: React.FC = () => {
             onClick={() => setActiveNode(activeNode === 1 ? null : 1)}
             className="journey-card-mobile absolute z-20 top-[360px] left-[3%] right-[calc(11%+24px)]"
           >
-            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+            <div className={`w-full bg-[#141414] border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
               activeNode === 1 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -590,7 +590,7 @@ const JourneySection: React.FC = () => {
             onClick={() => setActiveNode(activeNode === 2 ? null : 2)}
             className="journey-card-mobile absolute z-20 top-[685px] left-[calc(11%+24px)] right-[3%]"
           >
-            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+            <div className={`w-full bg-[#141414] border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
               activeNode === 2 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
@@ -632,7 +632,7 @@ const JourneySection: React.FC = () => {
             onClick={() => setActiveNode(activeNode === 3 ? null : 3)}
             className="journey-card-mobile absolute z-20 top-[1010px] left-[3%] right-[calc(11%+24px)]"
           >
-            <div className={`w-full bg-[#121212]/90 backdrop-blur-md border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
+            <div className={`w-full bg-[#141414] border rounded-2xl p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300 ${
               activeNode === 3 ? "border-white/40 shadow-[0_0_20px_rgba(241,237,227,0.2)]" : "border-white/10"
             }`}>
               <div className="flex items-center justify-between gap-2 mb-2">
