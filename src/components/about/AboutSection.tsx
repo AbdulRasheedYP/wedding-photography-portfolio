@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,7 +9,6 @@ const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -121,36 +120,16 @@ const AboutSection: React.FC = () => {
 
           {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
           <div ref={imageRef} className="lg:col-span-5">
-            {/* Primary Large Editorial Image with Interactive Hover Reveal */}
-            <div
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onClick={() => setIsHovered((prev) => !prev)}
-              className="relative aspect-[10/11] max-w-[420px] mx-auto lg:max-w-none rounded-3xl overflow-hidden bg-[#141414] border border-white/10 hover:border-white/25 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group cursor-pointer select-none transition-colors duration-500"
-            >
-              {/* 1. Base Primary Image: In the Field */}
-              <img
-                src="/images/about/camera_rig.webp"
-                alt="Adil Mubarak — Visual Storyteller"
-                className={`absolute inset-0 w-full h-full object-cover object-bottom filter brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out ${
-                  isHovered ? "opacity-0 scale-105" : "opacity-100 scale-100"
-                }`}
-                loading="lazy"
-                decoding="async"
-              />
-
-              {/* 2. Interactive Hover Reveal Image: On Set with Camera & Pass */}
+            {/* Primary Large Editorial Image */}
+            <div className="relative aspect-[10/11] max-w-[420px] mx-auto lg:max-w-none rounded-3xl overflow-hidden bg-[#141414] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
               <img
                 src="/images/about/camera_rig_hover.webp"
-                alt="Adil Mubarak — On Set"
-                className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05] transition-all duration-700 ease-out ${
-                  isHovered ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-                }`}
+                alt="Adil Mubarak — On Set Cinematographer"
+                className="w-full h-full object-cover object-center filter brightness-[0.94] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
-
-              {/* Cinematic Vignette Overlays */}
+              {/* Cinematic Vignette Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
             </div>
           </div>
