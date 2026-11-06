@@ -160,40 +160,25 @@ const AboutSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Action Bar with Round DP Avatar and Get in Touch Button */}
-            <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-3.5">
-                {/* Round Profile DP Avatar */}
-                <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-[#141414] shadow-md flex-shrink-0 overflow-hidden">
-                  <img
-                    src="/images/about/founder.webp"
-                    alt="Adil Mubarak"
-                    className="w-full h-full object-cover rounded-full"
-                    loading="lazy"
-                  />
-                </div>
-                <div>
-                  <p className="font-serif text-base text-[#F1EDE3] font-semibold leading-tight">
-                    Adil Mubarak MK
-                  </p>
-                  <p className="text-[11px] font-sans text-[#8D8B82] mt-0.5">
-                    adilmubarack03@gmail.com · +971 56 870 9412
-                  </p>
-                </div>
+            {/* Profile Signature & Contact Info */}
+            <div className="pt-4 border-t border-white/10 flex items-center gap-3.5">
+              {/* Round Profile DP Avatar */}
+              <div className="w-12 h-12 rounded-full border border-white/20 p-0.5 bg-[#141414] shadow-md flex-shrink-0 overflow-hidden">
+                <img
+                  src="/images/about/founder.webp"
+                  alt="Adil Mubarak"
+                  className="w-full h-full object-cover rounded-full"
+                  loading="lazy"
+                />
               </div>
-
-              <a
-                href="#contact"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-sans font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-lg"
-              >
-                <span>Get In Touch</span>
-                <svg
-                  className="w-3.5 h-3.5 stroke-current fill-none stroke-[2.2] transition-transform duration-300 group-hover:translate-x-0.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
+              <div>
+                <p className="font-serif text-base text-[#F1EDE3] font-semibold leading-tight">
+                  Adil Mubarak MK
+                </p>
+                <p className="text-[11px] font-sans text-[#8D8B82] mt-0.5">
+                  adilmubarack03@gmail.com · +971 56 870 9412
+                </p>
+              </div>
             </div>
 
           </div>
