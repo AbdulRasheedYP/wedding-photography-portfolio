@@ -76,11 +76,13 @@ const Navbar: React.FC = () => {
 
             {/* Logo */}
             <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group focus:outline-none" aria-label="Adil Mubarak Home">
-              <div className="w-7 h-7 rounded-full bg-[#F1EDE3] flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 stroke-black fill-none stroke-[2]">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 3L15 9M21 9.5L14.5 12M19.5 17.5L14 15M12 21L9 15M3 14.5L9.5 12M4.5 6.5L10 9" />
-                </svg>
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border border-[#F1EDE3]/30 group-hover:border-[#F1EDE3]/80 group-hover:scale-105 transition-all duration-300 shadow-sm flex-shrink-0 bg-[#141414]">
+                <img
+                  src="/images/about/founder.webp"
+                  alt="Adil Mubarak"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
               </div>
               <p className="font-serif font-semibold text-base tracking-tight text-[#F1EDE3] leading-none">Adil Mubarak</p>
             </button>
