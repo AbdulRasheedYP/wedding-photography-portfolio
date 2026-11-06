@@ -118,7 +118,7 @@ const ServicesSection: React.FC = () => {
         </div>
 
         {/* Modern Luxury 3D Spotlight Coverflow Carousel */}
-        <div ref={gridRef} className="mb-12 sm:mb-16">
+        <div ref={gridRef} data-lenis-prevent="true" className="mb-12 sm:mb-16 overscroll-contain">
           <SpotlightCoverflowCarousel />
         </div>
 

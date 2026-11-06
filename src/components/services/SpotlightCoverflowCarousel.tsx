@@ -117,6 +117,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   // Mouse Wheel & Trackpad scroll listener
   // Scrolling down (deltaY > 0) -> move to next card (right)
   // Scrolling up (deltaY < 0) -> move to prev card (left)
+  // Strictly prevent page scroll while mouse is over carousel
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -127,19 +128,20 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
     const handleWheel = (e: WheelEvent) => {
-      // Check horizontal or vertical scroll delta
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-
-      // Ignore micro-jitters
-      if (Math.abs(delta) < 8) return;
-
-      // Prevent vertical page jump over the carousel so cards smoothly rotate sideways
+      // 1. Strictly prevent vertical page scroll immediately on all wheel events!
       e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === "function") {
+        e.stopImmediatePropagation();
+      }
 
       if (isCoolingDown) return;
 
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 6) return;
+
       accumulatedDelta += delta;
-      const threshold = 35; // Responsive snappy threshold
+      const threshold = 25; // Snappy & immediate response
 
       if (accumulatedDelta > threshold) {
         // Down -> Next card (right)
@@ -148,7 +150,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
         isCoolingDown = true;
         cooldownTimer = setTimeout(() => {
           isCoolingDown = false;
-        }, 360);
+        }, 320);
       } else if (accumulatedDelta < -threshold) {
         // Up -> Prev card (left)
         prevCard();
@@ -156,19 +158,19 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
         isCoolingDown = true;
         cooldownTimer = setTimeout(() => {
           isCoolingDown = false;
-        }, 360);
+        }, 320);
       }
 
       if (resetTimer) clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
         accumulatedDelta = 0;
-      }, 200);
+      }, 180);
     };
 
-    container.addEventListener("wheel", handleWheel, { passive: false });
+    container.addEventListener("wheel", handleWheel, { passive: false, capture: true });
 
     return () => {
-      container.removeEventListener("wheel", handleWheel);
+      container.removeEventListener("wheel", handleWheel, true);
       if (cooldownTimer) clearTimeout(cooldownTimer);
       if (resetTimer) clearTimeout(resetTimer);
     };
@@ -235,7 +237,8 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
   return (
     <div
       ref={containerRef}
-      className={`relative w-full select-none py-2 cursor-grab active:cursor-grabbing ${className}`}
+      data-lenis-prevent="true"
+      className={`relative w-full select-none py-2 overscroll-contain cursor-grab active:cursor-grabbing ${className}`}
       onMouseDown={(e) => handleDragStart(e.clientX)}
       onMouseMove={(e) => handleDragMove(e.clientX)}
       onMouseUp={handleDragEnd}
