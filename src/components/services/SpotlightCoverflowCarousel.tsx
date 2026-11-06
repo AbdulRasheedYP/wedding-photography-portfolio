@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface ServiceCardItem {
   id: string;
   number: string;
   title: string;
-  description: string;
+  description?: string;
   img: string;
   tools?: string[];
 }
@@ -222,18 +222,6 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     currentDragRef.current = 0;
   };
 
-  // CTA Click handler
-  const handleCtaClick = (card: ServiceCardItem) => {
-    if (onCardCtaClick) {
-      onCardCtaClick(card);
-    } else {
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <div
       ref={containerRef}
@@ -307,7 +295,7 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
             <div
               key={card.id}
               onClick={() => {
-                if (!hasDraggedRef.current) {
+                if (!hasDraggedRef.current && !isActive) {
                   setActiveIndex(i);
                 }
               }}
@@ -354,44 +342,24 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
                 </span>
               </div>
 
-              {/* Bottom Content Area */}
-              <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 z-10 flex items-end justify-between gap-3">
-                {/* Bottom-Left: Bold Service Title & Tools */}
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-serif font-bold text-lg sm:text-xl text-[#F1EDE3] leading-tight mb-1 drop-shadow-md">
-                    {card.title}
-                  </h3>
-                  <p className="text-[11px] font-sans text-[#8D8B82] line-clamp-2 leading-relaxed">
-                    {card.description}
-                  </p>
+              {/* Bottom Content Area: Bold Service Title & Tool Badges */}
+              <div className="absolute bottom-0 inset-x-0 p-5 z-10">
+                <h3 className="font-serif font-bold text-lg sm:text-xl text-[#F1EDE3] leading-snug mb-2.5 drop-shadow-md">
+                  {card.title}
+                </h3>
 
-                  {/* Tool Pill Badges */}
-                  {card.tools && card.tools.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-2.5">
-                      {card.tools.slice(0, 3).map((tool) => (
-                        <span
-                          key={tool}
-                          className="text-[8.5px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-white/[0.06] border border-white/10 px-2 py-0.5 rounded-full"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Center Card CTA: Vibrant Champagne circular button with ArrowRight */}
-                {isActive && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCtaClick(card);
-                    }}
-                    aria-label={`Enquire about ${card.title}`}
-                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#DDD6C8] hover:bg-[#FFFDF7] active:scale-90 text-black flex items-center justify-center shadow-[0_0_22px_rgba(221,214,200,0.5)] transition-all duration-300 group/cta cursor-pointer flex-shrink-0 animate-in fade-in zoom-in-75 duration-300"
-                  >
-                    <ArrowRight className="w-5 h-5 group-hover/cta:translate-x-0.5 transition-transform" />
-                  </button>
+                {/* Tool Pill Badges */}
+                {card.tools && card.tools.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {card.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="text-[8.5px] sm:text-[9px] font-sans font-semibold uppercase tracking-wider text-[#D8D1C2] bg-white/[0.07] border border-white/10 px-2.5 py-0.5 rounded-full"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

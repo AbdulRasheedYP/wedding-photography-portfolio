@@ -112,9 +112,6 @@ const ServicesSection: React.FC = () => {
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#F1EDE3] font-normal tracking-tight leading-[1.1]">
             Services &amp; Expertise
           </h2>
-          <p className="text-[#8D8B82] text-xs sm:text-sm font-sans mt-2.5 max-w-md mx-auto">
-            Cinematic event coverage, editorial fashion campaigns, and strategic short-form content.
-          </p>
         </div>
 
         {/* Modern Luxury 3D Spotlight Coverflow Carousel */}
