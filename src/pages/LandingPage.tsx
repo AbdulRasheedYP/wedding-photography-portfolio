@@ -53,9 +53,6 @@ const LandingPage: React.FC = () => {
 
       <SectionGap />
 
-      {/* Sleek Minimal Brand & Client Logos Marquee right above Showreel */}
-      <BrandMarquee />
-
       <PortfolioSection
         projects={projects}
         categories={categories}
@@ -65,6 +62,11 @@ const LandingPage: React.FC = () => {
       <SectionGap />
 
       <StickyGallery />
+
+      <SectionGap />
+
+      {/* Sleek Minimal Brand & Client Logos Marquee right above Contact */}
+      <BrandMarquee />
 
       <SectionGap />
 
