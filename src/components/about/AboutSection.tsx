@@ -15,16 +15,16 @@ const AboutSection: React.FC = () => {
 
     const mm = gsap.matchMedia();
 
-    // Desktop only: smooth luxury reveal
-    mm.add("(min-width: 1024px) and (pointer: fine)", () => {
+    // Desktop: punchy & prominent side slide-in
+    mm.add("(min-width: 1024px)", () => {
       if (imageRef.current) {
         gsap.fromTo(
           imageRef.current,
-          { opacity: 0, x: -30 },
+          { opacity: 0, x: -115 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.9,
+            duration: 1.15,
             ease: "power3.out",
             scrollTrigger: {
               trigger: imageRef.current,
@@ -38,15 +38,54 @@ const AboutSection: React.FC = () => {
       if (contentRef.current) {
         gsap.fromTo(
           contentRef.current,
-          { opacity: 0, x: 30 },
+          { opacity: 0, x: 115 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.9,
+            duration: 1.15,
             ease: "power3.out",
             scrollTrigger: {
               trigger: contentRef.current,
               start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    // Mobile / Tablet: responsive side slide-in
+    mm.add("(max-width: 1023px)", () => {
+      if (imageRef.current) {
+        gsap.fromTo(
+          imageRef.current,
+          { opacity: 0, x: -60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: imageRef.current,
+              start: "top 88%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current,
+          { opacity: 0, x: 60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top 88%",
               once: true,
             },
           }

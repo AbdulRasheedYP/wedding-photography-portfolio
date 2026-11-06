@@ -103,17 +103,17 @@ const JourneySection: React.FC = () => {
         }
       );
 
-      // 2. Desktop cards slide in individually as you scroll down
+      // 2. Desktop cards slide in prominently from sides as you scroll down
       gsap.utils.toArray<HTMLElement>(".journey-card-desktop").forEach((card, i) => {
         const isLeft = i % 2 === 0;
         gsap.fromTo(
           card,
-          { opacity: 0, x: isLeft ? -45 : 45, y: 20 },
+          { opacity: 0, x: isLeft ? -110 : 110, y: 15 },
           {
             opacity: 1,
             x: 0,
             y: 0,
-            duration: 0.85,
+            duration: 1.05,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
@@ -137,6 +137,45 @@ const JourneySection: React.FC = () => {
             scrollTrigger: {
               trigger: badge,
               start: "top 90%",
+              once: true,
+            },
+          }
+        );
+      });
+    });
+
+    // Mobile / Tablet: punchy responsive side slide-in for journey cards
+    mm.add("(max-width: 1023px)", () => {
+      gsap.fromTo(
+        ".journey-header-anim",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+
+      gsap.utils.toArray<HTMLElement>(".journey-card-mobile").forEach((card, i) => {
+        const isRightCard = i % 2 === 0;
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: isRightCard ? 65 : -65, y: 15 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
               once: true,
             },
           }
