@@ -20,67 +20,7 @@ const AboutSection: React.FC = () => {
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const isMobileDevice =
-      window.innerWidth < 768 ||
-      "ontouchstart" in window ||
-      window.matchMedia("(pointer: coarse)").matches;
-
-    // On mobile devices, ensure elements are immediately visible without opacity:0 lag
-    if (isMobileDevice) {
-      if (imageRef.current) gsap.set(imageRef.current, { opacity: 1, y: 0, x: 0 });
-      if (contentRef.current) gsap.set(contentRef.current, { opacity: 1, y: 0, x: 0 });
-      return;
-    }
-
-    let ctx: gsap.Context;
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        if (imageRef.current) {
-          gsap.fromTo(
-            imageRef.current,
-            { opacity: 0, x: -30 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: imageRef.current,
-                start: "top 85%",
-                once: true,
-              },
-            }
-          );
-        }
-
-        if (contentRef.current) {
-          gsap.fromTo(
-            contentRef.current,
-            { opacity: 0, x: 30 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.9,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: contentRef.current,
-                start: "top 85%",
-                once: true,
-              },
-            }
-          );
-        }
-      }, sectionRef);
-    }, 120);
-
-    return () => {
-      clearTimeout(timer);
-      ctx?.revert();
-    };
-  }, []);
+  // Elements remain immediately 100% visible with zero opacity lag
 
   return (
     <section

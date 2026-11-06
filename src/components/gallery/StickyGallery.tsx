@@ -162,54 +162,7 @@ const StickyGallery: React.FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxIndex, filteredItems.length]);
 
-  // GSAP reveal animation on mount
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    let ctx: gsap.Context;
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        gsap.fromTo(
-          ".sticky-card",
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.04,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 80%",
-              once: true,
-            },
-          }
-        );
-
-        const header = sectionRef.current?.querySelector(".sticky-gallery-header");
-        if (header) {
-          gsap.fromTo(
-            header,
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              scrollTrigger: { trigger: header, start: "top 85%", once: true },
-            }
-          );
-        }
-      }, sectionRef);
-    }, 150);
-
-    return () => {
-      clearTimeout(timer);
-      ctx?.revert();
-    };
-  }, []);
+  // Keep all gallery cards immediately visible with zero opacity lag
 
   const activeLightboxItem =
     lightboxIndex !== null ? filteredItems[lightboxIndex] : null;

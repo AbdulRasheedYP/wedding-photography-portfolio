@@ -169,11 +169,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
           {/* Sidebar */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "120px" }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 space-y-7"
-          >
+          <div className="lg:col-span-5 space-y-7">
             <div>
               <p className="text-[11px] font-display font-bold uppercase tracking-widest text-[#8D8B82] mb-3">Enquire &amp; Connect</p>
               <h2 className="font-serif text-5xl sm:text-6xl tracking-tight leading-[0.95] mb-4 font-normal">
@@ -220,16 +216,10 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "120px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7"
-          >
+          <div className="lg:col-span-7">
             <div className="contact-form">
               {status === "success" ? (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="py-12 text-center space-y-4">
@@ -399,7 +389,7 @@ const ContactSection: React.FC<Props> = ({ prefill }) => {
                 </form>
               )}
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>

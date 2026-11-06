@@ -12,50 +12,7 @@ const DirectorNoteSection: React.FC<Props> = ({ onCommissionClick }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const isMobileDevice =
-      window.innerWidth < 768 ||
-      "ontouchstart" in window ||
-      window.matchMedia("(pointer: coarse)").matches;
-
-    // On mobile devices, ensure elements are immediately visible without opacity:0 lag
-    if (isMobileDevice) {
-      if (containerRef.current) {
-        gsap.set(containerRef.current, { opacity: 1, y: 0 });
-      }
-      return;
-    }
-
-    let ctx: gsap.Context;
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        if (containerRef.current) {
-          gsap.fromTo(
-            containerRef.current,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 78%",
-                once: true,
-              },
-            }
-          );
-        }
-      }, sectionRef);
-    }, 150);
-
-    return () => {
-      clearTimeout(timer);
-      ctx?.revert();
-    };
-  }, []);
+  // Note remains immediately 100% visible with zero opacity lag
 
   return (
     <section

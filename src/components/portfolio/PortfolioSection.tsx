@@ -113,51 +113,7 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
   const mainProject = projects.length > 0 ? projects[0] : DEFAULT_MAIN_PROJECT;
   const additionalReels = projects.length > 1 ? projects.slice(1) : [];
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const isMobileDevice =
-      window.innerWidth < 768 ||
-      "ontouchstart" in window ||
-      window.matchMedia("(pointer: coarse)").matches;
-
-    // On mobile devices, ensure elements are immediately visible without opacity:0 lag
-    if (isMobileDevice) {
-      if (containerRef.current) {
-        gsap.set(containerRef.current, { opacity: 1, y: 0, scale: 1 });
-      }
-      return;
-    }
-
-    let ctx: gsap.Context;
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        if (containerRef.current) {
-          gsap.fromTo(
-            containerRef.current,
-            { opacity: 0, y: 35, scale: 0.98 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 78%",
-                once: true,
-              },
-            }
-          );
-        }
-      }, sectionRef);
-    }, 150);
-
-    return () => {
-      clearTimeout(timer);
-      ctx?.revert();
-    };
-  }, []);
+  // Keep portfolio content immediately visible with zero opacity lag
 
   const handlePlayMain = () => {
     onSelectProject(mainProject);
