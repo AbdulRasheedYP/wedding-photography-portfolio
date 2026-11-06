@@ -5,16 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 
-const CV_SPECIALTIES = [
-  "Bridal & Fashion Campaigns",
-  "Runway Fashion Shows",
-  "Corporate & Social Events",
-  "Instagram Reels Creation",
-  "DaVinci Resolve (Advanced)",
-  "Color Correction & Grading",
-  "Professional Camera Operation",
-];
-
 const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -131,25 +121,7 @@ const AboutSection: React.FC = () => {
               </p>
             </div>
 
-            {/* Production Specialties from CV */}
-            <div>
-              <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8D8B82] mb-3">
-                Production Experience
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {CV_SPECIALTIES.map((item) => (
-                  <span
-                    key={item}
-                    className="text-[11px] font-sans font-medium text-[#D8D1C2] bg-[#141414] border border-white/10 px-3.5 py-1.5 rounded-full hover:border-white/25 hover:text-[#F1EDE3] transition-colors duration-200"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-
-            {/* Action Bar with Round DP Avatar and Download CV */}
+            {/* Action Bar with Round DP Avatar and Get in Touch Button */}
             <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
                 {/* Round Profile DP Avatar */}
@@ -172,24 +144,16 @@ const AboutSection: React.FC = () => {
               </div>
 
               <a
-                href="/documents/Adil_Mubarak_Resume.pdf"
-                download="Adil_Mubarak_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-sans font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-lg"
+                href="#contact"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-sans font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-lg"
               >
+                <span>Get In Touch</span>
                 <svg
-                  className="w-3.5 h-3.5 stroke-current fill-none stroke-[2.2] transition-transform duration-300 group-hover:translate-y-0.5"
+                  className="w-3.5 h-3.5 stroke-current fill-none stroke-[2.2] transition-transform duration-300 group-hover:translate-x-0.5"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
+                  <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-                <span>Download CV</span>
-                <span className="text-[9px] font-sans text-black/60 border-l border-black/20 pl-2">
-                  PDF
-                </span>
               </a>
             </div>
 

@@ -30,6 +30,7 @@ interface GridReelCardProps {
 const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject }) => {
   const cardVideoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isPortrait = project.aspect === "portrait";
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -51,7 +52,9 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
       onClick={() => onSelectProject(project)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-[#141414] hover:bg-[#181818] border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500"
+      className={`group relative rounded-2xl overflow-hidden bg-[#141414] hover:bg-[#181818] border border-white/10 hover:border-white/30 cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 ${
+        isPortrait ? "aspect-[9/16]" : "aspect-[16/10] sm:aspect-[16/9]"
+      }`}
     >
       {/* Background Poster Image */}
       <img
@@ -79,6 +82,18 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
         />
       )}
 
+      {/* Top Reel Badge for Portrait */}
+      {isPortrait && (
+        <div className="absolute top-3 left-3 z-10 pointer-events-none">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[9px] font-sans font-semibold tracking-wider uppercase text-[#F1EDE3]">
+            <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 fill-current text-[#F1EDE3]" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+            Reel 9:16
+          </span>
+        </div>
+      )}
+
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/30 group-hover:from-black/95 transition-colors duration-300 pointer-events-none" />
 
@@ -101,6 +116,11 @@ const GridReelCard: React.FC<GridReelCardProps> = ({ project, onSelectProject })
         <h4 className="font-serif text-base sm:text-lg text-[#F1EDE3] font-normal leading-snug group-hover:text-white transition-colors duration-300 line-clamp-1">
           {project.title}
         </h4>
+        {project.client_name && (
+          <p className="text-[11px] font-sans text-[#D8D1C2]/70 mt-0.5 line-clamp-1">
+            {project.client_name}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -113,6 +133,8 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
 
   const mainProject = projects.length > 0 ? projects[0] : DEFAULT_MAIN_PROJECT;
   const additionalReels = projects.length > 1 ? projects.slice(1) : [];
+  const cinematicReels = additionalReels.filter((r) => r.aspect !== "portrait");
+  const socialReels = additionalReels.filter((r) => r.aspect === "portrait");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -195,7 +217,6 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none" />
 
-
           {/* Center Play Button with Expanding Pulse */}
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none z-10">
             <div className="relative flex items-center justify-center">
@@ -211,7 +232,6 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
                 </svg>
               </div>
             </div>
-
           </div>
 
           {/* Bottom Content Bar */}
@@ -231,18 +251,45 @@ const PortfolioSection: React.FC<Props> = ({ projects = [], onSelectProject }) =
           </div>
         </div>
 
-        {/* 2. ADDITIONAL REELS GRID (Appears dynamically below when more reels are added) */}
-        {additionalReels.length > 0 && (
+        {/* 2. ADDITIONAL CINEMATIC REELS (Landscape) */}
+        {cinematicReels.length > 0 && (
           <div className="mt-12 sm:mt-16">
             <div className="flex items-center gap-3 mb-6">
               <span className="w-5 h-[1px] bg-[#67685D]" />
               <h3 className="font-serif text-xl sm:text-2xl text-[#F1EDE3]">
-                More Releases &amp; Campaigns
+                Cinematic Expeditions &amp; Films
               </h3>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {additionalReels.map((reel) => (
+              {cinematicReels.map((reel) => (
+                <GridReelCard
+                  key={reel.id}
+                  project={reel}
+                  onSelectProject={onSelectProject}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 3. SOCIAL MEDIA REELS & COMMERCIAL SHORTS (Portrait 9:16) */}
+        {socialReels.length > 0 && (
+          <div className="mt-12 sm:mt-16">
+            <div className="flex items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-3">
+                <span className="w-5 h-[1px] bg-[#67685D]" />
+                <h3 className="font-serif text-xl sm:text-2xl text-[#F1EDE3]">
+                  Commercial Reels &amp; Brand Campaigns
+                </h3>
+              </div>
+              <span className="text-[10px] font-sans uppercase tracking-widest text-[#8D8B82] hidden sm:inline">
+                Vertical 9:16
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {socialReels.map((reel) => (
                 <GridReelCard
                   key={reel.id}
                   project={reel}

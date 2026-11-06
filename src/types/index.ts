@@ -14,6 +14,7 @@ export interface Project {
   video_embed_url?: string;
   client_name?: string;
   description?: string;
+  aspect?: "landscape" | "portrait";
 }
 
 export interface TeamMember {
