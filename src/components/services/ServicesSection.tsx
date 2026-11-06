@@ -20,6 +20,7 @@ const EXACT_CV_SKILLS = [
 
 const ServicesSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
@@ -30,6 +31,26 @@ const ServicesSection: React.FC = () => {
     let ctx: gsap.Context;
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
+        // Auto-center carousel stage into screen when scrolling down into services
+        if (stageRef.current) {
+          ScrollTrigger.create({
+            trigger: stageRef.current,
+            start: "top 65%",
+            end: "bottom 35%",
+            once: true,
+            onEnter: () => {
+              if (typeof (window as any).__lenis?.scrollTo === "function") {
+                (window as any).__lenis.scrollTo(stageRef.current, {
+                  offset: 0,
+                  duration: 0.7,
+                });
+              } else {
+                stageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            },
+          });
+        }
+
         if (headerRef.current) {
           gsap.fromTo(
             headerRef.current,
@@ -40,7 +61,7 @@ const ServicesSection: React.FC = () => {
               duration: 0.8,
               ease: "power3.out",
               scrollTrigger: {
-                trigger: sectionRef.current,
+                trigger: stageRef.current,
                 start: "top 78%",
                 once: true,
               },
@@ -96,12 +117,16 @@ const ServicesSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="services"
-      className="py-14 sm:py-20 lg:py-24 px-4 sm:px-8 bg-black scroll-mt-20 relative overflow-hidden"
+      className="bg-black scroll-mt-0 relative overflow-hidden w-full"
     >
-      <div className="max-w-6xl mx-auto">
-
+      {/* 1. Full-Screen Centered Spotlight Carousel Stage */}
+      <div
+        ref={stageRef}
+        className="min-h-screen flex flex-col justify-center items-center px-4 sm:px-8 py-8 sm:py-12 relative z-10 max-w-6xl mx-auto w-full"
+        style={{ scrollSnapAlign: "center" }}
+      >
         {/* Section Header */}
-        <div ref={headerRef} className="mb-8 sm:mb-12 text-center">
+        <div ref={headerRef} className="mb-6 sm:mb-8 text-center flex-shrink-0">
           <div className="inline-flex items-center gap-2.5 mb-2.5">
             <span className="w-6 h-[1px] bg-[#67685D]" />
             <p className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.28em] text-[#D8D1C2]">
@@ -114,12 +139,14 @@ const ServicesSection: React.FC = () => {
           </h2>
         </div>
 
-        {/* Modern Luxury 3D Spotlight Coverflow Carousel */}
-        <div ref={gridRef} className="mb-12 sm:mb-16">
+        {/* Modern Luxury 3D Spotlight Coverflow Carousel - Centered in Screen */}
+        <div ref={gridRef} className="w-full flex-shrink-0">
           <SpotlightCoverflowCarousel />
         </div>
+      </div>
 
-        {/* Technical Skills & Software Arsenal — Elevated Ash Plaque */}
+      {/* 2. Technical Skills & Software Arsenal — Elevated Ash Plaque */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-4 pb-20 sm:pb-28 relative z-10">
         <div
           ref={skillsRef}
           className="rounded-2xl p-4 sm:p-6 bg-[#141414] border border-white/[0.08] shadow-lg"
@@ -146,7 +173,6 @@ const ServicesSection: React.FC = () => {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

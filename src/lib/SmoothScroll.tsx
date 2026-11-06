@@ -46,6 +46,9 @@ export const SmoothScrollProvider: React.FC<Props> = ({ children }) => {
       });
 
       setLenisInstance(lenis);
+      if (typeof window !== "undefined") {
+        (window as any).__lenis = lenis;
+      }
       lenis.on("scroll", ScrollTrigger.update);
 
       tickerUpdate = (time: number) => {
@@ -58,6 +61,9 @@ export const SmoothScrollProvider: React.FC<Props> = ({ children }) => {
 
     return () => {
       clearTimeout(timer);
+      if (typeof window !== "undefined") {
+        (window as any).__lenis = null;
+      }
       if (tickerUpdate) gsap.ticker.remove(tickerUpdate);
       if (lenis) lenis.destroy();
     };

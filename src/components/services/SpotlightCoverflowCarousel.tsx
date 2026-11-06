@@ -136,6 +136,28 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
     let cooldownTimer: ReturnType<typeof setTimeout> | null = null;
     let resetTimer: ReturnType<typeof setTimeout> | null = null;
 
+    // Helper to auto-center the carousel cards in the screen viewport when scrolling starts
+    const centerCarouselInViewport = () => {
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const elementCenter = rect.top + rect.height / 2;
+      const diff = elementCenter - viewportCenter;
+
+      // If cards are more than 35px away from screen center, glide smoothly into center
+      if (Math.abs(diff) > 35) {
+        if (typeof (window as any).__lenis?.scrollTo === "function") {
+          (window as any).__lenis.scrollTo(el, {
+            offset: -(window.innerHeight - rect.height) / 2,
+            duration: 0.65,
+          });
+        } else {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    };
+
     const handleWheel = (e: WheelEvent) => {
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
 
@@ -149,6 +171,9 @@ export const SpotlightCoverflowCarousel: React.FC<SpotlightCoverflowCarouselProp
       if (delta < 0 && activeIndexRef.current <= 0) {
         return;
       }
+
+      // Auto-center cards in the center of the screen when user starts scrolling!
+      centerCarouselInViewport();
 
       // 2. In-between cards: intercept and advance carousel cards horizontally
       e.preventDefault();
