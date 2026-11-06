@@ -19,43 +19,44 @@ interface Milestone {
 const MILESTONES: Milestone[] = [
   {
     number: "01",
-    year: "2021 – 2023",
-    role: "Visual Storyteller & Foundations",
-    company: "Independent Filmmaking",
+    year: "2023",
+    role: "Digital Marketing Graduate",
+    company: "CDA Academy",
     location: "Calicut, Kerala",
     description:
-      "Began hands-on visual storytelling, mastering professional camera operation, lighting, composition, and framing across early short films, bridal portraits, and event coverage.",
-    tags: ["Camera Operation", "Visual Storytelling", "Calicut"],
+      "Completed a specialized program in Digital Marketing, building core competence in social media strategies, audience psychology, and performance content distribution.",
+    tags: ["Digital Marketing", "Social Media", "CDA Calicut"],
     desktopNode: { x: 460, y: 170 },
+    logo: "/images/brands/cda-academy.svg",
   },
   {
     number: "02",
-    year: "2023 – 2024",
-    role: "Digital Strategy & Media Creation",
-    company: "Quadcubes · CDA Academy",
+    year: "2023",
+    role: "Digital Marketing Intern",
+    company: "Quadcubes",
     location: "Kerala",
     description:
-      "Executed Meta & Google Ads campaigns and social media strategy, bridging cinematic storytelling with digital content distribution, audience engagement, and performance marketing.",
-    tags: ["Meta Ads", "Campaign Strategy", "Social Media"],
+      "Planned and executed Meta Ads campaigns, managed social media accounts, conducted SMM audits, and assisted with Google Ads and WordPress website management.",
+    tags: ["Meta Ads", "SMM Audits", "Google Ads"],
     desktopNode: { x: 740, y: 420 },
     logo: "/images/brands/quadcubes.png",
   },
   {
     number: "03",
     year: "2024 – 2025",
-    role: "Bridal & Runway Cinematographer",
+    role: "Videographer & Content Creator",
     company: "Shobhika Weddings",
     location: "Calicut, Kerala",
     description:
-      "Produced promotional and fashion video content for a premier bridal brand. Filmed and edited 3 full runway fashion shows, directed DaVinci Resolve color grading, and produced seasonal campaign reels.",
+      "Produced promotional and fashion videos for a premier bridal brand. Filmed and edited 3 fashion shows, directed DaVinci Resolve color grading, and produced seasonal campaign reels.",
     tags: ["3 Fashion Shows", "Bridal Cinema", "DaVinci Resolve"],
     desktopNode: { x: 460, y: 680 },
     logo: "/images/brands/shobhika-weddings.png",
   },
   {
     number: "04",
-    year: "2025 – 2026",
-    role: "International Cinema & Events",
+    year: "2026",
+    role: "Photographer · Videographer · Reel Editor",
     company: "Jovial Events",
     location: "Dubai, UAE",
     description:
@@ -274,9 +275,11 @@ const JourneySection: React.FC = () => {
                 <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] px-2.5 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[#D8D1C2]">
                   {MILESTONES[0].year}
                 </span>
-                <div className="h-6 px-2 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 flex items-center">
-                  <CinemaBadge compact />
-                </div>
+                {MILESTONES[0].logo && (
+                  <div className="h-6 px-2 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 flex items-center">
+                    <img src={MILESTONES[0].logo} alt={MILESTONES[0].company} className="h-3.5 w-auto object-contain filter brightness-110" />
+                  </div>
+                )}
               </div>
               <h3 className="font-serif text-lg text-[#F1EDE3] font-normal leading-snug mb-0.5">
                 {MILESTONES[0].role}
