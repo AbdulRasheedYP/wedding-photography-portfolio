@@ -82,15 +82,6 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     rotation: 1.0
   },
   {
-    id: "g_camera_rig",
-    thumb: "/images/wall/camera_rig_thumb.webp",
-    full: "/images/wall/camera_rig.webp",
-    note: "Forest Canopy · On Location",
-    tag: "EXPEDITION",
-    category: "Travel & Landscapes",
-    rotation: -1.4
-  },
-  {
     id: "g_9",
     thumb: "/images/wall/9.webp",
     full: "/images/wall/9.webp",
@@ -611,5 +602,14 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     tag: "ASTRO",
     category: "Lifestyle & BTS",
     rotation: 1.4
+  },
+  {
+    id: "g_camera_rig",
+    thumb: "/images/wall/camera_rig_thumb.webp",
+    full: "/images/wall/camera_rig.webp",
+    note: "67 · Forest Canopy · On Location",
+    tag: "EXPEDITION",
+    category: "Travel & Landscapes",
+    rotation: -1.4
   },
 ];
