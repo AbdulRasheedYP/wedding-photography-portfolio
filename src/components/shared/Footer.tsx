@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface LegalModalContent {
   title: string;
@@ -59,6 +59,35 @@ const LEGAL_DOCS: Record<string, LegalModalContent> = {
 
 const Footer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    // Lock background page scroll
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Pause Lenis smooth scrolling while modal is open
+    if (typeof window !== "undefined" && (window as any).__lenis) {
+      (window as any).__lenis.stop();
+    }
+
+    // Keyboard navigation: Close on Escape
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveModal(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeModal]);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -124,40 +153,51 @@ const Footer: React.FC = () => {
       {/* Interactive Luxury Legal & Policy Modal */}
       {activeModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+          data-lenis-prevent
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md animate-fadeIn overscroll-contain"
           onClick={() => setActiveModal(null)}
         >
           <div
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-[#141414] border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl text-[#F1EDE3]"
+            data-lenis-prevent
+            className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-[#141414] border border-white/15 rounded-3xl shadow-2xl text-[#F1EDE3] overflow-hidden select-text"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button
-              onClick={() => setActiveModal(null)}
-              className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/10 hover:border-white/30 flex items-center justify-center hover:bg-white/5 transition-all text-[#8D8B82] hover:text-[#F1EDE3]"
-              aria-label="Close modal"
-            >
-              <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-[2]">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+            {/* Modal Header — Fixed / Sticky */}
+            <div className="relative p-6 sm:p-8 pb-5 border-b border-white/10 flex-shrink-0 flex items-start justify-between gap-4">
+              <div>
+                <span className="text-[10px] font-display font-bold uppercase tracking-[0.25em] text-[#8D8B82] block mb-1">
+                  Adil Mubarak Legal
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-wide">
+                  {LEGAL_DOCS[activeModal]?.title}
+                </h3>
+                <p className="text-xs text-[#8D8B82] font-sans mt-1">
+                  {LEGAL_DOCS[activeModal]?.subtitle}
+                </p>
+              </div>
 
-            {/* Modal Header */}
-            <div className="mb-6 pr-8">
-              <span className="text-[10px] font-display font-bold uppercase tracking-[0.25em] text-[#8D8B82] block mb-1">
-                Adil Mubarak Legal
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#F1EDE3] font-normal tracking-wide">
-                {LEGAL_DOCS[activeModal]?.title}
-              </h3>
-              <p className="text-xs text-[#8D8B82] font-sans mt-1">
-                {LEGAL_DOCS[activeModal]?.subtitle}
-              </p>
+              {/* Top Close Button */}
+              <button
+                onClick={() => setActiveModal(null)}
+                className="w-9 h-9 rounded-full border border-white/10 hover:border-white/30 flex items-center justify-center hover:bg-white/10 transition-all text-[#8D8B82] hover:text-[#F1EDE3] flex-shrink-0 cursor-pointer"
+                aria-label="Close modal"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-[2]">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
             </div>
 
-            {/* Policy Sections */}
-            <div className="space-y-5 border-t border-white/10 pt-5">
+            {/* Scrollable Policy Body */}
+            <div
+              data-lenis-prevent
+              className="overflow-y-auto overscroll-contain p-6 sm:p-8 space-y-6 flex-1 touch-pan-y"
+              style={{
+                scrollbarWidth: "thin",
+                scrollbarColor: "#67685D rgba(255,255,255,0.05)",
+              }}
+            >
               {LEGAL_DOCS[activeModal]?.sections.map((sec, idx) => (
                 <div key={idx} className="space-y-1.5">
                   <h4 className="font-display font-semibold text-sm text-[#D8D1C2] tracking-wide">
@@ -170,11 +210,14 @@ const Footer: React.FC = () => {
               ))}
             </div>
 
-            {/* Modal Bottom Action */}
-            <div className="mt-8 pt-5 border-t border-white/10 flex justify-end">
+            {/* Modal Bottom Action — Fixed / Sticky */}
+            <div className="p-4 sm:p-6 border-t border-white/10 flex items-center justify-between flex-shrink-0 bg-[#141414]">
+              <span className="text-[11px] text-[#8D8B82] font-sans hidden sm:inline">
+                Press <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-white text-[10px]">ESC</kbd> to close
+              </span>
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-display font-semibold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-md"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#F1EDE3] text-black font-display font-semibold text-xs uppercase tracking-wider hover:bg-white transition-all shadow-md active:scale-95 cursor-pointer ml-auto"
               >
                 Close
               </button>
