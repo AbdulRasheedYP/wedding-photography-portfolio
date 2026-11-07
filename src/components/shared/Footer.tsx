@@ -9,41 +9,49 @@ interface LegalModalContent {
 const LEGAL_DOCS: Record<string, LegalModalContent> = {
   terms: {
     title: "Terms & Conditions",
-    subtitle: "Production Agreements, Booking Policies & Deliverables",
+    subtitle: "Booking Guidelines, Creative Process & Deliverables",
     sections: [
       {
-        heading: "1. Reservation & Deposit",
-        body: "A non-refundable 30% retainer confirms your calendar dates across Kerala, UAE, and international destinations.",
+        heading: "1. Booking & Date Reservation",
+        body: "Dates are reserved on mutual agreement upon receipt of an advance booking deposit. Because I take on a limited number of projects to give each story my full creative attention, the deposit secures your calendar slot exclusively.",
       },
       {
-        heading: "2. Artistic Discretion",
-        body: "Adil Mubarak operates with distinct cinematic and editorial sensibilities. Final decisions regarding editing rhythm and color grading palettes remain at the artist's creative discretion.",
+        heading: "2. Creative Vision & Style",
+        body: "Every project is crafted with my personal visual aesthetic — natural light, cinematic pacing, and nuanced color grading. Bookings are made based on trust in this creative direction and storytelling approach.",
       },
       {
-        heading: "3. Delivery Timeline",
-        body: "Editorial social teasers are delivered within 14 business days. Full 4K master films and photo galleries are delivered within 6 to 8 weeks post-production.",
+        heading: "3. Delivery Timelines",
+        body: "Social media edits and reels are typically delivered within 7 to 14 business days. Full wedding films, event highlights, and complete photo series are delivered within 4 to 6 weeks, allowing time for meticulous editing and color polish.",
       },
       {
-        heading: "4. Revisions",
-        body: "Clients receive a private link for one consolidated round of timestamped refinement requests prior to master export.",
+        heading: "4. Review & Refinements",
+        body: "You will receive a private preview link for feedback. Each project includes a consolidated review round for music sync, select shot adjustments, and minor trim requests prior to final 4K master export.",
+      },
+      {
+        heading: "5. Travel & Destination Logistics",
+        body: "For shoots outside Calicut or across Kerala, other states, and international destinations, travel and stay logistics are coordinated transparently with the client in advance.",
       },
     ],
   },
   privacy: {
     title: "Privacy Policy",
-    subtitle: "Discretion, Image Protection & Data Safeguards",
+    subtitle: "Client Discretion, Media Usage & Personal Information",
     sections: [
       {
-        heading: "1. Confidentiality & NDAs",
-        body: "We respect the discretion of our clients. Private ceremonies, royal celebrations, and celebrity events can request strict non-disclosure (NDA) coverage prior to filming.",
+        heading: "1. Personal Information",
+        body: "Your contact details (name, email, phone/WhatsApp) shared via the contact form or direct message are used strictly for project inquiries, shoot logistics, and communication. Your information is never sold, shared, or used for spam.",
       },
       {
-        heading: "2. Data Protection",
-        body: "Personal information gathered through inquiry forms is utilized solely for project correspondence, travel logistics, and invoicing.",
+        heading: "2. Portfolio & Social Media Display",
+        body: "As a visual creator, selected photographs or short cinematic clips may be featured on this portfolio or Instagram to showcase my work. If you prefer your wedding, shoot, or event to remain completely private, simply let me know beforehand and your request will be fully respected.",
       },
       {
-        heading: "3. Archival Storage",
-        body: "Raw cinema footage and edited 4K masters are maintained in dual-redundant cold storage for 12 months following project handover.",
+        heading: "3. Private Events & Client Discretion",
+        body: "Strict discretion is maintained for intimate family ceremonies, private functions, and brand projects. Any requested non-disclosure (NDA) or delayed release dates will be completely honored.",
+      },
+      {
+        heading: "4. File Archival & Safe Storage",
+        body: "Final delivered high-resolution photo sets and video edits are kept safely backed up for at least 6 months following handover, giving you ample time to download and preserve your files.",
       },
     ],
   },
