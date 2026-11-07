@@ -55,6 +55,22 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMenuOpen(false);
+    };
+
+    if (menuOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("resize", handleResize);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
+    };
   }, [menuOpen]);
 
   const scrollTo = useCallback((id: string) => {
@@ -121,68 +137,85 @@ const Navbar: React.FC = () => {
               </button>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden w-9 h-9 rounded-full bg-[#F1EDE3]/5 text-[#F1EDE3] flex items-center justify-center text-base focus:outline-none border border-[#F1EDE3]/10"
+                className="md:hidden w-9 h-9 rounded-full bg-white/5 text-[#F1EDE3] flex items-center justify-center focus:outline-none border border-white/10 active:scale-95 transition-all"
                 aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
               >
-                {menuOpen ? "✕" : "☰"}
+                {menuOpen ? (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-[2]">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-current fill-none stroke-[2]">
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
+
+          {/* Mobile Dropdown Menu — Simple, sleek pull-down card right below the navbar */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="md:hidden mt-2.5 w-full max-w-[320px] ml-auto bg-[#141414]/95 backdrop-blur-2xl border border-white/15 rounded-3xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden"
+              >
+                <nav className="flex flex-col space-y-0.5">
+                  {NAV_LINKS.map((link) => {
+                    const isActive = active === link.id;
+                    return (
+                      <button
+                        key={link.id}
+                        onClick={() => scrollTo(link.id)}
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-2xl text-left transition-all duration-200 active:scale-[0.98] ${
+                          isActive
+                            ? "bg-white/10 text-[#F1EDE3] font-semibold"
+                            : "text-[#B0ACA0] hover:text-[#F1EDE3] hover:bg-white/5"
+                        }`}
+                      >
+                        <span className="text-[13px] font-display tracking-wider">
+                          {link.label}
+                        </span>
+                        {isActive && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#F1EDE3] shadow-[0_0_8px_rgba(241,237,227,0.8)]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </nav>
+
+                {/* Quick Contact CTA in dropdown */}
+                <div className="mt-2 pt-2 border-t border-white/10">
+                  <button
+                    onClick={() => scrollTo("contact")}
+                    className="w-full py-2.5 px-4 rounded-full bg-[#F1EDE3] text-black font-display font-semibold text-xs uppercase tracking-wider text-center hover:bg-white transition-all shadow-md active:scale-95 cursor-pointer"
+                  >
+                    Contact · Let's Talk
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
+      {/* Backdrop to close when tapping outside */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-black/98 pt-28 px-7 pb-10 flex flex-col justify-between md:hidden"
-          >
-            <div className="flex flex-col justify-center flex-1 space-y-6">
-              {NAV_LINKS.map((link, idx) => {
-                const isActive = active === link.id;
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => scrollTo(link.id)}
-                    className="group flex items-center justify-between py-2 text-left transition-colors duration-300"
-                  >
-                    <div className="flex items-baseline gap-4">
-                      <span className="text-[10px] font-display font-medium tracking-[0.25em] text-[#8D8B82]/60 uppercase">
-                        0{idx + 1}
-                      </span>
-                      <span
-                        className={`font-serif text-3xl sm:text-4xl tracking-tight transition-all duration-300 ${
-                          isActive
-                            ? "text-[#F1EDE3] italic font-normal"
-                            : "text-[#8D8B82] group-hover:text-[#F1EDE3]"
-                        }`}
-                      >
-                        {link.label}
-                      </span>
-                    </div>
-
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#F1EDE3] shadow-[0_0_8px_rgba(241,237,227,0.8)]" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Subtle Minimal Personal Brand Mark */}
-            <div className="pt-6 border-t border-[#F1EDE3]/10 flex items-center justify-between text-xs font-sans text-[#8D8B82]">
-              <span className="tracking-wider uppercase text-[10px] font-display">
-                Adil Mubarak
-              </span>
-              <span className="text-[10px] font-sans">
-                Dubai · Kerala · Worldwide
-              </span>
-            </div>
-          </motion.div>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          />
         )}
       </AnimatePresence>
     </>
