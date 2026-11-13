@@ -120,12 +120,21 @@ const AboutSection: React.FC = () => {
 
           {/* LEFT: RICH PHOTOGRAPHY SHOWCASE (Span 5) */}
           <div ref={imageRef} className="lg:col-span-5">
-            {/* Primary Large Editorial Image */}
-            <div className="relative aspect-[10/11] max-w-[420px] mx-auto lg:max-w-none rounded-3xl overflow-hidden bg-[#141414] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group">
+            {/* Primary Large Editorial Image with Interactive Hover Swap */}
+            <div className="relative aspect-[10/11] max-w-[420px] mx-auto lg:max-w-none rounded-3xl overflow-hidden bg-[#141414] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group cursor-pointer">
+              {/* Default Primary Image: Adil Mubarak Portrait in Dubai */}
+              <img
+                src="/images/about/owner.webp"
+                alt="Adil Mubarak — Cinematographer & Photographer"
+                className="w-full h-full object-cover object-[center_35%] filter brightness-[0.96] contrast-[1.04] transition-all duration-700 ease-out group-hover:scale-105 group-hover:opacity-0"
+                loading="eager"
+                decoding="async"
+              />
+              {/* On-Hover Reveal Image: Adil Mubarak On Set Camera Rig */}
               <img
                 src="/images/about/camera_rig_hover.webp"
-                alt="Adil Mubarak — On Set Cinematographer"
-                className="w-full h-full object-cover object-center filter brightness-[0.94] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                alt="Adil Mubarak — On Set"
+                className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.94] contrast-[1.05] opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-100 group-hover:scale-105 pointer-events-none"
                 loading="lazy"
                 decoding="async"
               />
