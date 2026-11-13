@@ -13,40 +13,18 @@ const NAV_LINKS = [
 const dropdownVariants = {
   hidden: {
     opacity: 0,
-    y: -10,
-    scale: 0.95,
+    y: -8,
     transition: {
-      duration: 0.2,
-      ease: [0.32, 0, 0.67, 0],
+      duration: 0.12,
+      ease: "easeOut",
     },
   },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
-      type: "spring",
-      stiffness: 380,
-      damping: 28,
-      mass: 0.75,
-      staggerChildren: 0.035,
-      delayChildren: 0.02,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: -6,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 450,
-      damping: 26,
+      duration: 0.15,
+      ease: "easeOut",
     },
   },
 };
@@ -184,17 +162,17 @@ const Navbar: React.FC = () => {
                 <div className="w-4 h-3.5 relative flex flex-col justify-between">
                   <motion.span
                     animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                    transition={{ type: "spring", stiffness: 420, damping: 26 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
                     className="w-full h-[1.75px] bg-[#F1EDE3] rounded-full origin-center"
                   />
                   <motion.span
-                    animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                    transition={{ duration: 0.15 }}
+                    animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+                    transition={{ duration: 0.1 }}
                     className="w-full h-[1.75px] bg-[#F1EDE3] rounded-full origin-center"
                   />
                   <motion.span
                     animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-                    transition={{ type: "spring", stiffness: 420, damping: 26 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
                     className="w-full h-[1.75px] bg-[#F1EDE3] rounded-full origin-center"
                   />
                 </div>
@@ -202,7 +180,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile Dropdown Menu — Silky smooth pull-down card right below the navbar */}
+          {/* Mobile Dropdown Menu — Fast, snappy pull-down card right below the navbar */}
           <AnimatePresence>
             {menuOpen && (
               <motion.div
@@ -210,18 +188,16 @@ const Navbar: React.FC = () => {
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                style={{ transformOrigin: "top right" }}
                 className="md:hidden mt-2.5 w-full max-w-[320px] ml-auto bg-[#141414]/95 backdrop-blur-2xl border border-white/15 rounded-3xl p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden"
               >
-                <motion.nav className="flex flex-col space-y-0.5">
+                <nav className="flex flex-col space-y-0.5">
                   {NAV_LINKS.map((link) => {
                     const isActive = active === link.id;
                     return (
-                      <motion.button
+                      <button
                         key={link.id}
-                        variants={itemVariants}
                         onClick={() => scrollTo(link.id)}
-                        className={`flex items-center justify-between px-4 py-2.5 rounded-2xl text-left transition-colors duration-200 active:scale-[0.98] cursor-pointer ${
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-2xl text-left transition-colors duration-150 active:scale-[0.98] cursor-pointer ${
                           isActive
                             ? "bg-white/10 text-[#F1EDE3] font-semibold"
                             : "text-[#B0ACA0] hover:text-[#F1EDE3] hover:bg-white/5"
@@ -233,23 +209,20 @@ const Navbar: React.FC = () => {
                         {isActive && (
                           <span className="w-1.5 h-1.5 rounded-full bg-[#F1EDE3] shadow-[0_0_8px_rgba(241,237,227,0.8)]" />
                         )}
-                      </motion.button>
+                      </button>
                     );
                   })}
-                </motion.nav>
+                </nav>
 
                 {/* Quick Contact CTA in dropdown */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mt-2 pt-2 border-t border-white/10"
-                >
+                <div className="mt-2 pt-2 border-t border-white/10">
                   <button
                     onClick={() => scrollTo("contact")}
                     className="w-full py-2.5 px-4 rounded-full bg-[#F1EDE3] text-black font-display font-semibold text-xs uppercase tracking-wider text-center hover:bg-white transition-all shadow-md active:scale-95 cursor-pointer"
                   >
                     Contact · Let's Talk
                   </button>
-                </motion.div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -263,7 +236,7 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             onClick={() => setMenuOpen(false)}
             className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
           />
