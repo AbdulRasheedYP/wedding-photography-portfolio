@@ -181,27 +181,6 @@ const StickyGallery: React.FC = () => {
           }
         );
       }
-
-      // Smooth scroll reveal batch for wall image cards as you scroll down
-      ScrollTrigger.batch(".sticky-card-wrapper", {
-        start: "top 90%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.fromTo(
-            batch,
-            { opacity: 0, y: 55, scale: 0.94 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              stagger: 0.08,
-              duration: 0.85,
-              ease: "power3.out",
-              overwrite: true,
-            }
-          );
-        },
-      });
     });
 
     // Mobile / Tablet
@@ -220,30 +199,10 @@ const StickyGallery: React.FC = () => {
           }
         );
       }
-
-      ScrollTrigger.batch(".sticky-card-wrapper", {
-        start: "top 92%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.fromTo(
-            batch,
-            { opacity: 0, y: 40, scale: 0.95 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              stagger: 0.06,
-              duration: 0.8,
-              ease: "power3.out",
-              overwrite: true,
-            }
-          );
-        },
-      });
     });
 
     return () => mm.revert();
-  }, [displayedItems.length]);
+  }, []);
 
   const activeLightboxItem =
     lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
