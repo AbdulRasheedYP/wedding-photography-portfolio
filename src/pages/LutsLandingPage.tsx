@@ -122,12 +122,12 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
 
             {/* Main Title */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white uppercase font-sans">
-              2 FREE CINEMATIC LUTS
+               FREE CINEMATIC LUTS
             </h1>
 
             {/* Subtitle */}
             <p className="text-xs sm:text-sm text-neutral-300/90 uppercase tracking-wide font-medium leading-relaxed max-w-md mx-auto">
-              These 2 LUTs are from my cinematic LUT pack and just a taste of some of the colour offerings from the full collection.
+              These  LUTs are from my cinematic LUT pack and just a taste of some of the colour offerings from the full collection.
             </p>
           </div>
 
@@ -202,7 +202,7 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
                 <div className="w-4 h-4 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shrink-0">
                   <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
                 </div>
-                <span>2 LUTs taken from my full pack, free</span>
+                <span>LUTs taken from my full pack, free</span>
               </div>
 
               <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
