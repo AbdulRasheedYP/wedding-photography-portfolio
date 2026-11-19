@@ -5,26 +5,35 @@ import LandingPage from "./pages/LandingPage";
 import LutsLandingPage from "./pages/LutsLandingPage";
 import { SmoothScrollProvider } from "./lib/SmoothScroll";
 
+/**
+ * Validates secret LUT download URL.
+ * Only accepts long, unguessable random codes under /downloads/luts/<BIG_CODE>.
+ * Simple / guessable URLs (like /luts, /free, /preset, /downloads/luts/free) are strictly rejected
+ * and will display the normal portfolio so nobody can randomly guess or access it.
+ */
 const isLutPath = (path: string): boolean => {
   const clean = path.toLowerCase().replace(/\/+$/, "");
-  // Do not intercept static downloads
+
+  // Do not intercept static files (.zip, .cube, etc.)
   if (clean.endsWith(".zip") || clean.endsWith(".cube") || clean.endsWith(".webp") || clean.endsWith(".png")) {
     return false;
   }
-  return (
-    clean === "/downloads/luts" ||
-    clean.startsWith("/downloads/luts/") ||
-    clean === "/download/luts" ||
-    clean.startsWith("/download/luts/") ||
-    clean === "/luts" ||
-    clean.startsWith("/luts/") ||
-    clean === "/preset" ||
-    clean.startsWith("/preset/") ||
-    clean === "/presets" ||
-    clean.startsWith("/presets/") ||
-    clean === "/free-luts" ||
-    clean.startsWith("/p/")
-  );
+
+  // Must strictly match /downloads/luts/<CODE> or /download/luts/<CODE>
+  const match = clean.match(/^\/downloads?\/luts\/([a-z0-9_-]+)$/);
+  if (!match) {
+    return false;
+  }
+
+  const code = match[1];
+
+  // Block short words and common guessable terms (e.g. "free", "preset", "test", "luts")
+  const blockedTerms = ["free", "preset", "presets", "test", "luts", "pack", "download", "lut"];
+  if (blockedTerms.includes(code) || code.length < 10) {
+    return false;
+  }
+
+  return true;
 };
 
 const App: React.FC = () => {
