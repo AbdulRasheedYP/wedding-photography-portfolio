@@ -183,7 +183,7 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
               className="w-full relative group overflow-hidden bg-gradient-to-r from-[#E5A853] via-[#f5c77e] to-[#E5A853] text-neutral-950 font-bold py-4 px-6 rounded-2xl shadow-[0_10px_30px_rgba(229,168,83,0.3)] hover:shadow-[0_12px_36px_rgba(229,168,83,0.45)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-base cursor-pointer"
             >
               <Download className="w-5 h-5 text-neutral-950 stroke-[2.5]" />
-              <span>Download 2 Free LUTs Now</span>
+              <span>Download  Free LUTs Now</span>
             </button>
 
             {downloadStarted && (
