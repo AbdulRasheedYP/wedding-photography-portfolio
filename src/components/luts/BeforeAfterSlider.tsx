@@ -155,11 +155,6 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Caption under slider */}
-      <p className="mt-2 text-center text-xs sm:text-sm text-neutral-400 font-sans tracking-wide">
-        Same clip. Drag slider to compare color grade.
-      </p>
     </div>
   );
 };
