@@ -7,13 +7,23 @@ import { SmoothScrollProvider } from "./lib/SmoothScroll";
 
 const isLutPath = (path: string): boolean => {
   const clean = path.toLowerCase().replace(/\/+$/, "");
+  // Do not intercept static downloads
+  if (clean.endsWith(".zip") || clean.endsWith(".cube") || clean.endsWith(".webp") || clean.endsWith(".png")) {
+    return false;
+  }
   return (
+    clean === "/downloads/luts" ||
+    clean.startsWith("/downloads/luts/") ||
+    clean === "/download/luts" ||
+    clean.startsWith("/download/luts/") ||
     clean === "/luts" ||
+    clean.startsWith("/luts/") ||
     clean === "/preset" ||
+    clean.startsWith("/preset/") ||
     clean === "/presets" ||
+    clean.startsWith("/presets/") ||
     clean === "/free-luts" ||
-    clean.startsWith("/p/") ||
-    clean.startsWith("/luts/")
+    clean.startsWith("/p/")
   );
 };
 

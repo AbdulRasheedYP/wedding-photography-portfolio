@@ -1,17 +1,45 @@
 import React, { useState } from "react";
 import BeforeAfterSlider from "../components/luts/BeforeAfterSlider";
-import { ArrowUpRight, Download, CheckCircle, Film, Sparkles, Star } from "lucide-react";
+import SupportedApps from "../components/luts/SupportedApps";
+import { ArrowUpRight, Download, Check, Film, Sparkles, Star, Sliders } from "lucide-react";
 
 interface LutsLandingPageProps {
   onNavigateHome: () => void;
 }
 
+interface LutPreset {
+  id: string;
+  number: number;
+  name: string;
+  tagline: string;
+  beforeImage: string;
+  afterImage: string;
+}
+
+const presets: LutPreset[] = [
+  {
+    id: "lut-1",
+    number: 1,
+    name: "LUT 01: Warm Golden Hour",
+    tagline: "Rich film skin-tones & golden sunset highlights",
+    beforeImage: "/images/luts/lut1_before.webp",
+    afterImage: "/images/luts/lut1_after.webp",
+  },
+  {
+    id: "lut-2",
+    number: 2,
+    name: "LUT 02: Moody Film Teal",
+    tagline: "Deep cinematic contrast & clean modern greens",
+    beforeImage: "/images/luts/lut2_before.webp",
+    afterImage: "/images/luts/lut2_after.webp",
+  },
+];
+
 export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome }) => {
+  const [selectedLutIndex, setSelectedLutIndex] = useState<number>(0);
   const [downloadStarted, setDownloadStarted] = useState(false);
 
-  // You can easily swap these two images with your own before/after photos:
-  const beforeImage = "/images/luts/before.webp";
-  const afterImage = "/images/luts/after.webp";
+  const currentPreset = presets[selectedLutIndex];
   const downloadUrl = "/downloads/Adil_Mubarak_Free_LUTs.zip";
 
   const handleDownload = () => {
@@ -30,7 +58,7 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
 
   return (
     <div className="min-h-screen bg-[#070908] text-[#F1EDE3] selection:bg-[#E5A853]/30 selection:text-white relative overflow-x-hidden font-sans">
-      {/* Background Cinematic Glows */}
+      {/* Background Cinematic Lighting */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div
           className="absolute -top-[10%] left-1/2 -translate-x-1/2 w-[90vw] max-w-[800px] h-[500px] rounded-full opacity-20 blur-[120px]"
@@ -42,8 +70,8 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
         />
       </div>
 
-      {/* Top Floating Navigation */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#070908]/80 border-b border-white/[0.06]">
+      {/* Top Floating Navigation Bar */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#070908]/85 border-b border-white/[0.06]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div 
             onClick={onNavigateHome}
@@ -53,10 +81,6 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
               src="/images/about/founder1.webp"
               alt="Adil Mubarak"
               className="w-9 h-9 rounded-full object-cover border border-[#E5A853]/40 group-hover:border-[#E5A853] transition-colors"
-              onError={(e) => {
-                // fallback if image not loaded
-                (e.target as HTMLElement).style.display = 'none';
-              }}
             />
             <div>
               <span className="font-heading font-serif text-lg tracking-wider block text-white group-hover:text-[#E5A853] transition-colors">
@@ -79,14 +103,14 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10 max-w-xl mx-auto px-4 py-6 sm:py-10 space-y-7">
+      <main className="relative z-10 max-w-xl mx-auto px-4 py-6 sm:py-9 space-y-6">
         
         {/* Creator Info Header */}
         <div className="flex items-center gap-3.5">
           <img
             src="/images/about/founder1.webp"
             alt="Adil Mubarak"
-            className="w-14 h-14 shrink-0 rounded-full object-cover border-2 border-[#E5A853]/50 shadow-lg"
+            className="w-14 h-14 rounded-full object-cover border-2 border-[#E5A853]/50 shadow-lg shrink-0"
           />
           <div>
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -100,7 +124,7 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
           </div>
         </div>
 
-        {/* Hero Card Container */}
+        {/* Hero Product Card */}
         <div className="bg-[#101311]/90 rounded-3xl border border-white/[0.08] p-4 sm:p-6 shadow-2xl backdrop-blur-md space-y-5">
           
           {/* Badge & Title */}
@@ -121,41 +145,71 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
             </h1>
 
             <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              These 2 signature LUTs are taken from my private cinematic grade collection. Designed for wedding films, commercials, and travel reels to give you instant film-toned colors.
+              These 2 LUTs are from my cinematic LUT pack and just a taste of some of the colour offerings from the full collection.
             </p>
           </div>
 
-          {/* Software Compatibility Badges */}
-          <div className="flex items-center gap-2 pt-1 pb-1 overflow-x-auto">
-            <span className="text-[11px] uppercase tracking-wider text-neutral-400 mr-1 font-medium">
-              Supports:
-            </span>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-neutral-900 border border-white/10 text-xs text-neutral-200">
-              <span className="w-2 h-2 rounded-full bg-[#E5A853]" />
-              DaVinci Resolve
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-neutral-900 border border-white/10 text-xs text-neutral-200">
-              <span className="w-2 h-2 rounded-full bg-blue-400" />
-              Premiere Pro
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-neutral-900 border border-white/10 text-xs text-neutral-200">
-              <span className="w-2 h-2 rounded-full bg-purple-400" />
-              Final Cut Pro
-            </div>
+          {/* Software Compatibility Strip (Pr, FCP, DaVinci, CL, VN, CapCut) */}
+          <div className="pt-1 pb-1">
+            <SupportedApps />
           </div>
 
           {/* Interactive Before / After Comparison Slider */}
-          <div className="pt-2">
+          <div className="pt-1 space-y-3">
             <BeforeAfterSlider
-              beforeImage={beforeImage}
-              afterImage={afterImage}
-              beforeLabel="Raw / Log"
-              afterLabel="Cinematic Grade"
+              key={currentPreset.id}
+              beforeImage={currentPreset.beforeImage}
+              afterImage={currentPreset.afterImage}
+              beforeLabel="Before (Raw / Log)"
+              afterLabel={`After (${currentPreset.name.replace(/.*:\s*/, "")})`}
             />
+
+            {/* LUT Switcher Tabs: Select LUT 1 or LUT 2 to update the slider! */}
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center justify-between text-xs text-neutral-400 px-1">
+                <span className="inline-flex items-center gap-1 font-medium text-neutral-300">
+                  <Sliders className="w-3.5 h-3.5 text-[#E5A853]" />
+                  Preview Preset Look:
+                </span>
+                <span className="text-[11px] text-[#E5A853]">Click to switch preview</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                {presets.map((preset, index) => {
+                  const isSelected = selectedLutIndex === index;
+                  return (
+                    <button
+                      key={preset.id}
+                      onClick={() => setSelectedLutIndex(index)}
+                      className={`relative p-3 rounded-2xl text-left transition-all duration-200 border cursor-pointer ${
+                        isSelected
+                          ? "bg-[#E5A853]/15 border-[#E5A853] shadow-[0_0_20px_rgba(229,168,83,0.2)]"
+                          : "bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className={`text-[11px] font-bold uppercase tracking-wider ${isSelected ? "text-[#E5A853]" : "text-neutral-400"}`}>
+                          Preset 0{preset.number}
+                        </span>
+                        {isSelected && (
+                          <span className="w-2 h-2 rounded-full bg-[#E5A853] animate-pulse" />
+                        )}
+                      </div>
+                      <div className="text-xs sm:text-sm font-semibold text-white mt-1 line-clamp-1">
+                        {preset.name.replace(/.*:\s*/, "")}
+                      </div>
+                      <p className="text-[10px] text-neutral-400 mt-0.5 line-clamp-1">
+                        {preset.tagline}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Download Action Section */}
-          <div className="pt-3 space-y-3">
+          <div className="pt-2 space-y-3.5">
             <button
               onClick={handleDownload}
               className="w-full relative group overflow-hidden bg-gradient-to-r from-[#E5A853] via-[#f5c77e] to-[#E5A853] text-neutral-950 font-bold py-4 px-6 rounded-2xl shadow-[0_10px_30px_rgba(229,168,83,0.3)] hover:shadow-[0_12px_36px_rgba(229,168,83,0.45)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-base cursor-pointer"
@@ -165,35 +219,42 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
             </button>
 
             {downloadStarted && (
-              <div className="p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/30 text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
-                <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Your download has started! Unzip and load into Premiere or DaVinci.</span>
+              <div className="p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 animate-fadeIn">
+                <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                  <Check className="w-3 h-3 text-emerald-400 stroke-[3]" />
+                </div>
+                <span>Your download has started! Unzip and import into Premiere, CapCut, or DaVinci.</span>
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-xs text-neutral-400 pt-1">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-[#E5A853]" />
-                <span>Instant .cube file access</span>
+            {/* Exact 3 Bullet Points Requested by User */}
+            <div className="space-y-2 pt-1 px-1">
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
+                <div className="w-4 h-4 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                </div>
+                <span>2 LUTs taken from my full pack, free</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-[#E5A853]" />
-                <span>Rec.709 & Log compatible</span>
+
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
+                <div className="w-4 h-4 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                </div>
+                <span>Works in Premiere, Final Cut, DaVinci, CapCut and VN</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-[#E5A853]" />
-                <span>No sign-up required</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-[#E5A853]" />
-                <span>Commercial use allowed</span>
+
+              <div className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
+                <div className="w-4 h-4 rounded-full bg-neutral-800 border border-neutral-600 flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                </div>
+                <span>Instant download right after checkout</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Secondary Upsell & Portfolio Section */}
-        <div className="space-y-3 pt-2">
+        <div className="space-y-3 pt-1">
           {/* Card: Portfolio Link */}
           <div 
             onClick={onNavigateHome}
