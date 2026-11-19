@@ -146,7 +146,7 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
               afterLabel="After"
             />
 
-            {/* Pack Switcher: Pack 01 & Pack 02 */}
+            {/* Preset Switcher (Subheading / Name only) */}
             <div className="grid grid-cols-2 gap-2.5 pt-1">
               {presets.map((preset, index) => {
                 const isSelected = selectedLutIndex === index;
@@ -154,23 +154,22 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
                   <button
                     key={preset.id}
                     onClick={() => setSelectedLutIndex(index)}
-                    className={`relative p-3 rounded-2xl text-left transition-all duration-200 border cursor-pointer ${
+                    className={`relative py-3 px-3.5 rounded-2xl text-center transition-all duration-200 border cursor-pointer flex items-center justify-center gap-2 ${
                       isSelected
                         ? "bg-[#E5A853]/15 border-[#E5A853] shadow-[0_0_20px_rgba(229,168,83,0.2)]"
                         : "bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20"
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className={`text-[11px] font-bold uppercase tracking-wider ${isSelected ? "text-[#E5A853]" : "text-neutral-400"}`}>
-                        Pack 0{preset.number}
-                      </span>
-                      {isSelected && (
-                        <span className="w-2 h-2 rounded-full bg-[#E5A853] animate-pulse" />
-                      )}
-                    </div>
-                    <div className="text-xs sm:text-sm font-semibold text-white mt-1 line-clamp-1">
+                    {isSelected && (
+                      <span className="w-2 h-2 rounded-full bg-[#E5A853] animate-pulse shrink-0" />
+                    )}
+                    <span
+                      className={`text-xs sm:text-sm font-semibold truncate ${
+                        isSelected ? "text-[#E5A853]" : "text-neutral-300"
+                      }`}
+                    >
                       {preset.name}
-                    </div>
+                    </span>
                   </button>
                 );
               })}
