@@ -48,6 +48,14 @@ const App: React.FC = () => {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+  useEffect(() => {
+    if (isLutPath(currentPath)) {
+      document.title = "Adil Mubarak — 2 Free Cinematic LUTs Pack";
+    } else {
+      document.title = "Adil Mubarak — Videographer & Photographer";
+    }
+  }, [currentPath]);
+
   const navigateToHome = () => {
     window.history.pushState({}, "", "/");
     setCurrentPath("/");
