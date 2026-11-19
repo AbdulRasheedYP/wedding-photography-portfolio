@@ -1,9 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/shared/Navbar";
 import ProgressBar from "./components/shared/ProgressBar";
-import LandingPage from "./pages/LandingPage";
-import LutsLandingPage from "./pages/LutsLandingPage";
 import { SmoothScrollProvider } from "./lib/SmoothScroll";
+
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const LutsLandingPage = lazy(() => import("./pages/LutsLandingPage"));
+
+const PageLoadingFallback = () => (
+  <div className="min-h-screen bg-[#070908] flex flex-col items-center justify-center select-none">
+    <div className="text-[11px] font-semibold tracking-[0.35em] uppercase text-[#E5A853] mb-3.5 opacity-90 font-sans">
+      Adil Mubarak
+    </div>
+    <div className="w-6 h-6 border-2 border-[#E5A853]/20 border-t-[#E5A853] rounded-full animate-spin" />
+  </div>
+);
 
 /**
  * Validates secret LUT download URL.
@@ -65,14 +75,20 @@ const App: React.FC = () => {
   const isLutsView = isLutPath(currentPath);
 
   if (isLutsView) {
-    return <LutsLandingPage onNavigateHome={navigateToHome} />;
+    return (
+      <Suspense fallback={<PageLoadingFallback />}>
+        <LutsLandingPage onNavigateHome={navigateToHome} />
+      </Suspense>
+    );
   }
 
   return (
     <SmoothScrollProvider>
       <ProgressBar />
       <Navbar />
-      <LandingPage />
+      <Suspense fallback={<PageLoadingFallback />}>
+        <LandingPage />
+      </Suspense>
     </SmoothScrollProvider>
   );
 };

@@ -7,36 +7,14 @@ interface LutsLandingPageProps {
   onNavigateHome: () => void;
 }
 
-interface LutPreset {
-  id: string;
-  number: number;
-  name: string;
-  beforeImage: string;
-  afterImage: string;
-}
-
-const presets: LutPreset[] = [
-  {
-    id: "pack-1",
-    number: 1,
-    name: "Warm Golden Hour",
-    beforeImage: "/images/luts/lut1_before.webp",
-    afterImage: "/images/luts/lut1_after.webp",
-  },
-  {
-    id: "pack-2",
-    number: 2,
-    name: "Moody Film Teal",
-    beforeImage: "/images/luts/lut2_before.webp",
-    afterImage: "/images/luts/lut2_after.webp",
-  },
-];
+const lutPreview = {
+  beforeImage: "/images/luts/lut1_before.webp",
+  afterImage: "/images/luts/lut1_after.webp",
+};
 
 export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome }) => {
-  const [selectedLutIndex, setSelectedLutIndex] = useState<number>(0);
   const [downloadStarted, setDownloadStarted] = useState(false);
 
-  const currentPreset = presets[selectedLutIndex];
   const downloadUrl = "/downloads/Adil_Mubarak_Free_LUTs.zip";
 
   const handleDownload = () => {
@@ -137,53 +115,23 @@ export const LutsLandingPage: React.FC<LutsLandingPageProps> = ({ onNavigateHome
           </div>
 
           {/* Interactive Before / After Comparison Slider */}
-          <div className="pt-1 space-y-3 text-left">
+          <div className="pt-1 text-left">
             <BeforeAfterSlider
-              key={currentPreset.id}
-              beforeImage={currentPreset.beforeImage}
-              afterImage={currentPreset.afterImage}
+              beforeImage={lutPreview.beforeImage}
+              afterImage={lutPreview.afterImage}
               beforeLabel="Before"
               afterLabel="After"
             />
-
-            {/* Preset Switcher (Subheading / Name only) */}
-            <div className="grid grid-cols-2 gap-2.5 pt-1">
-              {presets.map((preset, index) => {
-                const isSelected = selectedLutIndex === index;
-                return (
-                  <button
-                    key={preset.id}
-                    onClick={() => setSelectedLutIndex(index)}
-                    className={`relative py-3 px-3.5 rounded-2xl text-center transition-all duration-200 border cursor-pointer flex items-center justify-center gap-2 ${
-                      isSelected
-                        ? "bg-[#E5A853]/15 border-[#E5A853] shadow-[0_0_20px_rgba(229,168,83,0.2)]"
-                        : "bg-white/[0.03] border-white/10 hover:bg-white/[0.06] hover:border-white/20"
-                    }`}
-                  >
-                    {isSelected && (
-                      <span className="w-2 h-2 rounded-full bg-[#E5A853] animate-pulse shrink-0" />
-                    )}
-                    <span
-                      className={`text-xs sm:text-sm font-semibold truncate ${
-                        isSelected ? "text-[#E5A853]" : "text-neutral-300"
-                      }`}
-                    >
-                      {preset.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
           {/* Download Action Section */}
-          <div className="pt-1.5 space-y-3.5 text-left">
+          <div className="pt-3 space-y-3.5 text-left">
             <button
               onClick={handleDownload}
               className="w-full relative group overflow-hidden bg-gradient-to-r from-[#E5A853] via-[#f5c77e] to-[#E5A853] text-neutral-950 font-bold py-4 px-6 rounded-2xl shadow-[0_10px_30px_rgba(229,168,83,0.3)] hover:shadow-[0_12px_36px_rgba(229,168,83,0.45)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2 text-base cursor-pointer"
             >
               <Download className="w-5 h-5 text-neutral-950 stroke-[2.5]" />
-              <span>Download  Free LUTs Now</span>
+              <span>Download Free LUTs Now</span>
             </button>
 
             {downloadStarted && (

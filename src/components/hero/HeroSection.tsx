@@ -21,7 +21,7 @@ export default function HeroSection({ onExploreClick }: Props) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Smooth, unified cinematic entrance timeline
-      const tl = gsap.timeline({ delay: 0.15 });
+      const tl = gsap.timeline();
 
       // 1. Eyebrow
       if (eyebrowRef.current) {
@@ -150,7 +150,7 @@ export default function HeroSection({ onExploreClick }: Props) {
         className="relative z-10 text-center px-5 sm:px-6 w-full max-w-6xl mx-auto flex flex-col items-center select-none"
       >
         {/* Eyebrow */}
-        <div ref={eyebrowRef} className="flex items-center gap-3 mb-6 sm:mb-8 opacity-0">
+        <div ref={eyebrowRef} className="flex items-center gap-3 mb-6 sm:mb-8">
           <span className="w-8 h-[1px] bg-[#F1EDE3]/30" />
           <span className="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-[0.35em] text-[#D8D1C2]/80">
             Dubai · Calicut · Worldwide
@@ -161,7 +161,7 @@ export default function HeroSection({ onExploreClick }: Props) {
         {/* Main Title — Clean, constant tracking, no jitter */}
         <h1
           ref={titleRef}
-          className="font-serif text-[clamp(2.8rem,8.5vw,7.2rem)] text-[#F1EDE3] font-normal uppercase tracking-[0.14em] leading-none drop-shadow-[0_4px_32px_rgba(0,0,0,0.9)] opacity-0"
+          className="font-serif text-[clamp(2.8rem,8.5vw,7.2rem)] text-[#F1EDE3] font-normal uppercase tracking-[0.14em] leading-none drop-shadow-[0_4px_32px_rgba(0,0,0,0.9)]"
         >
           Adil Mubarak
         </h1>
@@ -174,7 +174,7 @@ export default function HeroSection({ onExploreClick }: Props) {
           {["Videographer", "Photographer", "Reel Editor"].map((word, i) => (
             <span
               key={word}
-              className="tagline-item flex items-center gap-x-3 sm:gap-x-5 opacity-0"
+              className="tagline-item flex items-center gap-x-3 sm:gap-x-5"
             >
               <span className="text-[11px] sm:text-sm font-sans font-medium uppercase tracking-[0.25em] sm:tracking-[0.32em] text-[#D8D1C2] drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
                 {word}
@@ -187,7 +187,7 @@ export default function HeroSection({ onExploreClick }: Props) {
         </div>
 
         {/* Call to Action Button */}
-        <div ref={ctaRef} className="mt-9 sm:mt-11 flex flex-col sm:flex-row items-center gap-4 opacity-0">
+        <div ref={ctaRef} className="mt-9 sm:mt-11 flex flex-col sm:flex-row items-center gap-4">
           <button
             onClick={onExploreClick}
             className="group flex items-center gap-2.5 text-[11px] font-sans font-semibold uppercase tracking-[0.25em] text-[#F1EDE3] border border-[#F1EDE3]/30 hover:border-[#F1EDE3] hover:bg-[#F1EDE3]/10 px-6 py-3 rounded-full transition-all duration-300 backdrop-blur-sm shadow-md"
@@ -209,7 +209,7 @@ export default function HeroSection({ onExploreClick }: Props) {
       </div>
 
       {/* Scroll indicator */}
-      <div ref={scrollHintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 opacity-0">
+      <div ref={scrollHintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <button
           className="text-[#F1EDE3] opacity-60 flex flex-col items-center gap-2 cursor-pointer hover:opacity-100 transition-opacity focus:outline-none"
           onClick={onExploreClick}

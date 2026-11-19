@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </React.StrictMode>
 );
 
-// Clean up any previously registered service workers and clear cache storage safely
+// Clean up any previously registered service workers safely
 try {
   if (typeof window !== "undefined" && "serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -18,11 +18,6 @@ try {
       }
     }).catch(() => {});
   }
-  if (typeof window !== "undefined" && "caches" in window) {
-    caches.keys().then((keys) => {
-      keys.forEach((key) => caches.delete(key).catch(() => {}));
-    }).catch(() => {});
-  }
 } catch {
-  // Ignore in environments where Service Worker / Cache API is restricted
+  // Ignore in environments where Service Worker is restricted
 }
